@@ -1,0 +1,8 @@
+# Dependencias EXCLUSIVAS del pipeline de ingesta open-source (scripts/ingest/).
+# No hacen falta para correr la app: instálalas solo cuando vayas a poblar las BD.
+#   pip install -r requirements-ingest.txt
+
+psycopg[binary]==3.2.3     # cliente PostgreSQL (capa de staging: dumps DrugCentral/ChEMBL)
+requests==2.34.2           # descargas y APIs (Open Targets, PubChem, UniProt, ChEMBL API)
+rdkit==2026.3.3            # SMILES → fingerprints, masa molecular, InChIKey (ya en requirements.txt)
+tqdm==4.67.1               # barras de progreso para los ETL largos

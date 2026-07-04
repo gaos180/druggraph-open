@@ -1,0 +1,297 @@
+/* --- Contenedor Principal --- */
+.drugs-root {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* --- Encabezado y Buscador Moderno --- */
+  .drugs-header {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border-bottom: 1px solid #2d3748;
+    padding-bottom: 20px;
+  }
+  
+  .drugs-header h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .drugs-controls {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .search-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 300px;
+  }
+  
+  .search-wrap svg {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    pointer-events: none;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 12px 16px 12px 42px;
+    background-color: #1e293b;
+    border: 2px solid #334155;
+    border-radius: 10px;
+    color: #f8fafc;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+  }
+  
+  .search-input:focus {
+    outline: none;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+    background-color: #0f172a;
+  }
+  
+  .filter-select {
+    padding: 12px 16px;
+    background-color: #1e293b;
+    border: 2px solid #334155;
+    border-radius: 10px;
+    color: #f8fafc;
+    font-size: 0.95rem;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  
+  .filter-select:focus {
+    border-color: #a855f7;
+  }
+  
+  /* --- Layout de Contenido Dinámico --- */
+  .drugs-main-layout {
+    display: flex;
+    gap: 24px;
+    position: relative;
+  }
+  
+  .drugs-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+    align-content: flex-start;
+  }
+  
+  /* --- Tarjetas de Medicamentos (Cards) --- */
+  .drug-card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .drug-card:hover {
+    transform: translateY(-4px);
+    border-color: #6366f1;
+    box-shadow: 0 10px 20px -10px rgba(99, 102, 241, 0.3);
+    background: #243249;
+  }
+  
+  .drug-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .drug-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #f1f5f9;
+  }
+  
+  .drug-id {
+    font-size: 0.8rem;
+    font-weight: 700;
+    background: #0f172a;
+    color: #38bdf8;
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: 1px solid #1e293b;
+    white-space: nowrap;
+  }
+  
+  .drug-desc {
+    font-size: 0.9rem;
+    color: #94a3b8;
+    line-height: 1.5;
+    margin: 0;
+  }
+  
+  .drug-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: auto;
+  }
+  
+  .tag-type {
+    font-size: 0.72rem;
+    background: #dbeafe;
+    color: #1e40af;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-weight: 700;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+  }
+
+  .tag-group {
+    font-size: 0.72rem;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-weight: 700;
+    text-transform: capitalize;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .tag-approved { background: #d1fae5; color: #065f46; }
+  .tag-investigational { background: #ffedd5; color: #9a3412; }
+  .tag-experimental { background: #f3e8ff; color: #6b21a8; }
+  .tag-withdrawn { background: #fee2e2; color: #991b1b; }
+  .tag-default { background: #f5f5f4; color: #44403c; }
+  
+  /* --- Panel Expandible de Detalle Lateral (Drawer) --- */
+  .drug-detail-drawer {
+    width: 450px;
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.25);
+    position: sticky;
+    top: 24px;
+    height: calc(100vh - 100px);
+    overflow-y: auto;
+    animation: slideIn 0.3s ease;
+  }
+  
+  @keyframes slideIn {
+    from { transform: translateX(30px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  
+  .drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #334155;
+    padding-bottom: 14px;
+  }
+  
+  .drawer-close-btn {
+    background: none;
+    border: none;
+    color: #64748b;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  
+  .drawer-close-btn:hover { color: #f1f5f9; }
+  
+  /* Tema cuaderno: fichas de papel con borde tinta */
+  .detail-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: #faf6ee;
+    padding: 14px;
+    border-radius: 12px;
+    border: 2px solid rgba(43, 37, 29, 0.15);
+    box-shadow: 2px 2.5px 0 rgba(30, 25, 21, 0.06);
+  }
+
+  .detail-section label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    color: #7c2d12;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    font-family: ui-monospace, monospace;
+  }
+
+  .detail-section p {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: #44403c;
+  }
+
+  .smiles-box {
+    font-family: 'Courier New', Courier, monospace;
+    background: #f1ece0;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px dashed #b45309;
+    color: #7c2d12;
+    font-size: 0.85rem;
+    word-break: break-all;
+  }
+  
+  /* --- Paginación Simple --- */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-top: 20px;
+  }
+  
+  .pagination button {
+    padding: 10px 20px;
+    background: #1e293b;
+    border: 2px solid #334155;
+    color: #f8fafc;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  
+  .pagination button:not(:disabled):hover {
+    border-color: #6366f1;
+    background: #243249;
+  }
+  
+  .pagination button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }

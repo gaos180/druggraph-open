@@ -1,0 +1,26 @@
+"""
+tools — Herramientas analíticas avanzadas de DrugGraph.
+
+Endpoints:
+  POST /api/tools/deg-analysis/        Análisis de Expresión Diferencial (deg.py)
+  GET  /api/tools/repurposing/<id>/    Candidatos de reposicionamiento (repurposing.py)
+  GET  /api/tools/toxicity/<id>/       Perfil de toxicidad y off-targets (toxicity.py)
+
+Helpers compartidos (lectura de targets/info de un fármaco) en _common.py.
+"""
+
+from .deg import deg_analysis_view
+from .repurposing import repurposing_view
+from .toxicity import toxicity_view
+from .proximity import proximity_view
+from .disease_evidence import disease_evidence_view
+from .signature_reversion import signature_reversion_view
+from .chemical_space import chemical_space_view, chemical_space_locate_view
+from .denovo import denovo_view
+from .admet import admet_view
+from .dti_gnn import dti_gnn_view
+
+__all__ = ["deg_analysis_view", "repurposing_view", "toxicity_view", "proximity_view",
+           "disease_evidence_view", "signature_reversion_view",
+           "chemical_space_view", "chemical_space_locate_view", "denovo_view", "admet_view",
+           "dti_gnn_view"]

@@ -1,0 +1,43 @@
+/* Tema "Cuaderno Científico" — base de diseño de DrugGraph (Tailwind 4 CSS-first). */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Patrick+Hand&family=Architects+Daughter&family=Coming+Soon&family=Delius&display=swap');
+/* `source("../")` fija la raíz de detección de clases a src/ (relativo a este archivo
+   en src/styles/), necesario porque bajo CRA/CRACO el auto-scanning de Tailwind 4 no
+   resuelve el directorio del proyecto por sí solo. */
+@import "tailwindcss";
+@source "../**/*.{ts,tsx,js,jsx}";
+
+@theme {
+  --font-hand: "Patrick Hand", "Caveat", "Architects Daughter", cursive;
+
+  /* Paleta cuaderno */
+  --color-paper: #faf6ee;
+  --color-paper-deep: #eadecd;
+  --color-ink: #2b251d;
+  --color-ink-soft: #574c3e;
+}
+
+/* Borde a lápiz: contorno tinta + sombra dura desplazada (efecto dibujo). */
+.pencil-border {
+  border: 2px solid #2d2621;
+  box-shadow: 3px 3.5px 0px #2d2621;
+}
+.pencil-border-hover:hover {
+  transform: translate(-1px, -1.5px);
+  box-shadow: 4px 5px 0px #2d2621;
+}
+.pencil-border-active:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1.5px 0px #2d2621;
+}
+
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes loaderBar {
+  0% { width: 0%; }
+  50% { width: 70%; }
+  100% { width: 100%; }
+}
+.animate-spin-slow { animation: spinSlow 10s linear infinite; }
+.animate-loader-bar { animation: loaderBar 2s ease-in-out infinite; }

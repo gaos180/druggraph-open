@@ -1,0 +1,18 @@
+# requirements-ml.txt — Dependencias ML PESADAS y OPCIONALES de DrugGraph.
+#
+# No se instalan por defecto (requirements.txt). Instálalas solo si vas a usar las
+# features que las necesitan; todas degradan a 503 si no están presentes.
+#
+# Instalación:
+#   pip install -r requirements-ml.txt
+#
+# ── Tier 3.2 — embeddings ChemBERTa (similitud + mapa de espacio químico 4.1 "locate") ──
+# torch CPU recomendado (más ligero):
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu
+torch
+transformers
+
+# ── Tier 4.4b — motor generativo REINVENT4 (de novo, AstraZeneca, Apache-2.0) ──
+# Requiere además descargar un modelo prior y definir REINVENT_PRIOR_PATH.
+# Ver https://github.com/MolecularAI/REINVENT4
+reinvent4

@@ -1,0 +1,51 @@
+DrugGraph Open — atribución de fuentes de datos
+================================================
+
+El código se distribuye bajo licencia MIT (ver LICENSE). Los datos ingeridos por el
+pipeline (backend/scripts/ingest/) provienen de las siguientes fuentes de terceros. Al
+publicar o redistribuir datos derivados, cita cada fuente y respeta su licencia.
+
+DrugCentral
+  Ursu O. et al. "DrugCentral 2021 supports drug discovery and repositioning."
+  Nucleic Acids Research. https://drugcentral.org
+  Licencia: CC BY-SA 4.0
+
+ChEMBL
+  Zdrazil B. et al. "The ChEMBL Database in 2023." Nucleic Acids Research.
+  https://www.ebi.ac.uk/chembl/
+  Licencia: CC BY-SA 3.0
+
+UniProt
+  The UniProt Consortium. Nucleic Acids Research. https://www.uniprot.org
+  Licencia: CC BY 4.0
+
+Open Targets
+  Ochoa D. et al. "Open Targets Platform." Nucleic Acids Research.
+  https://www.opentargets.org
+  Licencia: CC0 1.0
+
+PubChem
+  Kim S. et al. "PubChem 2023 update." Nucleic Acids Research.
+  https://pubchem.ncbi.nlm.nih.gov
+  Dominio público (U.S. Government work)
+
+Comparative Toxicogenomics Database (CTD)
+  Davis AP. et al. "Comparative Toxicogenomics Database (CTD)." Nucleic Acids Research.
+  https://ctdbase.org
+  Uso académico libre con atribución.
+
+STRING
+  Szklarczyk D. et al. "The STRING database." Nucleic Acids Research.
+  https://string-db.org
+  Licencia: CC BY 4.0
+
+KEGG
+  Kanehisa M., Goto S. "KEGG." Nucleic Acids Research. https://www.kegg.jp
+  Libre para uso académico (API).
+
+TWOSIDES / nSIDES
+  Tatonetti NP. et al. "Data-driven prediction of drug effects and interactions."
+  Science Translational Medicine. https://nsides.io
+  Licencia: CC0 1.0
+
+DrugGraph Open no incluye ni redistribuye datos de DrugBank.

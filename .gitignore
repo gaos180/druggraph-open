@@ -1,0 +1,82 @@
+# Python
+backend/venv/
+backend/db.sqlite3
+
+# Modelos ML entrenados (los regeneran los scripts de entrenamiento — pesados)
+backend/models/
+__pycache__/
+**/__pycache__/
+**/*.pyc
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+
+# Node
+frontend/node_modules/
+frontend/build/
+frontend/.env.local
+
+# Entorno
+.env
+*.env
+.env.*
+!.env.example
+!**/.env.example
+
+# BLAST índices binarios
+*.nsi
+*.nsd
+*.nsq
+*.nin
+*.nhr
+*.psi
+*.psd
+*.psq
+*.pin
+*.phr
+*.pto
+*.ptf
+
+# Datos locales (no redistribuir — requieren licencias externas)
+data/
+*.fasta
+*.ndjson
+
+# Archivos de sesión / planificación
+handoff.md
+carta_gantt*.xlsx
+*.cif
+
+# Claude Code
+.claude/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Presentación (no subir)
+presentacion/
+
+# Auxiliares LaTeX
+*.aux
+*.nav
+*.snm
+*.toc
+*.vrb
+*.out
+*.fls
+*.fdb_latexmk
+
+# Tailwind CSS generado (build step del CLI)
+frontend/src/styles/notebook.gen.css

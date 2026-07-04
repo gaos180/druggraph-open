@@ -1,0 +1,73 @@
+# DrugGraph Open — stack de bases de datos AISLADO del proyecto DrugGraph original.
+# Puertos, nombres de contenedor y volúmenes son distintos a propósito para que ambos
+# stacks puedan convivir en la misma máquina sin colisionar.
+#
+#   Servicio    DrugGraph (orig.)   DrugGraph Open (este)
+#   MongoDB     27017               27018
+#   Neo4j HTTP  7474                7475
+#   Neo4j Bolt  7687                7688
+#   Postgres    —                   5433   (capa de staging para dumps open-source)
+#
+# Levantar:  docker compose up -d
+services:
+  mongodb:
+    image: mongo:7
+    container_name: druggraph-open-mongodb
+    restart: always
+    ports:
+      - "27018:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=druggraph_open
+    volumes:
+      - mongo_data:/data/db
+
+  neo4j:
+    image: neo4j:5
+    container_name: druggraph-open-neo4j
+    restart: always
+    ports:
+      - "7475:7474" # Consola web HTTP (Browser)
+      - "7688:7687" # Protocolo Bolt para Django
+    environment:
+      - NEO4J_AUTH=neo4j/druggraphopen123
+      - NEO4J_PLUGINS=["apoc", "graph-data-science"]
+      - NEO4J_server_memory_heap_initial__size=800m
+      - NEO4J_server_memory_heap_max__size=1000m
+      - NEO4J_server_memory_pagecache_size=500m
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+    deploy:
+      resources:
+        limits:
+          memory: 1600M
+        reservations:
+          memory: 500M
+
+  # Capa relacional de STAGING para la ingesta open-source.
+  # DrugCentral y ChEMBL se distribuyen como dumps PostgreSQL nativos: se restauran aquí
+  # y desde este Postgres el ETL (scripts/ingest/) proyecta a MongoDB (documentos) y
+  # Neo4j (grafo). No lo consume la app en runtime, solo el pipeline de ingesta.
+  postgres:
+    image: postgres:16
+    container_name: druggraph-open-postgres
+    restart: always
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_USER=druggraph
+      - POSTGRES_PASSWORD=druggraphopen123
+      - POSTGRES_DB=staging
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    shm_size: '1gb'   # DrugCentral/ChEMBL hacen restores grandes; amplía la mem compartida
+
+volumes:
+  mongo_data:
+    driver: local
+  neo4j_data:
+    driver: local
+  neo4j_logs:
+    driver: local
+  postgres_data:
+    driver: local

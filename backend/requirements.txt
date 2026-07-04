@@ -1,0 +1,29 @@
+django==5.2.15
+djangorestframework==3.17.1
+pymongo==4.17.0
+bcrypt==5.0.0
+PyJWT==2.13.0
+django-cors-headers==4.9.0
+python-dotenv==1.0.1
+requests==2.34.2
+rdkit==2026.3.3
+drf-spectacular==0.29.0
+omnipath==1.0.12          # opcional: carga de la red causal con signo (Tier 2.2 / load_omnipath_regulatory.py)
+
+# ── Tier 4 (ML propio): clustering, ADMET supervisado, cabezal DTI, de novo ──────
+# CPU, sin GPU. Necesarios para las herramientas del Tier 4 (degradan a 503 si faltan):
+scikit-learn==1.9.0       # ADMET supervisado (4.3) + cabezal Link Prediction de la GNN DTI (4.2)
+joblib==1.5.3             # persistencia de modelos (UMAP/ADMET)
+pandas==3.0.3             # carga de datasets MoleculeNet (scripts/train_admet_models.py)
+umap-learn==0.5.12        # mapa de espacio químico (4.1) — proyección 2D
+hdbscan==0.8.44           # mapa de espacio químico (4.1) — clustering
+crem==0.3.0               # diseño de novo (4.4) — motor CReM (requiere base de fragmentos, ver build_crem_db.py)
+
+# Opcional y PESADO (Tier 3.2 — similitud molecular por embedding ChemBERTa).
+# No se instala por defecto; si se usa, instalar aparte (torch CPU recomendado):
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu
+#   pip install transformers
+# torch
+# transformers
+#
+# Tier 4.4b (motor generativo REINVENT4, opcional y pesado): ver requirements-ml.txt
