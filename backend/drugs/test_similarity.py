@@ -57,7 +57,7 @@ class SimilarityDetailTests(SimpleTestCase):
             'name': 'Naproxen', 'calculated-properties': [{'kind': 'SMILES', 'value': NAPROXEN}],
         }
         res = self.client.post('/api/drugs/sandbox/similarity-detail/',
-                               {'smiles': IBU, 'drugbank_id': 'DB00788'}, format='json',
+                               {'smiles': IBU, 'drugbank_id': 'DC1962'}, format='json',
                                **auth_headers(self.user))
         self.assertEqual(res.status_code, 200)
         self.assertTrue(res.json()['available'])
@@ -68,7 +68,7 @@ class SimilarityDetailTests(SimpleTestCase):
         mock_user.return_value = self.user
         mock_db.return_value.drugs.find_one.return_value = {'name': 'Lepirudin'}
         res = self.client.post('/api/drugs/sandbox/similarity-detail/',
-                               {'smiles': IBU, 'drugbank_id': 'DB00001'}, format='json',
+                               {'smiles': IBU, 'drugbank_id': 'DC1234'}, format='json',
                                **auth_headers(self.user))
         self.assertEqual(res.status_code, 200)
         self.assertFalse(res.json()['available'])

@@ -36,8 +36,9 @@ PUBCHEM_SUMMARY = {'cid': 2244, 'total': 4929, 'active': 125, 'inactive': 2621,
                                'activity_value_um': '', 'activity_name': '', 'assay_name': 'X', 'assay_type': 'Confirmatory'}]}
 
 DRUG_DOC = {
-    '_id': str(ObjectId()), 'name': 'Aspirin',
-    'calculated-properties': [{'kind': 'SMILES', 'value': 'CC(=O)Oc1ccccc1C(=O)O'}],
+    '_id': 'DC35', 'drugbank-id': 'DC35', 'name': 'Aspirin',
+    'smiles': 'CC(=O)Oc1ccccc1C(=O)O',
+    'calculated-properties': [{'kind': 'SMILES', 'value': 'CC(=O)Oc1ccccc1C(=O)O', 'source': 'DrugCentral'}],
 }
 
 
@@ -54,7 +55,7 @@ class DrugBioactivityTests(SimpleTestCase):
     def test_drug_bioactivity_success(self, mock_user, mock_db, mock_chembl, mock_cid, mock_assay):
         mock_user.return_value = self.user
         mock_db.return_value.drugs.find_one.return_value = DRUG_DOC
-        res = self.client.get('/api/drugs/DB00945/bioactivity/', **auth_headers(self.user))
+        res = self.client.get('/api/drugs/DC35/bioactivity/', **auth_headers(self.user))
         self.assertEqual(res.status_code, 200)
         body = res.json()
         self.assertTrue(body['available'])
@@ -65,8 +66,8 @@ class DrugBioactivityTests(SimpleTestCase):
     @patch('users.authentication.get_user_by_id')
     def test_drug_without_smiles(self, mock_user, mock_db):
         mock_user.return_value = self.user
-        mock_db.return_value.drugs.find_one.return_value = {'_id': 'x', 'name': 'Lepirudin'}  # biotech, sin SMILES
-        res = self.client.get('/api/drugs/DB00001/bioactivity/', **auth_headers(self.user))
+        mock_db.return_value.drugs.find_one.return_value = {'_id': 'DC1234', 'name': 'Lepirudin'}  # biotech, sin SMILES
+        res = self.client.get('/api/drugs/DC1234/bioactivity/', **auth_headers(self.user))
         self.assertEqual(res.status_code, 200)
         self.assertFalse(res.json()['available'])
 
@@ -75,7 +76,7 @@ class DrugBioactivityTests(SimpleTestCase):
     def test_drug_not_found(self, mock_user, mock_db):
         mock_user.return_value = self.user
         mock_db.return_value.drugs.find_one.return_value = None
-        res = self.client.get('/api/drugs/DBXXXXX/bioactivity/', **auth_headers(self.user))
+        res = self.client.get('/api/drugs/DC99999/bioactivity/', **auth_headers(self.user))
         self.assertEqual(res.status_code, 404)
 
     @patch('config.services.pubchem_service.bioassay_summary', return_value=PUBCHEM_SUMMARY)

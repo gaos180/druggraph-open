@@ -31,16 +31,16 @@ class DtiGnnTests(SimpleTestCase):
     @patch('users.authentication.get_user_by_id')
     def test_gds_unavailable_returns_503(self, mock_user, mock_pred):
         mock_user.return_value = self.user
-        res = self.client.get('/api/tools/dti-gnn/DB00945/', **auth_headers(self.user))
+        res = self.client.get('/api/tools/dti-gnn/DC35/', **auth_headers(self.user))
         self.assertEqual(res.status_code, 503)
 
     @patch('config.services.dti_gnn_service.predict_for_drug',
-           return_value={'available': True, 'drug': {'drugbank_id': 'DB00945', 'name': 'Aspirin'},
+           return_value={'available': True, 'drug': {'drugbank_id': 'DC35', 'name': 'Aspirin'},
                          'predictions': [], 'model': {}})
     @patch('users.authentication.get_user_by_id')
     def test_model_not_trained_returns_503(self, mock_user, mock_pred):
         mock_user.return_value = self.user
-        res = self.client.get('/api/tools/dti-gnn/DB00945/', **auth_headers(self.user))
+        res = self.client.get('/api/tools/dti-gnn/DC35/', **auth_headers(self.user))
         self.assertEqual(res.status_code, 503)
 
     @patch('config.services.dti_gnn_service.predict_for_drug')
@@ -49,13 +49,13 @@ class DtiGnnTests(SimpleTestCase):
         mock_user.return_value = self.user
         mock_pred.return_value = {
             'available': True,
-            'drug': {'drugbank_id': 'DB00945', 'name': 'Aspirin'},
-            'predictions': [{'target_id': 'BE0001', 'target_name': 'COX-2', 'uniprot_id': 'P35354',
+            'drug': {'drugbank_id': 'DC35', 'name': 'Aspirin'},
+            'predictions': [{'target_id': 'P35354', 'target_name': 'COX-2', 'uniprot_id': 'P35354',
                              'gene_name': 'PTGS2', 'probability': 0.87}],
             'model': {'auc_pr': 0.82, 'roc_auc': 0.8, 'embedding_method': 'fastrp',
                       'trained_at': '2026-07-02T00:00:00+00:00'},
         }
-        res = self.client.get('/api/tools/dti-gnn/DB00945/', **auth_headers(self.user))
+        res = self.client.get('/api/tools/dti-gnn/DC35/', **auth_headers(self.user))
         self.assertEqual(res.status_code, 200)
         body = res.json()
         self.assertTrue(body['available'])

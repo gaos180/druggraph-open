@@ -23,6 +23,7 @@ Estas no dependían de DrugBank y se conservan igual:
 
 | Fuente | Rol | Licencia |
 |--------|-----|----------|
+| **STITCH** | Interacciones químico-proteína (dianas soportadas, `:STITCH_TARGET`) por PubChem CID | CC BY 4.0 |
 | **STRING** | PPI vecinos + red bulk para propagación (difusión) | CC BY 4.0 |
 | **KEGG** | Pathways de dianas + KGML regulatorio (cascada dirigida) | Libre para académico (API) |
 | **OmniPath / SIGNOR** | Red causal con signo (cascada dirigida, opcional) | CC BY / académico |
@@ -39,8 +40,17 @@ DrugBank era la fuente de las DDI **documentadas** (`drug-interactions`). Su ree
 | **TWOSIDES / OFFSIDES (nSIDES)** | CC0 | DDI derivadas de farmacovigilancia (FAERS). 100% libre, incluye comercial. |
 
 El pipeline usa **TWOSIDES por defecto** (CC0, sin restricciones) y deja DDInter como
-opción documentada. El *riesgo PK/PD predicho* (`ddi_risk.py`) no depende de ninguna
-fuente: se calcula sobre CYPs/dianas compartidas/proximidad y sigue funcionando igual.
+opción documentada. El mapeo fármaco↔fármaco es por **PubChem CID** (los stereo-CID de
+STITCH que usa TWOSIDES se convierten a CID entero) contra el cross-ref PubChem del
+catálogo — más robusto que por nombre. El *riesgo PK/PD predicho* (`ddi_risk.py`) no
+depende de ninguna fuente: se calcula sobre CYPs/dianas compartidas/proximidad y sigue
+funcionando igual. Detalle en `docs/DDI_STITCH.md`.
+
+## Enriquecedores opcionales (pasos 6–8)
+
+Añaden campos al documento sin ser parte del backbone. Detalle en `docs/OPEN_ENRICHERS.md`:
+`open_targets_diseases` (Open Targets, CC0), `pubchem_properties` (PubChem, dominio
+público) y `toxinpred` (ToxinPred, académico — requiere input externo).
 
 ## Mapeo de campos: DrugBank → DrugCentral (documento Mongo `drugs`)
 

@@ -35,7 +35,7 @@ class ProximityTests(SimpleTestCase):
         self.user = make_user()
 
     @patch('drugs.views.tools.proximity.closest_proximity', return_value=PROX)
-    @patch('drugs.views.tools.proximity._get_drug_info', return_value={'name': 'X', 'drugbank_id': 'DB1'})
+    @patch('drugs.views.tools.proximity._get_drug_info', return_value={'name': 'X', 'drugbank_id': 'DC1'})
     @patch('drugs.views.tools.proximity._get_drug_targets')
     @patch('users.authentication.get_user_by_id')
     def test_success(self, mock_user, mock_targets, mock_info, mock_prox):
@@ -44,7 +44,7 @@ class ProximityTests(SimpleTestCase):
             [{'gene_name': 'F2'}, {'gene_name': 'F10'}],
             [{'gene_name': 'F2'}, {'gene_name': 'C3'}],
         ]
-        res = self.client.get('/api/tools/proximity/?drug_a=DB14738&drug_b=DB14487',
+        res = self.client.get('/api/tools/proximity/?drug_a=DC14738&drug_b=DC14487',
                               **auth_headers(self.user))
         self.assertEqual(res.status_code, 200)
         self.assertEqual(res.json()['d_c_symmetric'], 1.15)
@@ -52,12 +52,12 @@ class ProximityTests(SimpleTestCase):
     @patch('users.authentication.get_user_by_id')
     def test_missing_params(self, mock_user):
         mock_user.return_value = self.user
-        res = self.client.get('/api/tools/proximity/?drug_a=DB1', **auth_headers(self.user))
+        res = self.client.get('/api/tools/proximity/?drug_a=DC1', **auth_headers(self.user))
         self.assertEqual(res.status_code, 400)
 
     @patch('drugs.views.tools.proximity._get_drug_targets', return_value=[])
     @patch('users.authentication.get_user_by_id')
     def test_no_genes(self, mock_user, mock_targets):
         mock_user.return_value = self.user
-        res = self.client.get('/api/tools/proximity/?drug_a=DB1&drug_b=DB2', **auth_headers(self.user))
+        res = self.client.get('/api/tools/proximity/?drug_a=DC1&drug_b=DC2', **auth_headers(self.user))
         self.assertEqual(res.status_code, 404)

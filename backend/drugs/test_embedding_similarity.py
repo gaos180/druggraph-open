@@ -50,7 +50,7 @@ class EmbeddingSimilarityTests(SimpleTestCase):
         mock_user.return_value = self.user
         session = MagicMock()
         session.run.return_value.data.return_value = [
-            {'drugbank_id': 'DB00945', 'name': 'Aspirin', 'score': 0.98},
+            {'drugbank_id': 'DC35', 'name': 'Aspirin', 'score': 0.98},
         ]
         mock_session.return_value.__enter__.return_value = session
         res = self.client.post('/api/drugs/sandbox/embedding-similarity/',
@@ -59,7 +59,7 @@ class EmbeddingSimilarityTests(SimpleTestCase):
         self.assertEqual(res.status_code, 200)
         body = res.json()
         self.assertTrue(body['available'])
-        self.assertEqual(body['results'][0]['drugbank_id'], 'DB00945')
+        self.assertEqual(body['results'][0]['drugbank_id'], 'DC35')
 
     @patch('drugs.views.embedding_similarity._session')
     @patch('config.services.chemberta_service.embed', return_value=[0.1] * 768)

@@ -34,12 +34,12 @@ class DiseaseEvidenceTests(SimpleTestCase):
         self.user = make_user()
 
     @patch('drugs.views.tools.disease_evidence.diseases_for_genes', return_value=EVID)
-    @patch('drugs.views.tools.disease_evidence._get_drug_info', return_value={'name': 'X', 'drugbank_id': 'DB1'})
+    @patch('drugs.views.tools.disease_evidence._get_drug_info', return_value={'name': 'X', 'drugbank_id': 'DC1'})
     @patch('drugs.views.tools.disease_evidence._get_drug_targets', return_value=[{'gene_name': 'EGFR'}])
     @patch('users.authentication.get_user_by_id')
     def test_success(self, mock_user, mock_targets, mock_info, mock_evid):
         mock_user.return_value = self.user
-        res = self.client.get('/api/tools/disease-evidence/DB00530/', **auth_headers(self.user))
+        res = self.client.get('/api/tools/disease-evidence/DC530/', **auth_headers(self.user))
         self.assertEqual(res.status_code, 200)
         body = res.json()
         self.assertTrue(body['available'])
@@ -49,5 +49,5 @@ class DiseaseEvidenceTests(SimpleTestCase):
     @patch('users.authentication.get_user_by_id')
     def test_no_genes(self, mock_user, mock_targets):
         mock_user.return_value = self.user
-        res = self.client.get('/api/tools/disease-evidence/DBX/', **auth_headers(self.user))
+        res = self.client.get('/api/tools/disease-evidence/DCX/', **auth_headers(self.user))
         self.assertEqual(res.status_code, 404)

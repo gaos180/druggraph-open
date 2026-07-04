@@ -50,7 +50,7 @@ class ChemicalSpaceTests(SimpleTestCase):
         mock_user.return_value = self.user
         mock_load.return_value = {
             'available': True,
-            'points': [{'drugbank_id': 'DB00945', 'name': 'Aspirin', 'type': 'small molecule',
+            'points': [{'drugbank_id': 'DC35', 'name': 'Aspirin', 'type': 'small molecule',
                         'groups': ['approved'], 'x': 1.0, 'y': 2.0, 'cluster': 0}],
             'clusters': [{'cluster': 0, 'size': 1, 'is_outlier': False,
                           'top_types': ['small molecule'], 'examples': ['Aspirin']}],
@@ -59,7 +59,7 @@ class ChemicalSpaceTests(SimpleTestCase):
         self.assertEqual(res.status_code, 200)
         body = res.json()
         self.assertTrue(body['available'])
-        self.assertEqual(body['points'][0]['drugbank_id'], 'DB00945')
+        self.assertEqual(body['points'][0]['drugbank_id'], 'DC35')
 
     @patch('config.services.chemical_space_service.SPACE_OK', True)
     @patch('users.authentication.get_user_by_id')
@@ -86,7 +86,7 @@ class ChemicalSpaceTests(SimpleTestCase):
         mock_user.return_value = self.user
         mock_locate.return_value = {
             'available': True, 'x': 1.0, 'y': 2.0, 'cluster': 0,
-            'neighbors': [{'drugbank_id': 'DB00945', 'name': 'Aspirin', 'score': 0.98}],
+            'neighbors': [{'drugbank_id': 'DC35', 'name': 'Aspirin', 'score': 0.98}],
         }
         res = self.client.post('/api/tools/chemical-space/locate/',
                                {'smiles': 'CC(=O)Oc1ccccc1C(=O)O'}, format='json',

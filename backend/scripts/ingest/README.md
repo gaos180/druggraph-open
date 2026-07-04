@@ -38,9 +38,33 @@ python -m scripts.ingest.step02_chembl_enrich --source postgres   # o --source a
 # 3. Mongo → grafo Neo4j (:Drug/:Target/:Category + TARGETS/IN_CATEGORY)
 python -m scripts.ingest.step03_build_graph
 
-# 4. DDI open (reemplaza las DDI de DrugBank) — TWOSIDES (CC0) por defecto
+# 4a. Preparar el CSV de DDI desde una fuente cruda (TWOSIDES → cid_a,cid_b,…)
+python -m scripts.ingest.prepare_ddi_stitch --twosides /ruta/TWOSIDES.tsv.gz --out data/ddi_twosides.csv
+
+# 4b. DDI open (reemplaza las DDI de DrugBank) — TWOSIDES (CC0). Autodetecta CID/nombre.
 python -m scripts.ingest.step04_ddi_open --csv data/ddi_twosides.csv --source TWOSIDES
+
+# 5. (opcional) STITCH químico-proteína → aristas :STITCH_TARGET en Neo4j
+python -m scripts.ingest.step05_stitch_cpi --links /ruta/9606.protein_chemical.links.detailed.v5.0.tsv.gz --min-score 700
 ```
+
+### Enriquecedores open adicionales (opcionales)
+
+```bash
+# 6. Open Targets: evidencia diana→enfermedad → campo open_targets_diseases
+python -m scripts.ingest.step06_opentargets --limit 500 --top 10
+
+# 7. PubChem: propiedades fisicoquímicas por CID → campo pubchem_properties
+python -m scripts.ingest.step07_pubchem --limit 500
+
+# 8. ToxinPred: toxicidad de péptidos (requiere input externo — ver docs/OPEN_ENRICHERS.md)
+python -m scripts.ingest.step08_toxinpred --mode export --out data/peptidos.fasta
+#    …corre ToxinPred con ese FASTA y luego:
+python -m scripts.ingest.step08_toxinpred --mode annotate --csv data/toxinpred_out.csv
+```
+
+Detalle de fuentes/licencias/mapeos: `docs/DDI_STITCH.md` (pasos 4–5) y
+`docs/OPEN_ENRICHERS.md` (pasos 6–8).
 
 ## Enriquecedores heredados (ya eran open — se reutilizan tal cual)
 

@@ -24,7 +24,7 @@ def auth_headers(user: dict) -> dict:
 
 
 TOX_PAYLOAD = {
-    'drug': {'name': 'Aspirina', 'drugbank_id': 'DB00945'},
+    'drug': {'name': 'Aspirina', 'drugbank_id': 'DC35'},
     'risk_score': 5, 'risk_level': 'moderado',
     'alerts': [{'gene_name': 'PTGS1', 'level': 'medium', 'category': 'GI', 'message': 'COX-1'}],
 }

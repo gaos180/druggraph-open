@@ -23,16 +23,33 @@ def auth_headers(user: dict) -> dict:
     token = generate_token(user['_id'], user['is_admin'])
     return {'HTTP_AUTHORIZATION': f'Bearer {token}'}
 
+# Esquema abierto (DrugCentral): el ID primario es un ID abierto 'DC<struct_id>',
+# guardado como string simple en el campo heredado `drugbank-id` (y como `_id`).
 SAMPLE_DRUG = {
-    '_id': str(ObjectId()),
-    'drugbank-id': [{'value': 'DB00001', 'primary': True}],
+    '_id': 'DC1234',
+    'drugbank-id': 'DC1234',
+    'drugcentral_id': '1234',
     'name': 'Lepirudin',
     'description': 'A recombinant form of hirudin.',
     'type': 'biotech',
     'groups': ['approved'],
+    'unii': None,
+    'cas-number': '138068-37-8',
+    'average-mass': 6979.5,
+    'smiles': None,
+    'inchikey': None,
 }
 
-SAMPLE_DRUG_DETAIL = {**SAMPLE_DRUG, 'pharmacology': {}, 'targets': [], 'enzymes': []}
+SAMPLE_DRUG_DETAIL = {
+    **SAMPLE_DRUG,
+    'calculated-properties': [],
+    'external-identifiers': [{'resource': 'DrugBank', 'identifier': 'DB00001'}],
+    'categories': [{'category': 'Anticoagulants', 'kind': 'MoA'}],
+    'indications': ['Heparin-induced thrombocytopenia'],
+    'contraindications': [],
+    'targets': [],
+    'drug-interactions': [],
+}
 
 SAMPLE_FILTERS = {'types': ['biotech', 'small molecule'], 'groups': ['approved', 'experimental']}
 
@@ -90,7 +107,7 @@ class DrugDetailTests(SimpleTestCase):
     def test_drug_detail_found(self, mock_get_drug, mock_get_user):
         mock_get_user.return_value = self.user
         mock_get_drug.return_value = SAMPLE_DRUG_DETAIL
-        res = self.client.get('/api/drugs/DB00001/', **auth_headers(self.user))
+        res = self.client.get('/api/drugs/DC1234/', **auth_headers(self.user))
         self.assertEqual(res.status_code, 200)
         self.assertEqual(res.json()['name'], 'Lepirudin')
 
@@ -99,11 +116,11 @@ class DrugDetailTests(SimpleTestCase):
     def test_drug_detail_not_found(self, mock_get_drug, mock_get_user):
         mock_get_user.return_value = self.user
         mock_get_drug.return_value = None
-        res = self.client.get('/api/drugs/DBXXXXX/', **auth_headers(self.user))
+        res = self.client.get('/api/drugs/DC99999/', **auth_headers(self.user))
         self.assertEqual(res.status_code, 404)
 
     def test_drug_detail_unauthenticated(self):
-        res = self.client.get('/api/drugs/DB00001/')
+        res = self.client.get('/api/drugs/DC1234/')
         self.assertIn(res.status_code, [401, 403])
 
 
@@ -190,19 +207,22 @@ class GdsTests(SimpleTestCase):
     def test_link_prediction_not_found(self, mock_pred, mock_get_user):
         mock_get_user.return_value = self.user
         mock_pred.return_value = []
-        res = self.client.get('/api/drugs/gds/predict/DB99999/', **auth_headers(self.user))
+        res = self.client.get('/api/drugs/gds/predict/DC99999/', **auth_headers(self.user))
         self.assertIn(res.status_code, [200, 404, 503])
 
 
 # ── Target graph ───────────────────────────────────────────────────────────────
 
+# En el esquema abierto, la clave estable de :Target es el accession UniProt
+# (p.ej. P00734 = Prothrombin/F2), no un id DrugBank 'BE...'.
 SAMPLE_TARGET = {
-    '_id': 'BE0000017',
+    '_id': 'P00734',
     'name': 'Prothrombin',
     'gene_name': 'F2',
-    'organism': 'Humans',
+    'uniprot_id': 'P00734',
+    'organism': 'Homo sapiens',
     'drug_refs': [
-        {'drugbank_id': 'DB00001', 'drug_name': 'Lepirudin', 'rel_type': 'target'},
+        {'drugbank_id': 'DC1234', 'drug_name': 'Lepirudin', 'rel_type': 'target'},
     ],
 }
 
@@ -213,7 +233,7 @@ class TargetGraphTests(SimpleTestCase):
         self.user = make_user()
 
     def test_graph_unauthenticated(self):
-        res = self.client.get('/api/drugs/targets/BE0000017/graph/')
+        res = self.client.get('/api/drugs/targets/P00734/graph/')
         self.assertIn(res.status_code, [401, 403])
 
     @patch('users.authentication.get_user_by_id')
@@ -222,7 +242,7 @@ class TargetGraphTests(SimpleTestCase):
     def test_graph_from_mongo(self, mock_db, _ready, mock_get_user):
         mock_get_user.return_value = self.user
         mock_db.return_value.targets.find_one.return_value = SAMPLE_TARGET
-        res = self.client.get('/api/drugs/targets/BE0000017/graph/', **auth_headers(self.user))
+        res = self.client.get('/api/drugs/targets/P00734/graph/', **auth_headers(self.user))
         self.assertEqual(res.status_code, 200)
         data = res.json()
         self.assertIn('nodes', data)
@@ -254,7 +274,7 @@ class TargetCompareTests(SimpleTestCase):
         self.user = make_user()
 
     def test_compare_unauthenticated(self):
-        res = self.client.get('/api/drugs/targets/compare/?a=BE0000017&b=BE0000522')
+        res = self.client.get('/api/drugs/targets/compare/?a=P00734&b=P00742')
         self.assertIn(res.status_code, [401, 403])
 
     @patch('users.authentication.get_user_by_id')
@@ -268,15 +288,15 @@ class TargetCompareTests(SimpleTestCase):
     @patch('drugs.views.targets.get_db')
     def test_compare_success(self, mock_db, _ready, mock_get_user):
         mock_get_user.return_value = self.user
-        target_a = {**SAMPLE_TARGET, '_id': 'BE0000017',
-                    'drug_refs': [{'drugbank_id': 'DB00001', 'drug_name': 'Lepirudin', 'rel_type': 'target'}]}
-        target_b = {**SAMPLE_TARGET, '_id': 'BE0000522', 'name': 'Factor X',
-                    'drug_refs': [{'drugbank_id': 'DB00001', 'drug_name': 'Lepirudin', 'rel_type': 'target'},
-                                  {'drugbank_id': 'DB00002', 'drug_name': 'Bivalirudin', 'rel_type': 'target'}]}
+        target_a = {**SAMPLE_TARGET, '_id': 'P00734',
+                    'drug_refs': [{'drugbank_id': 'DC1234', 'drug_name': 'Lepirudin', 'rel_type': 'target'}]}
+        target_b = {**SAMPLE_TARGET, '_id': 'P00742', 'name': 'Factor X', 'gene_name': 'F10',
+                    'drug_refs': [{'drugbank_id': 'DC1234', 'drug_name': 'Lepirudin', 'rel_type': 'target'},
+                                  {'drugbank_id': 'DC372', 'drug_name': 'Bivalirudin', 'rel_type': 'target'}]}
         mock_db.return_value.targets.find_one.side_effect = lambda q, *_: (
-            target_a if q.get('_id') == 'BE0000017' else target_b
+            target_a if q.get('_id') == 'P00734' else target_b
         )
-        res = self.client.get('/api/drugs/targets/compare/?a=BE0000017&b=BE0000522',
+        res = self.client.get('/api/drugs/targets/compare/?a=P00734&b=P00742',
                               **auth_headers(self.user))
         self.assertEqual(res.status_code, 200)
         data = res.json()
@@ -294,7 +314,7 @@ class DdiTests(SimpleTestCase):
         self.user = make_user()
 
     def test_ddi_unauthenticated(self):
-        res = self.client.get('/api/drugs/ddi/?drug_a=DB00001')
+        res = self.client.get('/api/drugs/ddi/?drug_a=DC1234')
         self.assertIn(res.status_code, [401, 403])
 
     @patch('users.authentication.get_user_by_id')
@@ -308,20 +328,22 @@ class DdiTests(SimpleTestCase):
     def test_ddi_not_found(self, mock_db, mock_get_user):
         mock_get_user.return_value = self.user
         mock_db.return_value.drugs.find_one.return_value = None
-        res = self.client.get('/api/drugs/ddi/?drug_a=DB99999', **auth_headers(self.user))
+        res = self.client.get('/api/drugs/ddi/?drug_a=DC99999', **auth_headers(self.user))
         self.assertEqual(res.status_code, 404)
 
     @patch('users.authentication.get_user_by_id')
     @patch('drugs.views.ddi.get_db')
     def test_ddi_all_interactions(self, mock_db, mock_get_user):
         mock_get_user.return_value = self.user
+        # `drug-interactions` en el esquema abierto (TWOSIDES): incluye severity/source.
         mock_db.return_value.drugs.find_one.return_value = {
             'name': 'Aspirin',
             'drug-interactions': [
-                {'drugbank-id': 'DB00002', 'name': 'Ibuprofen', 'description': 'Bleeding risk'},
+                {'drugbank-id': 'DC1596', 'name': 'Ibuprofen',
+                 'description': 'Bleeding risk', 'severity': 'moderate', 'source': 'TWOSIDES'},
             ],
         }
-        res = self.client.get('/api/drugs/ddi/?drug_a=DB00945', **auth_headers(self.user))
+        res = self.client.get('/api/drugs/ddi/?drug_a=DC35', **auth_headers(self.user))
         self.assertEqual(res.status_code, 200)
         data = res.json()
         self.assertIn('interactions', data)
@@ -334,10 +356,11 @@ class DdiTests(SimpleTestCase):
         mock_db.return_value.drugs.find_one.return_value = {
             'name': 'Aspirin',
             'drug-interactions': [
-                {'drugbank-id': 'DB00788', 'name': 'Naproxen', 'description': 'Increased bleeding'},
+                {'drugbank-id': 'DC1962', 'name': 'Naproxen',
+                 'description': 'Increased bleeding', 'severity': 'major', 'source': 'TWOSIDES'},
             ],
         }
-        res = self.client.get('/api/drugs/ddi/?drug_a=DB00945&drug_b=DB00788',
+        res = self.client.get('/api/drugs/ddi/?drug_a=DC35&drug_b=DC1962',
                               **auth_headers(self.user))
         self.assertEqual(res.status_code, 200)
         data = res.json()

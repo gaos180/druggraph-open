@@ -35,7 +35,7 @@ class DdiRiskTests(SimpleTestCase):
             [{'gene_name': 'CYP3A4'}, {'gene_name': 'PTGS1'}],  # drug A
             [{'gene_name': 'CYP3A4'}, {'gene_name': 'PTGS1'}, {'gene_name': 'F2'}],  # drug B
         ]
-        res = self.client.get('/api/drugs/ddi/risk/?drug_a=DB1&drug_b=DB2', **auth_headers(self.user))
+        res = self.client.get('/api/drugs/ddi/risk/?drug_a=DC1&drug_b=DC2', **auth_headers(self.user))
         self.assertEqual(res.status_code, 200)
         body = res.json()
         self.assertIn('CYP3A4', body['shared_cyps'])
@@ -46,12 +46,12 @@ class DdiRiskTests(SimpleTestCase):
     @patch('users.authentication.get_user_by_id')
     def test_missing_params(self, mock_user):
         mock_user.return_value = self.user
-        res = self.client.get('/api/drugs/ddi/risk/?drug_a=DB1', **auth_headers(self.user))
+        res = self.client.get('/api/drugs/ddi/risk/?drug_a=DC1', **auth_headers(self.user))
         self.assertEqual(res.status_code, 400)
 
     @patch('drugs.views.ddi_risk._get_drug_targets', return_value=[])
     @patch('users.authentication.get_user_by_id')
     def test_no_genes(self, mock_user, mock_targets):
         mock_user.return_value = self.user
-        res = self.client.get('/api/drugs/ddi/risk/?drug_a=DB1&drug_b=DB2', **auth_headers(self.user))
+        res = self.client.get('/api/drugs/ddi/risk/?drug_a=DC1&drug_b=DC2', **auth_headers(self.user))
         self.assertEqual(res.status_code, 404)
