@@ -50,6 +50,8 @@ import csv
 from scripts.ingest._common import log, mongo_db
 
 # Posibles campos donde el documento podría traer ya la secuencia peptídica.
+# `peptide_sequence` lo puebla `step08b_uniprot_peptide_seqs.py` (secuencia madura desde
+# UniProt por nombre); el export lo usa automáticamente al estar en esta tupla.
 _SEQ_FIELDS = ("sequence", "peptide-sequence", "peptide_sequence", "aa_sequence")
 
 # Aliases de columnas del CSV de ToxinPred (búsqueda case-insensitive).

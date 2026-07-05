@@ -57,7 +57,15 @@ python -m scripts.ingest.step06_opentargets --limit 500 --top 10
 # 7. PubChem: propiedades fisicoquímicas por CID → campo pubchem_properties
 python -m scripts.ingest.step07_pubchem --limit 500
 
+# 8b. UniProt: secuencia peptídica por nombre (DrugCentral no la trae) → peptide_sequence
+#     Solo resuelve péptidos/hormonas naturales con entrada en UniProt (los análogos
+#     sintéticos quedan sin secuencia). Habilita el FASTA del paso 8 para ese subconjunto.
+python -m scripts.ingest.step08b_uniprot_peptide_seqs           # (--limit 30 para probar)
+
 # 8. ToxinPred: toxicidad de péptidos (requiere input externo — ver docs/OPEN_ENRICHERS.md)
+#    El FASTA usa peptide_sequence (paso 8b) + cualquier campo de secuencia previo.
+#    IMPORTANTE: la PREDICCIÓN de toxicidad no tiene API pública; hay que subir el FASTA
+#    a la web de ToxinPred (https://webs.iiitd.edu.in/raghava/toxinpred/) y bajar el CSV.
 python -m scripts.ingest.step08_toxinpred --mode export --out data/peptidos.fasta
 #    …corre ToxinPred con ese FASTA y luego:
 python -m scripts.ingest.step08_toxinpred --mode annotate --csv data/toxinpred_out.csv
