@@ -199,7 +199,15 @@ def convert_twosides(path, out_path, col_a=None, col_b=None, col_event=None,
 
 
 # ── Conversión DDInter (modo nombre) ────────────────────────────────────────────
-def convert_ddinter(path, out_path, col_a=None, col_b=None, col_severity=None):
+def convert_ddinter(path, out_path, col_a=None, col_b=None, col_severity=None,
+                    col_event=None, max_pairs=None):
+    """Modo nombre (DDInter y también TWOSIDES-por-RxNorm/nombre).
+
+    DEDUPLICA por par NO ORDENADO: TWOSIDES trae una fila por (par, evento adverso), así
+    que sin dedup el CSV tendría millones de filas (y la carga a Neo4j sería inviable en
+    equipos con poca RAM). Se conserva la primera aparición de cada par; si hay columna de
+    evento (condición), se usa como descripción. `max_pairs` acota el total.
+    """
     fh = _open_text(path)
     reader, delim = _sniff_reader(fh)
     fields = reader.fieldnames or []
@@ -211,26 +219,42 @@ def convert_ddinter(path, out_path, col_a=None, col_b=None, col_severity=None):
         raise SystemExit(
             "No se reconocen columnas de nombre de fármaco. Usa --col-a/--col-b.")
     sev_col = _pick_column(fields, _SEVERITY_CANDIDATES, col_severity)
-    log.info("Mapeo: name_a=%s name_b=%s severity=%s", a_col, b_col, sev_col or "(vacío)")
+    ev_col = _pick_column(fields, _EVENT_CANDIDATES, col_event)
+    log.info("Mapeo: name_a=%s name_b=%s description=%s severity=%s",
+             a_col, b_col, ev_col or "(fijo)", sev_col or "(vacío)")
 
-    written, skipped = 0, 0
+    seen: set = set()
+    written, skipped, dup = 0, 0, 0
     with open(out_path, "w", newline="", encoding="utf-8") as outfh:
         w = csv.writer(outfh)
         w.writerow(["name_a", "name_b", "description", "severity"])
-        it = tqdm(reader, desc="DDInter", unit=" filas") if tqdm else reader
+        it = tqdm(reader, desc="DDI(nombre)", unit=" filas") if tqdm else reader
         for row in it:
             na = (row.get(a_col) or "").strip()
             nb = (row.get(b_col) or "").strip()
             if not na or not nb or na.lower() == nb.lower():
                 skipped += 1
                 continue
+            key = (na.lower(), nb.lower()) if na.lower() < nb.lower() else (nb.lower(), na.lower())
+            if key in seen:
+                dup += 1
+                continue
+            seen.add(key)
             sev = (row.get(sev_col) or "").strip() if sev_col else ""
-            desc = f"Interacción DDInter ({sev})" if sev else "Interacción DDInter"
+            if ev_col:
+                cond = (row.get(ev_col) or "").strip()
+                desc = f"DDI (farmacovigilancia): {cond}" if cond else _DEFAULT_DESC
+            else:
+                desc = f"Interacción DDInter ({sev})" if sev else "Interacción DDInter"
             w.writerow([na, nb, desc, sev])
             written += 1
+            if max_pairs and written >= max_pairs:
+                log.info("Alcanzado --max-pairs=%d; deteniendo lectura.", max_pairs)
+                break
 
     fh.close()
-    log.info("DDInter → %s: %d pares escritos, %d descartados.", out_path, written, skipped)
+    log.info("Modo nombre → %s: %d pares únicos, %d duplicados colapsados, %d descartados.",
+             out_path, written, dup, skipped)
     return written
 
 
@@ -246,13 +270,16 @@ def main(argv=None):
     ap.add_argument("--col-a", default=None, help="Forzar columna del fármaco A")
     ap.add_argument("--col-b", default=None, help="Forzar columna del fármaco B")
     ap.add_argument("--col-event", default=None,
-                    help="(TWOSIDES) Forzar columna del evento adverso → description")
+                    help="Forzar columna del evento adverso → description")
     ap.add_argument("--col-severity", default=None, help="Forzar columna de severidad")
+    ap.add_argument("--max-pairs", type=int, default=None,
+                    help="(modo nombre) tope de pares únicos a emitir")
     args = ap.parse_args(argv)
 
     if args.source == "ddinter":
         convert_ddinter(args.twosides, args.out,
-                        col_a=args.col_a, col_b=args.col_b, col_severity=args.col_severity)
+                        col_a=args.col_a, col_b=args.col_b, col_severity=args.col_severity,
+                        col_event=args.col_event, max_pairs=args.max_pairs)
     else:
         convert_twosides(args.twosides, args.out,
                          col_a=args.col_a, col_b=args.col_b,
