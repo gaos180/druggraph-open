@@ -19,9 +19,22 @@ log = logging.getLogger(__name__)
 
 
 def _specificity_weights(session, genes: set[str]) -> dict[str, float]:
-    """Peso de especificidad por gen diana: inverso del nº de fármacos que lo tienen como
-    diana (estilo IDF). Una diana promiscua (p.ej. CYP3A4, atacada por cientos de fármacos)
-    pesa mucho menos que una diana rara, para que el Jaccard no se infle por hubs.
+    """Peso de especificidad por gen diana = **contenido de información / IDF**.
+
+        w(g) = log2( (N + 1) / (n_g + 1) )
+
+    con N = nº de fármacos con alguna diana (tamaño del "corpus") y n_g = nº de fármacos
+    que tienen a g como diana ("frecuencia de documento"). Es la famosa medida de
+    contenido de información IC(t) = −log p(t): compartir una diana promiscua (CYP3A4,
+    atacada por cientos de fármacos) aporta poca información y pesa ~0; compartir una
+    diana rara y específica pesa mucho. Es el criterio estándar en la literatura para
+    ponderar features compartidas por especificidad:
+      · Resnik (1995), Lin (1998), Schlicker et al. (2006) — IC en similitud semántica GO.
+      · IDF log(N/df) para descontar dianas/ATC promiscuas en perfiles de fármaco
+        (p.ej. Vanunu/"weighted drug-target interactome", cosine IDF-ponderado).
+    (Nota: la base del log se cancela dentro del cociente del Jaccard ponderado; lo que
+    cambia el ranking es la FORMA log(N/n), no la base. Suavizado +1 al estilo IDF
+    probabilístico para acotar n_g = N → peso 0.)
     """
     if not genes:
         return {}
@@ -34,8 +47,14 @@ def _specificity_weights(session, genes: set[str]) -> dict[str, float]:
         genes=list(genes),
     )
     counts = {r["gene"]: r["drugs"] for r in rows}
-    # w = 1 / log2(2 + n_drugs): n=0→1.0, n=2→0.5, n=100→~0.15, n=500→~0.11
-    return {g: 1.0 / math.log2(2 + counts.get(g, 0)) for g in genes}
+    # N = nº de fármacos con al menos una diana (corpus). Se consulta una sola vez.
+    n_total = session.run(
+        "MATCH (d:Drug) WHERE (d)-[:TARGETS]->(:Target) RETURN count(d) AS n"
+    ).single()["n"] or 1
+    return {
+        g: math.log2((n_total + 1) / (counts.get(g, 0) + 1))
+        for g in genes
+    }
 
 
 def _weighted_jaccard(inter: set[str], union: set[str], w: dict[str, float]) -> float:
