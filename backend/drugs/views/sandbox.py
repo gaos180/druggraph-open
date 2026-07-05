@@ -37,7 +37,7 @@ from config.services.swiss_service import (
 from config.services.string_service import indirect_neighbors, functional_annotations
 from config.services.kegg_service import pathways_for_targets
 from config.services.ctd_service import gene_interactions as ctd_gene_interactions
-from config.services.propagation_service import propagate, propagate_signed, PropagationUnavailable
+from config.services.propagation_service import propagate, propagate_signed, sign_for_action, PropagationUnavailable
 
 log = logging.getLogger(__name__)
 
@@ -239,9 +239,33 @@ def sandbox_cleanup_view(request, sandbox_id: str):
 # ══════════════════════════════════════════════════════════════════════════════
 
 def _resolve_targets(target_ids: list[str], drug_ids: list[str]) -> list[dict]:
-    """Convierte listas de drugbank_target_id y drugbank_id a dicts con gene_name/uniprot."""
+    """Convierte listas de drugbank_target_id y drugbank_id a dicts con gene_name/uniprot.
+
+    Para los targets alcanzados vía `drug_ids` se incluye además `actions` (la acción del
+    fármaco sobre la diana, p.ej. INHIBITOR/AGONIST), que la propagación con signo usa para
+    fijar el signo de la perturbación por diana.
+    """
     result: list[dict] = []
-    seen: set[str] = set()
+    by_tid: dict[str, dict] = {}
+
+    def _add(tid, uniprot, gene, name, organism, actions):
+        if not tid:
+            return
+        entry = by_tid.get(tid)
+        if entry is None:
+            entry = {
+                "drugbank_target_id": tid,
+                "uniprot_id": uniprot or "",
+                "gene_name":  gene or "",
+                "name":       name or "",
+                "organism":   organism or "",
+                "actions":    [],
+            }
+            by_tid[tid] = entry
+            result.append(entry)
+        for a in (actions or []):
+            if a and a not in entry["actions"]:
+                entry["actions"].append(a)
 
     if target_ids:
         cypher = """
@@ -255,42 +279,27 @@ def _resolve_targets(target_ids: list[str], drug_ids: list[str]) -> list[dict]:
         """
         with _session() as session:
             for row in session.run(cypher, tids=target_ids).data():
-                tid = row["drugbank_target_id"]
-                if tid and tid not in seen:
-                    seen.add(tid)
-                    result.append({
-                        "drugbank_target_id": tid,
-                        "uniprot_id": row.get("uniprot_id") or "",
-                        "gene_name":  row.get("gene_name") or "",
-                        "name":       row.get("name") or "",
-                        "organism":   row.get("organism") or "",
-                    })
+                _add(row["drugbank_target_id"], row.get("uniprot_id"),
+                     row.get("gene_name"), row.get("name"), row.get("organism"), None)
 
     if drug_ids:
         cypher = """
-            MATCH (d:Drug)-[]->(t:Target)
+            MATCH (d:Drug)-[r]->(t:Target)
             WHERE d.drugbank_id IN $dids
               AND (t.organism = 'Humans' OR t.organism CONTAINS 'Homo sapiens')
-            RETURN DISTINCT
-                   t.drugbank_target_id AS drugbank_target_id,
+            RETURN t.drugbank_target_id AS drugbank_target_id,
                    t.uniprot_id AS uniprot_id,
                    t.gene_name  AS gene_name,
                    t.name       AS name,
-                   t.organism   AS organism
+                   t.organism   AS organism,
+                   r.actions    AS actions
             ORDER BY t.name
         """
         with _session() as session:
             for row in session.run(cypher, dids=drug_ids).data():
-                tid = row["drugbank_target_id"]
-                if tid and tid not in seen:
-                    seen.add(tid)
-                    result.append({
-                        "drugbank_target_id": tid,
-                        "uniprot_id": row.get("uniprot_id") or "",
-                        "gene_name":  row.get("gene_name") or "",
-                        "name":       row.get("name") or "",
-                        "organism":   row.get("organism") or "",
-                    })
+                _add(row["drugbank_target_id"], row.get("uniprot_id"),
+                     row.get("gene_name"), row.get("name"), row.get("organism"),
+                     row.get("actions"))
 
     return result
 
@@ -426,6 +435,11 @@ def sandbox_propagation_view(request):
     body = request.data
     genes = [str(g).strip() for g in (body.get("genes") or []) if str(g).strip()]
 
+    # Signo de perturbación POR DIANA (derivado de la acción del fármaco sobre cada diana).
+    # Solo se puede inferir cuando las semillas provienen de target_ids/drug_ids (que traen
+    # `actions`); si el usuario pasa `genes` sueltos, se usa el seed_sign uniforme.
+    seed_signs: dict[str, int] = {}
+
     if not genes:
         target_ids = [str(t).strip() for t in (body.get("target_ids") or []) if str(t).strip()]
         drug_ids   = [str(d).strip() for d in (body.get("drug_ids") or []) if str(d).strip()][:MAX_DRUG_IDS_PATHWAY]
@@ -435,6 +449,11 @@ def sandbox_propagation_view(request):
             except neo4j_exc.ServiceUnavailable:
                 return JsonResponse({"error": "Neo4j no disponible."}, status=503)
             genes = [t["gene_name"] for t in targets if t.get("gene_name")]
+            for t in targets:
+                g = t.get("gene_name")
+                s = sign_for_action(t.get("actions"))
+                if g and s is not None:
+                    seed_signs[g] = s
 
     genes = list(dict.fromkeys(genes))[:MAX_PROPAGATION_SEEDS]
     if not genes:
@@ -450,6 +469,7 @@ def sandbox_propagation_view(request):
                 seed_sign=int(body.get("seed_sign", -1)),
                 max_hops=int(body.get("max_hops", 3)),
                 top_n=top_n,
+                seed_signs=seed_signs or None,
             )
         else:
             result = propagate(genes, top_n=top_n)

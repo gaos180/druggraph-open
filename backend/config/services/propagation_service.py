@@ -68,6 +68,46 @@ def regulatory_network_loaded(session=None) -> bool:
 MAX_HOPS = 4
 FRONTIER_CAP = 800  # poda por salto para acotar explosión en hubs
 
+# Mapeo acción farmacológica → signo de la perturbación inicial en la diana.
+# Un fármaco que INHIBE/ANTAGONIZA su diana la perturba negativamente (−1); uno que la
+# ACTIVA/AGONIZA, positivamente (+1). Permite semillas con signo POR DIANA en vez de
+# asumir uniformemente que el fármaco inhibe todas sus dianas (recomendación del informe
+# de biología de sistemas — el dato `actions` ya viaja en la arista (:Drug)-[:TARGETS]).
+_NEGATIVE_ACTIONS = {
+    "inhibitor", "antagonist", "blocker", "negative modulator", "inverse agonist",
+    "suppressor", "downregulator", "inactivator", "antisense", "gating inhibitor",
+    "channel blocker", "negative allosteric modulator", "weak inhibitor",
+}
+_POSITIVE_ACTIONS = {
+    "agonist", "activator", "inducer", "positive modulator", "partial agonist",
+    "stimulator", "potentiator", "upregulator", "opener",
+    "positive allosteric modulator",
+}
+
+
+def sign_for_action(actions) -> int | None:
+    """Deriva el signo de perturbación (−1/+1) de la(s) acción(es) del fármaco sobre la diana.
+
+    Devuelve None si no hay señal clara (acción desconocida, ausente o mixta), para que el
+    llamador aplique el signo por defecto. `actions` puede ser un string o un iterable.
+    """
+    if not actions:
+        return None
+    if isinstance(actions, str):
+        actions = [actions]
+    neg = pos = 0
+    for a in actions:
+        s = str(a).strip().lower()
+        if s in _NEGATIVE_ACTIONS:
+            neg += 1
+        elif s in _POSITIVE_ACTIONS:
+            pos += 1
+    if neg and not pos:
+        return -1
+    if pos and not neg:
+        return 1
+    return None  # ambiguo/desconocido
+
 
 def propagate_signed(
     seed_genes: list[str],
@@ -75,6 +115,7 @@ def propagate_signed(
     max_hops: int = 3,
     decay: float = 0.5,
     top_n: int = 40,
+    seed_signs: dict | None = None,
 ) -> dict:
     """
     Propaga el efecto con SIGNO y DIRECCIÓN por la red regulatoria de KEGG
@@ -83,8 +124,12 @@ def propagate_signed(
     atenuado por `decay` en cada salto.
 
     Parámetros:
-        seed_sign : signo de la perturbación inicial en las dianas. -1 = el
-                    fármaco INHIBE sus dianas (caso típico). +1 = las activa.
+        seed_sign : signo por defecto de la perturbación inicial en las dianas.
+                    -1 = el fármaco INHIBE sus dianas (caso típico). +1 = las activa.
+        seed_signs: mapa opcional {gen: ±1} con el signo POR DIANA (derivado de la
+                    acción del fármaco vía `sign_for_action`). Para los genes ausentes
+                    del mapa se usa `seed_sign`. Evita asumir que el fármaco inhibe
+                    TODAS sus dianas cuando en realidad agoniza algunas.
         max_hops  : profundidad de la cascada (1..MAX_HOPS).
         decay     : atenuación por salto (0..1).
 
@@ -133,9 +178,15 @@ def propagate_signed(
                 "seeds_used": [], "seeds_missing": seeds_missing, "seed_sign": seed_sign,
                 "max_hops": max_hops}
 
-    # Difusión en K pasos (signed)
+    # Difusión en K pasos (signed). Signo inicial POR DIANA: usa seed_signs[g] si se
+    # proporcionó (derivado de la acción del fármaco), si no el seed_sign uniforme.
+    def _seed_value(g: str) -> float:
+        if seed_signs and g in seed_signs and seed_signs[g] is not None:
+            return 1.0 if int(seed_signs[g]) >= 0 else -1.0
+        return float(seed_sign)
+
     reach: dict = defaultdict(float)
-    frontier: dict = {g: float(seed_sign) for g in seeds_used}
+    frontier: dict = {g: _seed_value(g) for g in seeds_used}
     seed_set = set(seeds_used)
 
     for _hop in range(max_hops):
@@ -182,6 +233,7 @@ def propagate_signed(
         "available": True,
         "mode": "directed",
         "seed_sign": seed_sign,
+        "per_seed_sign": bool(seed_signs),   # True si se usó signo por diana (acción)
         "max_hops": max_hops,
         "seeds_used": seeds_used,
         "seeds_missing": seeds_missing,

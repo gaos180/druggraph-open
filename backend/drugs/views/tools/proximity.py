@@ -11,7 +11,9 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from config.services.proximity_service import closest_proximity, ProximityUnavailable
+from config.services.proximity_service import (
+    closest_proximity, proximity_significance, ProximityUnavailable,
+)
 from ._common import _get_drug_targets, _get_drug_info
 
 log = logging.getLogger(__name__)
@@ -34,8 +36,18 @@ def proximity_view(request):
     if not genes_a or not genes_b:
         return Response({"error": "Uno de los fármacos no tiene genes diana en la red."}, status=404)
 
+    # ?significance=true → calcula z-score/p-valor con modelo nulo por grado (más lento).
+    want_sig = request.GET.get("significance", "").strip().lower() in ("1", "true", "yes")
     try:
-        result = closest_proximity(genes_a, genes_b)
+        n_random = min(max(int(request.GET.get("n_random", 50)), 10), 200)
+    except (TypeError, ValueError):
+        n_random = 50
+
+    try:
+        if want_sig:
+            result = proximity_significance(genes_a, genes_b, n_random=n_random)
+        else:
+            result = closest_proximity(genes_a, genes_b)
     except ProximityUnavailable as exc:
         return Response({"error": str(exc), "available": False}, status=503)
     except Exception as exc:

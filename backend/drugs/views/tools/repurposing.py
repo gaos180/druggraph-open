@@ -5,6 +5,7 @@ GET /api/tools/repurposing/<drug_id>/ — ranking de fármacos por Jaccard del c
 de dianas moleculares, con perfil GO del fármaco consultado.
 """
 import logging
+import math
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -15,6 +16,32 @@ from config.services.gprofiler_service import run_enrichment
 from ._common import _get_drug_targets, _get_drug_info
 
 log = logging.getLogger(__name__)
+
+
+def _specificity_weights(session, genes: set[str]) -> dict[str, float]:
+    """Peso de especificidad por gen diana: inverso del nº de fármacos que lo tienen como
+    diana (estilo IDF). Una diana promiscua (p.ej. CYP3A4, atacada por cientos de fármacos)
+    pesa mucho menos que una diana rara, para que el Jaccard no se infle por hubs.
+    """
+    if not genes:
+        return {}
+    rows = session.run(
+        """
+        MATCH (d:Drug)-[:TARGETS]->(t:Target)
+        WHERE t.gene_name IS NOT NULL AND toUpper(t.gene_name) IN $genes
+        RETURN toUpper(t.gene_name) AS gene, count(DISTINCT d) AS drugs
+        """,
+        genes=list(genes),
+    )
+    counts = {r["gene"]: r["drugs"] for r in rows}
+    # w = 1 / log2(2 + n_drugs): n=0→1.0, n=2→0.5, n=100→~0.15, n=500→~0.11
+    return {g: 1.0 / math.log2(2 + counts.get(g, 0)) for g in genes}
+
+
+def _weighted_jaccard(inter: set[str], union: set[str], w: dict[str, float]) -> float:
+    num = sum(w.get(g, 1.0) for g in inter)
+    den = sum(w.get(g, 1.0) for g in union)
+    return num / den if den else 0.0
 
 
 @api_view(['GET'])
@@ -55,35 +82,45 @@ def repurposing_view(request, drug_id: str):
         )
         candidates_raw = [dict(r) for r in res]
 
-    candidates = []
+    # Pasada 1: reunir los genes diana de cada candidato y el universo de genes.
+    prelim = []
+    all_genes: set[str] = set(genes_a)
     for c in candidates_raw:
-        shared = {g.upper() for g in c['shared_genes'] if g}
-
-        # Obtener targets del candidato para calcular Jaccard
         targets_b = _get_drug_targets(c['drugbank_id'])
         genes_b   = {t['gene_name'].upper() for t in targets_b if t['gene_name']}
-
         if not genes_b:
             continue
+        prelim.append((c, genes_b))
+        all_genes |= genes_b
 
+    # Pesos de especificidad (una sola consulta para todo el universo de genes).
+    with driver.session() as session:
+        weights = _specificity_weights(session, all_genes)
+
+    # Pasada 2: Jaccard simple + Jaccard ponderado por especificidad (ranking principal).
+    candidates = []
+    for c, genes_b in prelim:
         intersection = genes_a & genes_b
         union        = genes_a | genes_b
         jaccard      = len(intersection) / len(union) if union else 0.0
+        jaccard_w    = _weighted_jaccard(intersection, union, weights)
 
         if jaccard < 0.05:
             continue
 
         candidates.append({
-            'drugbank_id':     c['drugbank_id'],
-            'name':            c['name'],
-            'jaccard':         round(jaccard, 4),
-            'shared_count':    len(intersection),
-            'shared_genes':    sorted(intersection),
-            'targets_a':       len(genes_a),
-            'targets_b':       len(genes_b),
+            'drugbank_id':       c['drugbank_id'],
+            'name':              c['name'],
+            'jaccard':           round(jaccard, 4),
+            'jaccard_weighted':  round(jaccard_w, 4),
+            'shared_count':      len(intersection),
+            'shared_genes':      sorted(intersection),
+            'targets_a':         len(genes_a),
+            'targets_b':         len(genes_b),
         })
 
-    candidates.sort(key=lambda x: x['jaccard'], reverse=True)
+    # Ordena por el Jaccard ponderado (prioriza dianas específicas sobre hubs promiscuos).
+    candidates.sort(key=lambda x: (x['jaccard_weighted'], x['jaccard']), reverse=True)
 
     # Enriquecimiento GO de targets del fármaco A
     go_results = []
