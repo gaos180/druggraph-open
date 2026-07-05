@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from config.services.mongo import get_db
+from config.services import ddi_service
 
 # DrugGraph Open usa IDs abiertos (por defecto 'DC<struct_id>' de DrugCentral). El
 # validador se construye desde OPEN_ID_PREFIX y admite dígitos de longitud variable.
@@ -15,27 +16,27 @@ _DRUGBANK_ID_RE = re.compile(rf'^({_OPEN_PREFIX}|DB|BTD|BIOD)\d+$')
 
 def _find_drug(db, drug_id: str):
     """Busca un fármaco por drugbank-id (string simple o campo anidado con .value)."""
-    doc = db.drugs.find_one(
-        {'drugbank-id': drug_id},
-        {'name': 1, 'drug-interactions': 1}
-    )
+    doc = db.drugs.find_one({'drugbank-id': drug_id}, {'name': 1})
     if not doc:
-        doc = db.drugs.find_one(
-            {'drugbank-id.value': drug_id},
-            {'name': 1, 'drug-interactions': 1}
-        )
+        doc = db.drugs.find_one({'drugbank-id.value': drug_id}, {'name': 1})
     return doc
 
 
-def _serialize_interactions(raw: list) -> list:
+def _serialize_interactions(rows: list) -> list:
+    """Proyecta las filas SQL a la forma histórica del checker.
+
+    Se conservan EXACTAMENTE los mismos campos que devolvía el array de Mongo
+    (`drugbank_id`, `name`, `description`) para no romper el frontend. La severity
+    y la fuente viven en la tabla SQL pero no se exponen aquí.
+    """
     return [
         {
-            'drugbank_id': item.get('drugbank-id', ''),
+            'drugbank_id': item.get('drugbank_id', ''),
             'name':        item.get('name', ''),
             'description': item.get('description'),
         }
-        for item in raw
-        if item.get('drugbank-id') or item.get('name')
+        for item in rows
+        if item.get('drugbank_id') or item.get('name')
     ]
 
 
@@ -43,11 +44,14 @@ def _serialize_interactions(raw: list) -> list:
 @permission_classes([IsAuthenticated])
 def ddi_check_view(request):
     """
-    GET /api/drugs/ddi/?drug_a=DB00945
-      → Devuelve todas las DDIs del fármaco A desde MongoDB.
+    GET /api/drugs/ddi/?drug_a=DC945
+      → Devuelve todas las DDIs del fármaco A desde PostgreSQL (tabla `ddi`).
 
-    GET /api/drugs/ddi/?drug_a=DB00945&drug_b=DB00788
+    GET /api/drugs/ddi/?drug_a=DC945&drug_b=DC788
       → Verifica si existe interacción entre A y B.
+
+    Las DDI se leen de la capa SQL (`ddi_service`); si Postgres no está disponible
+    se degrada con 503. Neo4j `:INTERACTS_WITH` se conserva aparte para grafo.
     """
     drug_a_id = request.GET.get('drug_a', '').strip().upper()
     drug_b_id = request.GET.get('drug_b', '').strip().upper()
@@ -67,10 +71,7 @@ def ddi_check_view(request):
             {'error': f'Fármaco {drug_a_id} no encontrado en la base de datos'},
             status=404
         )
-
-    drug_a_name  = doc_a.get('name', drug_a_id)
-    raw_list     = doc_a.get('drug-interactions', []) or []
-    interactions = _serialize_interactions(raw_list)
+    drug_a_name = doc_a.get('name', drug_a_id)
 
     # ── Modo PAR: verificar interacción A ↔ B ────────────────────────────────
     if drug_b_id:
@@ -82,10 +83,13 @@ def ddi_check_view(request):
             )
         drug_b_name = doc_b.get('name', drug_b_id)
 
-        found = next(
-            (i for i in interactions if i['drugbank_id'] == drug_b_id),
-            None
-        )
+        try:
+            found = ddi_service.check_pair(drug_a_id, drug_b_id)
+        except ddi_service.PostgresUnavailable:
+            return JsonResponse(
+                {'error': 'El servicio de interacciones (SQL) no está disponible'},
+                status=503
+            )
 
         return JsonResponse({
             'mode':        'pair',
@@ -96,6 +100,15 @@ def ddi_check_view(request):
         })
 
     # ── Modo SINGLE: todas las DDIs del fármaco A ─────────────────────────────
+    try:
+        rows = ddi_service.interactions_for(drug_a_id)
+    except ddi_service.PostgresUnavailable:
+        return JsonResponse(
+            {'error': 'El servicio de interacciones (SQL) no está disponible'},
+            status=503
+        )
+    interactions = _serialize_interactions(rows)
+
     return JsonResponse({
         'mode':              'single',
         'drug':              {'drugbank_id': drug_a_id, 'name': drug_a_name},
