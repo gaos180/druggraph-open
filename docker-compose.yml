@@ -53,7 +53,9 @@ services:
     container_name: druggraph-open-postgres
     restart: always
     ports:
-      - "5433:5432"
+      # Puerto de host configurable (algunas máquinas ya tienen un Postgres en 5433).
+      # Override con POSTGRES_HOST_PORT en el .env de la raíz. Default: 5433.
+      - "${POSTGRES_HOST_PORT:-5433}:5432"
     environment:
       - POSTGRES_USER=druggraph
       - POSTGRES_PASSWORD=druggraphopen123

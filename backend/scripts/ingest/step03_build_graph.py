@@ -26,8 +26,7 @@ MERGE (d:Drug {drugbank_id: row.drugbank_id})
       d.groups = row.groups,
       d.smiles = row.smiles
 WITH d, row
-CALL {
-    WITH d, row
+CALL (d, row) {
     UNWIND row.targets AS t
     MERGE (tg:Target {drugbank_target_id: t.target_key})
       SET tg.name       = t.name,
@@ -39,8 +38,7 @@ CALL {
           r.known_action = t.known_action,
           r.role         = t.role
 }
-CALL {
-    WITH d, row
+CALL (d, row) {
     UNWIND row.categories AS c
     MERGE (cat:Category {name: c})
     MERGE (d)-[:IN_CATEGORY]->(cat)
