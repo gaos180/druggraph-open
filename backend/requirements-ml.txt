@@ -12,15 +12,36 @@
 torch
 transformers
 
+# ── Tier 4.1 — mapa del espacio químico (UMAP + HDBSCAN sobre embeddings ChemBERTa) ──
+umap-learn
+hdbscan
+
+# ── Evaluación / visualización (scripts eval_*.py, gráficas ROC/PR, pharmacóforos) ──
+matplotlib
+
 # ── Tier 4.6 — GNN Chemprop (D-MPNN) de toxicidad multi-tarea (Stanford/MIT) ──
 # Predictor de bioactividad por paso de mensajes; complementa al ADMET (RandomForest) y
 # sirve como score model de SyntheMol. Compatible con torch 2.x (no lo degrada).
 # Entrenar con scripts/train_chemprop.py. https://github.com/chemprop/chemprop
 chemprop
 
-# ── Tier 5.2 — de novo guiado por pharmacóforo (GA sobre SELFIES, open) ──
-# selfies: representación robusta (todo decodifica a SMILES válido). RDKit ya presente.
+# ── Tier 5.1/5.2 — pharmacóforos + de novo guiado por pharmacóforo (open, RDKit) ──
+# selfies: representación robusta (todo decodifica a SMILES válido) para el GA (5.2).
+# biopython/lxml: parseo de estructuras/PDB y XML (PLIP) para pharmacóforo structure-based (5.2+).
+# py3Dmol: visores 3D. RDKit ya presente (requirements.txt).
 selfies
+biopython
+lxml
+py3Dmol
+
+# ── Tier 5.3 — docking estructural con AutoDock Vina (open) ──
+# vina: bindings de AutoDock Vina. meeko(+gemmi): preparación de ligando/receptor a PDBQT.
+# openbabel-wheel: conversión de receptor a PDBQT (autocontenido, sin libs del sistema).
+# Preparar un receptor con scripts/prepare_receptor.py antes de usar.
+vina
+meeko
+gemmi
+openbabel-wheel
 
 # ── Tier 4.4c — motor generativo SyntheMol (de novo, Stanford, MIT) ──
 # Búsqueda combinatoria (MCTS/RL) sobre bloques comprables + reacciones reales: síntesis

@@ -4,6 +4,7 @@ from .views.tools import (
     proximity_view, disease_evidence_view, signature_reversion_view,
     chemical_space_view, chemical_space_locate_view, denovo_view, admet_view, dti_gnn_view,
     chemprop_tox_view, disease_gnn_view, pharmacophore_view,
+    docking_view, docking_targets_view,
 )
 
 urlpatterns = [
@@ -21,4 +22,6 @@ urlpatterns = [
     path('chemprop-tox/',                   chemprop_tox_view,     name='tools-chemprop-tox'),
     path('disease-gnn/<str:drug_id>/',      disease_gnn_view,      name='tools-disease-gnn'),
     path('pharmacophore/',                  pharmacophore_view,    name='tools-pharmacophore'),
+    path('docking/',                        docking_view,          name='tools-docking'),
+    path('docking/targets/',                docking_targets_view,  name='tools-docking-targets'),
 ]

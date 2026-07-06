@@ -202,7 +202,35 @@ export const toolsApi = {
 
   pharmacophore: (body: { smiles?: string; drug_id?: string; min_fraction?: number }) =>
     api.post<PharmacophoreResult>('/tools/pharmacophore/', body),
+
+  dockingTargets: () =>
+    api.get<{ available: boolean; targets: DockingTarget[] }>('/tools/docking/targets/'),
+  docking: (body: { smiles?: string; drug_id?: string; target: string; exhaustiveness?: number }) =>
+    api.post<DockingResult>('/tools/docking/', body),
 };
+
+// ── Docking estructural con AutoDock Vina (Tier 5.3) ──────────────────────────────
+
+export interface DockingTarget {
+  target: string; name: string; pdb_id?: string;
+  center?: number[]; box_size?: number[];
+}
+
+export interface DockingResult {
+  available:          boolean;
+  engine?:            string;
+  target?:            string;
+  target_name?:       string;
+  pdb_id?:            string;
+  drug_id?:           string;
+  smiles?:            string;
+  affinity_kcal_mol?: number | null;
+  poses_kcal_mol?:    number[];
+  box?:               { center: number[]; box_size: number[] };
+  note?:              string;
+  reason?:            string;
+  error?:             string;
+}
 
 // ── Pharmacóforos 3D ligand-based (Tier 5.1) ──────────────────────────────────────
 

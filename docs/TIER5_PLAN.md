@@ -1,6 +1,10 @@
 # Tier 5 — Plan: cribado estructural por docking (NDM-1 como caso piloto)
 
-_Estado: **EN ESPERA** (planificado, no implementado). 2026-07-06._
+_Estado (2026-07-06): **NÚCLEO IMPLEMENTADO**. 5.1 pharmacóforos (`pharmacophore_service`), 5.2 de
+novo pharmaco-guiado (`denovo_pharma_service`, `engine='pharma'`) y **5.3 docking Vina**
+(`docking_service` + `scripts/prepare_receptor.py`, receptor NDM-1/3SPU probado: aspirina −4.86
+kcal/mol) ya funcionan. Pendiente/futuro: cribado batch del catálogo persistido + validación EF/ROC
+vs. decoys DUD-E + MD (fase 2). El resto de este documento es el plan original._
 
 Basado en el repo `Insilico Drug Discovery for NDM-1` de la tabla de métodos externos. Es la única
 recomendación que introduce una **modalidad realmente nueva**: pasar de los métodos basados en

@@ -26,6 +26,7 @@ import DtiGnnTool from './features/tools/DtiGnnTool';
 import ChempropToxTool from './features/tools/ChempropToxTool';
 import DiseaseGnnTool from './features/tools/DiseaseGnnTool';
 import PharmacophoreTool from './features/tools/PharmacophoreTool';
+import DockingTool from './features/tools/DockingTool';
 import LandingPage from './pages/LandingPage';
 import TargetComparePage from './features/targets/TargetComparePage';
 import { NotebookSvgDefs } from './components/notebook';
@@ -167,6 +168,7 @@ export default function App() {
             <Route path="chemprop-tox" element={<ChempropToxTool />} />
             <Route path="disease-gnn" element={<DiseaseGnnTool />} />
             <Route path="pharmacophore" element={<PharmacophoreTool />} />
+            <Route path="docking" element={<DockingTool />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/dashboard" />} />

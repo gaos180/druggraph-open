@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { BarChart3, Repeat, AlertTriangle, Pill, Wrench, Map as MapIcon, FlaskConical, Beaker, Share2, Biohazard, Stethoscope, Atom } from 'lucide-react';
+import { BarChart3, Repeat, AlertTriangle, Pill, Wrench, Map as MapIcon, FlaskConical, Beaker, Share2, Biohazard, Stethoscope, Atom, Target } from 'lucide-react';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { NotebookLayout, NotebookNavbar, HandTitle, NotebookCard } from '../../components/notebook';
 
@@ -16,6 +16,7 @@ const TOOLS = [
   { path: '/tools/chemprop-tox', label: 'Toxicidad GNN', Icon: Biohazard, description: 'GNN Chemprop (D-MPNN) que aprende la representación molecular y predice los 12 ensayos de toxicidad Tox21.' },
   { path: '/tools/disease-gnn', label: 'Repurposing (GNN)', Icon: Stethoscope, description: 'GNN de enlaces sobre el knowledge graph (Drug↔Target↔Disease) que propone reposicionamientos fármaco→enfermedad.' },
   { path: '/tools/pharmacophore', label: 'Pharmacóforos 3D', Icon: Atom, description: 'Modelo pharmacofórico ligand-based (RDKit): rasgos 3D y geometría, o consenso multi-ligando. Base del Tier 5 estructural.' },
+  { path: '/tools/docking', label: 'Docking (Vina)', Icon: Target, description: 'Cribado estructural: acopla un ligando al sitio activo 3D de una diana y estima la afinidad (AutoDock Vina).' },
 ];
 
 export default function ToolsPage() {
