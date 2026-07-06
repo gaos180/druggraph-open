@@ -22,7 +22,7 @@ log = logging.getLogger(__name__)
 
 MAX_SEED_LENGTH = 500
 VALID_MODES = ("grow", "mutate", "link")
-VALID_ENGINES = ("crem", "synthemol", "reinvent")
+VALID_ENGINES = ("crem", "synthemol", "reinvent", "pharma")
 
 
 @api_view(["POST"])

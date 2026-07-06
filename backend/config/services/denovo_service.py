@@ -144,6 +144,10 @@ def generate(seed: str, mode: str = "mutate", engine: str = "crem",
     """
     n = max(1, min(n, 100))
 
+    if engine == "pharma":
+        from config.services import denovo_pharma_service
+        return denovo_pharma_service.generate(seed=seed, n=n)
+
     if engine == "synthemol":
         from config.services import denovo_synthemol
         return denovo_synthemol.generate(seed=seed, n=n)

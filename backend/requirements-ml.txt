@@ -18,6 +18,10 @@ transformers
 # Entrenar con scripts/train_chemprop.py. https://github.com/chemprop/chemprop
 chemprop
 
+# ── Tier 5.2 — de novo guiado por pharmacóforo (GA sobre SELFIES, open) ──
+# selfies: representación robusta (todo decodifica a SMILES válido). RDKit ya presente.
+selfies
+
 # ── Tier 4.4c — motor generativo SyntheMol (de novo, Stanford, MIT) ──
 # Búsqueda combinatoria (MCTS/RL) sobre bloques comprables + reacciones reales: síntesis
 # garantizada por construcción. Requiere además descargar la biblioteca de bloques (Enamine

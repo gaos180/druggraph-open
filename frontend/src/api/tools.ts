@@ -319,7 +319,7 @@ export interface AdmetResult {
 export interface DeNovoRequest {
   seed:    string;
   mode?:   'grow' | 'mutate' | 'link';
-  engine?: 'crem' | 'synthemol' | 'reinvent';
+  engine?: 'crem' | 'synthemol' | 'reinvent' | 'pharma';
   n?:      number;
 }
 
@@ -332,6 +332,8 @@ export interface DeNovoCandidate {
   logp:                number;
   lipinski_rules:      number;
   model_score?:        number;  // score del predictor SyntheMol (solo motor synthemol)
+  pharma_match?:       number;  // fracción de rasgos del pharmacóforo (solo motor pharma)
+  fitness?:            number;  // fitness del GA (solo motor pharma)
 }
 
 export interface DeNovoResult {
