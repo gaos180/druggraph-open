@@ -65,9 +65,10 @@ def gds_centrality_view(request):
     node   = request.GET.get("node", "Target")
     metric = request.GET.get("metric", "pagerank")
     top_n  = _int_param(request, "top_n", DEFAULT_TOP_N)
+    fresh  = request.GET.get("fresh", "").lower() in ("1", "true", "yes")
 
     try:
-        result = centrality(node_label=node, metric=metric, top_n=top_n)
+        result = centrality(node_label=node, metric=metric, top_n=top_n, fresh=fresh)
     except ValueError as exc:
         return JsonResponse({"error": str(exc)}, status=400)
     except GDSUnavailable as exc:
@@ -98,12 +99,14 @@ def gds_communities_view(request):
     max_comm = _int_param(request, "max", 100)
     min_size = _int_param(request, "min_size", 2)
     members  = _int_param(request, "members", 20)
+    fresh    = request.GET.get("fresh", "").lower() in ("1", "true", "yes")
 
     try:
         result = communities(
             max_communities=max_comm,
             min_size=min_size,
             members_per_community=members,
+            fresh=fresh,
         )
     except GDSUnavailable as exc:
         return JsonResponse({"error": str(exc)}, status=503)

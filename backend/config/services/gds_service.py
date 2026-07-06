@@ -101,6 +101,141 @@ def _project_drug_target(session, graph_name: str, undirected: bool = True):
 
 
 # ══════════════════════════════════════════════════════════════════════════════
+# MATERIALIZACIÓN (compute-once): persistir métricas GDS como propiedades de nodo
+# ──────────────────────────────────────────────────────────────────────────────
+# Louvain/PageRank/grado son caros porque REPROYECTAN el grafo en cada request. Si
+# los datos del grafo no cambian, no hace falta recalcularlos: se corren UNA vez con
+# `materialize_graph_metrics()` (offline, p.ej. tras la ingesta) y quedan escritos como
+# propiedades de nodo. Entonces centrality()/communities() LEEN la propiedad (Cypher
+# barato, sin proyección ni GDS) en vez de recomputar. Reejecutar solo si cambian los datos.
+# ══════════════════════════════════════════════════════════════════════════════
+
+PROP_COMMUNITY = "communityId"
+PROP_PAGERANK  = "pagerank"
+PROP_DEGREE    = "degree"
+
+
+def _metrics_materialized(session) -> bool:
+    """True si ya hay métricas GDS persistidas (al menos un nodo con communityId)."""
+    rec = session.run(
+        f"MATCH (n) WHERE (n:Drug OR n:Target) AND n.{PROP_COMMUNITY} IS NOT NULL "
+        "RETURN n LIMIT 1"
+    ).single()
+    return rec is not None
+
+
+def materialize_graph_metrics() -> dict:
+    """
+    Calcula UNA vez Louvain + PageRank + grado sobre el grafo bipartito Drug↔Target y
+    escribe los resultados como propiedades de nodo (communityId/pagerank/degree), de modo
+    que los endpoints los lean sin reproyectar. Idempotente (reescribe). Requiere GDS.
+    Correr offline tras cambios en el grafo (ver scripts/materialize_gds.py).
+    """
+    graph_name = _unique_graph_name("materialize")
+    proj = None
+    with _session() as session:
+        if not _gds_available(session):
+            raise GDSUnavailable("El plugin GDS no está instalado en Neo4j.")
+        try:
+            proj = _project_drug_target(session, graph_name, undirected=True)
+            session.run(
+                "CALL gds.louvain.write($g, {maxLevels:10, maxIterations:10, writeProperty:$p})",
+                g=graph_name, p=PROP_COMMUNITY,
+            )
+            session.run(
+                "CALL gds.pageRank.write($g, {maxIterations:20, dampingFactor:0.85, writeProperty:$p})",
+                g=graph_name, p=PROP_PAGERANK,
+            )
+            session.run(
+                "CALL gds.degree.write($g, {writeProperty:$p})",
+                g=graph_name, p=PROP_DEGREE,
+            )
+        except neo4j_exc.ClientError as exc:
+            raise GDSUnavailable(f"Error GDS: {exc}")
+        finally:
+            _drop_graph(session, graph_name)
+
+    node_count = int(proj["nodeCount"]) if proj else 0
+    try:  # marca temporal (opcional) para saber cuándo se materializó
+        from datetime import datetime, timezone
+        from config.services.mongo import get_db
+        get_db().model_metrics.update_one(
+            {"_id": "gds_materialization"},
+            {"$set": {"materialized_at": datetime.now(timezone.utc).isoformat(),
+                      "node_count": node_count}},
+            upsert=True,
+        )
+    except Exception as exc:
+        log.debug("No se pudo registrar la marca de materialización: %s", exc)
+
+    return {"materialized": True, "node_count": node_count,
+            "properties": [PROP_COMMUNITY, PROP_PAGERANK, PROP_DEGREE]}
+
+
+def _centrality_from_property(node_label: str, metric: str, top_n: int) -> dict:
+    """Ranking de centralidad LEYENDO la propiedad materializada (sin proyección/GDS)."""
+    prop = PROP_PAGERANK if metric == "pagerank" else PROP_DEGREE
+    cypher = f"""
+        MATCH (n:{node_label}) WHERE n.{prop} IS NOT NULL
+        RETURN n AS node, n.{prop} AS score
+        ORDER BY score DESC LIMIT $top_n
+    """
+    results = []
+    with _session() as session:
+        for row in session.run(cypher, top_n=top_n):
+            props = dict(row["node"])
+            if node_label == "Target":
+                results.append({
+                    "id":         props.get("drugbank_target_id", ""),
+                    "name":       props.get("name", ""),
+                    "uniprot_id": props.get("uniprot_id", ""),
+                    "organism":   props.get("organism", ""),
+                    "score":      round(float(row["score"]), 4),
+                })
+            else:
+                results.append({
+                    "id":    props.get("drugbank_id", ""),
+                    "name":  props.get("name", ""),
+                    "type":  props.get("type", ""),
+                    "score": round(float(row["score"]), 4),
+                })
+    return {"node_label": node_label, "metric": metric, "results": results,
+            "source": "materialized"}
+
+
+def _communities_from_property(max_communities: int, min_size: int,
+                               members_per_community: int) -> dict:
+    """Comunidades LEYENDO la propiedad communityId materializada (sin proyección/GDS)."""
+    cypher = """
+        MATCH (n) WHERE (n:Drug OR n:Target) AND n.communityId IS NOT NULL
+        WITH n.communityId AS communityId,
+             collect({
+                kind: CASE WHEN 'Drug' IN labels(n) THEN 'Drug' ELSE 'Target' END,
+                id:   coalesce(n.drugbank_id, n.drugbank_target_id, ''),
+                name: coalesce(n.name, '')
+             }) AS members
+        WITH communityId, members, size(members) AS sz
+        WHERE sz >= $min_size
+        RETURN communityId, sz, members
+        ORDER BY sz DESC
+        LIMIT $max_communities
+    """
+    communities_out = []
+    with _session() as session:
+        for row in session.run(cypher, min_size=min_size, max_communities=max_communities):
+            members = row["members"]
+            communities_out.append({
+                "community_id": row["communityId"],
+                "size":         row["sz"],
+                "drug_count":   sum(1 for m in members if m["kind"] == "Drug"),
+                "target_count": sum(1 for m in members if m["kind"] == "Target"),
+                "members":      members[:members_per_community],
+            })
+    return {"community_count": len(communities_out), "communities": communities_out,
+            "source": "materialized"}
+
+
+# ══════════════════════════════════════════════════════════════════════════════
 # 1. CENTRALIDAD
 # ══════════════════════════════════════════════════════════════════════════════
 
@@ -108,6 +243,7 @@ def centrality(
     node_label: str = "Target",
     metric: str = "pagerank",
     top_n: int = DEFAULT_TOP_N,
+    fresh: bool = False,
 ) -> dict:
     """
     Calcula centralidad sobre nodos :Target o :Drug.
@@ -138,6 +274,14 @@ def centrality(
         raise ValueError("metric debe ser 'pagerank' o 'degree'")
 
     top_n = max(1, min(top_n, MAX_TOP_N))
+
+    # Camino rápido: si ya está materializado y no se pide fresco, leer la propiedad
+    # (sin reproyectar ni depender de GDS).
+    if not fresh:
+        with _session() as session:
+            if _metrics_materialized(session):
+                return _centrality_from_property(node_label, metric, top_n)
+
     graph_name = _unique_graph_name("central")
 
     with _session() as session:
@@ -211,6 +355,7 @@ def communities(
     max_communities: int = MAX_COMMUNITIES,
     min_size: int = 2,
     members_per_community: int = 20,
+    fresh: bool = False,
 ) -> dict:
     """
     Detecta comunidades en el grafo bipartito Drug↔Target con Louvain.
@@ -237,6 +382,14 @@ def communities(
         }
     """
     max_communities = max(1, min(max_communities, MAX_COMMUNITIES))
+
+    # Camino rápido: si ya está materializado y no se pide fresco, leer communityId
+    # (sin reproyectar ni depender de GDS).
+    if not fresh:
+        with _session() as session:
+            if _metrics_materialized(session):
+                return _communities_from_property(max_communities, min_size, members_per_community)
+
     graph_name = _unique_graph_name("louvain")
 
     with _session() as session:
