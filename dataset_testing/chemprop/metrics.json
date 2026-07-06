@@ -1,0 +1,68 @@
+{
+  "model": "chemprop-dmpnn",
+  "protocol": "scaffold-split held-out",
+  "n_test_molecules": 782,
+  "macro_roc_auc": 0.7339,
+  "per_assay": {
+    "NR-AR": {
+      "roc_auc": 0.6539,
+      "label": "Receptor de andrógenos",
+      "n": 711
+    },
+    "NR-AR-LBD": {
+      "roc_auc": 0.7336,
+      "label": "Receptor de andrógenos (LBD)",
+      "n": 646
+    },
+    "NR-AhR": {
+      "roc_auc": 0.8478,
+      "label": "Receptor de aril-hidrocarburos",
+      "n": 628
+    },
+    "NR-Aromatase": {
+      "roc_auc": 0.6459,
+      "label": "Aromatasa",
+      "n": 542
+    },
+    "NR-ER": {
+      "roc_auc": 0.6765,
+      "label": "Receptor de estrógenos",
+      "n": 568
+    },
+    "NR-ER-LBD": {
+      "roc_auc": 0.7375,
+      "label": "Receptor de estrógenos (LBD)",
+      "n": 675
+    },
+    "NR-PPAR-gamma": {
+      "roc_auc": 0.7071,
+      "label": "PPAR-γ",
+      "n": 591
+    },
+    "SR-ARE": {
+      "roc_auc": 0.7757,
+      "label": "Respuesta antioxidante (ARE)",
+      "n": 533
+    },
+    "SR-ATAD5": {
+      "roc_auc": 0.7801,
+      "label": "Daño al ADN (ATAD5)",
+      "n": 682
+    },
+    "SR-HSE": {
+      "roc_auc": 0.7601,
+      "label": "Choque térmico (HSE)",
+      "n": 611
+    },
+    "SR-MMP": {
+      "roc_auc": 0.7926,
+      "label": "Potencial mitocondrial (MMP)",
+      "n": 545
+    },
+    "SR-p53": {
+      "roc_auc": 0.6964,
+      "label": "Vía de estrés p53",
+      "n": 645
+    }
+  }
+}

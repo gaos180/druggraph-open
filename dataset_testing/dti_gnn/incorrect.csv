@@ -1,0 +1,524 @@
+drug_id,drug_name,target_id,target_name,gene,uniprot,label,model_prob,predicted,correct
+DC5371,roxadustat,Q96KS0,Egl nine homolog 2,EGLN2,Q96KS0,1,0.4018,0,0
+DC1745,thiamazole,P59533,Taste receptor type 2 member 38,TAS2R38,P59533,1,0.0972,0,0
+DC1725,metformin,Q9NX14,Mitochondrial complex I (NADH dehydrogenase),NDUFB11,Q9NX14,1,0.1274,0,0
+DC4973,tucidinostat,Q92769,Histone deacetylase 2,HDAC2,Q92769,1,0.4397,0,0
+DC4109,dronabinol,O75762,Transient receptor potential cation channel subfamily A member 1,TRPA1,O75762,1,0.4746,0,0
+DC1725,metformin,O43674,Mitochondrial complex I (NADH dehydrogenase),NDUFB5,O43674,1,0.1274,0,0
+DC4344,zinc chloride,P06241,Tyrosine-protein kinase Fyn,FYN,P06241,1,0.3589,0,0
+DC5464,aducanumab,P05067,Amyloid beta A4 protein,APP,P05067,1,0.2927,0,0
+DC5031,mogamulizumab,P51679,C-C chemokine receptor type 4,CCR4,P51679,1,0.0869,0,0
+DC2966,suramin,Q8IXJ6,NAD-dependent protein deacetylase sirtuin-2,SIRT2,Q8IXJ6,1,0.3705,0,0
+DC5275,lutetium (177Lu) oxodotreotide,P30874,Somatostatin receptor type 2,SSTR2,P30874,1,0.1116,0,0
+DC765,cyproheptadine,Q8WTS6,Histone-lysine N-methyltransferase SETD7,SETD7,Q8WTS6,1,0.3169,0,0
+DC2355,ramelteon,P49286,Melatonin receptor type 1B,MTNR1B,P49286,1,0.3828,0,0
+DC5067,ixazomib,P20618,Proteasome subunit beta type-1,PSMB1,P20618,1,0.4012,0,0
+DC1599,loperamide,P35346,Somatostatin receptor type 5,SSTR5,P35346,1,0.22,0,0
+DC5279,ibalizumab,P01730,T-cell surface glycoprotein CD4,CD4,P01730,1,0.3671,0,0
+DC773,dacarbazine,Q14181,DNA polymerase alpha subunit B,POLA2,Q14181,1,0.4224,0,0
+DC3137,dibrompropamidine,P00749,Urokinase-type plasminogen activator,PLAU,P00749,1,0.3871,0,0
+DC4886,cetilistat,P16233,Pancreatic triacylglycerol lipase,PNLIP,P16233,1,0.2994,0,0
+DC1725,metformin,O95139,Mitochondrial complex I (NADH dehydrogenase),NDUFB6,O95139,1,0.1274,0,0
+DC4601,diosmetin,P33527,Multidrug resistance-associated protein 1,ABCC1,P33527,1,0.456,0,0
+DC5389,tucatinib,P21860,ERBB2/ERBB3,ERBB3,P21860,1,0.3985,0,0
+DC3577,oxedrine,Q9GZQ4,Neuromedin-U receptor 2,NMUR2,Q9GZQ4,1,0.3856,0,0
+DC5288,cannabidiol,P00338,L-lactate dehydrogenase A chain,LDHA,P00338,1,0.4928,0,0
+DC5307,evocalcet,P41180,Extracellular calcium-sensing receptor,CASR,P41180,1,0.3513,0,0
+DC4682,panobinostat,Q92769,Histone deacetylase 2,HDAC2,Q92769,1,0.3672,0,0
+DC5062,osimertinib,Q8TBX8,Phosphatidylinositol 5-phosphate 4-kinase type-2 gamma,PIP4K2C,Q8TBX8,1,0.4065,0,0
+DC511,carmofur,P27361,Mitogen-activated protein kinase 3,MAPK3,P27361,1,0.4611,0,0
+DC1193,flufenamic acid,O75762,Transient receptor potential cation channel subfamily A member 1,TRPA1,O75762,1,0.3336,0,0
+DC4673,nalfurafine,O43613,Orexin receptor type 1,HCRTR1,O43613,1,0.3427,0,0
+DC4167,fingolimod,O95977,Sphingosine 1-phosphate receptor 4,S1PR4,O95977,1,0.3426,0,0
+DC5062,osimertinib,P04626,Receptor tyrosine-protein kinase erbB-2,ERBB2,P04626,1,0.4595,0,0
+DC2544,sunitinib,P34947,G protein-coupled receptor kinase 5,GRK5,P34947,1,0.2508,0,0
+DC2172,pimozide,Q16322,Voltage-gated potassium channel,KCNA10,Q16322,1,0.1641,0,0
+DC1076,ethanol,O14764,GABA A receptor alpha-4/beta-3/delta,GABRD,O14764,1,0.4818,0,0
+DC30,methoxsalen,P59543,Taste receptor type 2 member 20,TAS2R20,P59543,1,0.3238,0,0
+DC1314,glibenclamide,P11712,Cytochrome P450 2C9,CYP2C9,P11712,1,0.3288,0,0
+DC158,amiloride,P00749,Urokinase-type plasminogen activator,PLAU,P00749,1,0.2732,0,0
+DC691,clofarabine,O00408,"cGMP-dependent 3',5'-cyclic phosphodiesterase",PDE2A,O00408,1,0.4903,0,0
+DC5434,margetuximab,P04626,Receptor tyrosine-protein kinase erbB-2,ERBB2,P04626,1,0.4682,0,0
+DC5677,deucravacitinib,Q13873,Bone morphogenetic protein receptor type-2,BMPR2,Q13873,1,0.2927,0,0
+DC2405,rosiglitazone,P13631,Retinoic acid receptor gamma,RARG,P13631,1,0.2647,0,0
+DC2646,levothyroxine,Q96RI1,Bile acid receptor,NR1H4,Q96RI1,1,0.4539,0,0
+DC2966,suramin,Q15139,Serine/threonine-protein kinase D1,PRKD1,Q15139,1,0.4004,0,0
+DC1906,nicotinamide,Q8TDS4,Hydroxycarboxylic acid receptor 2,HCAR2,Q8TDS4,1,0.1064,0,0
+DC5105,rilonacept,P01584,Interleukin-1 beta,IL1B,P01584,1,0.2424,0,0
+DC542,cefonicid,P31391,Somatostatin receptor type 4,SSTR4,P31391,1,0.1793,0,0
+DC1725,metformin,O96000,Mitochondrial complex I (NADH dehydrogenase),NDUFB10,O96000,1,0.1274,0,0
+DC1193,flufenamic acid,O60218,Aldo-keto reductase family 1 member B10,AKR1B10,O60218,1,0.4607,0,0
+DC3505,homonicotinic acid,Q8TDS4,Hydroxycarboxylic acid receptor 2,HCAR2,Q8TDS4,1,0.4675,0,0
+DC2706,topiramate,P48058,Glutamate receptor ionotropic AMPA,GRIA4,P48058,1,0.3806,0,0
+DC1082,ethinylestradiol,Q7Z2H8,Proton-coupled amino acid transporter 1,SLC36A1,Q7Z2H8,1,0.181,0,0
+DC1148,fendiline,P17405,Sphingomyelin phosphodiesterase,SMPD1,P17405,1,0.4091,0,0
+DC5181,etelcalcetide,P41180,Extracellular calcium-sensing receptor,CASR,P41180,1,0.3513,0,0
+DC2013,oxaprozin,P34897,"Serine hydroxymethyltransferase, mitochondrial",SHMT2,P34897,1,0.4134,0,0
+DC85,acyclovir,P00491,Purine nucleoside phosphorylase,PNP,P00491,1,0.23,0,0
+DC708,clopidogrel,Q9H244,P2Y purinoceptor 12,P2RY12,Q9H244,1,0.4496,0,0
+DC4483,carfilzomib,P49721,Proteasome subunit beta type-2,PSMB2,P49721,1,0.3776,0,0
+DC2580,teicoplanin aglycone,P07711,Cathepsin L1,CTSL,P07711,1,0.364,0,0
+DC4173,telaprevir,P25774,Cathepsin S,CTSS,P25774,1,0.1192,0,0
+DC726,colchicine,P23416,Glycine receptor subunit alpha-2,GLRA2,P23416,1,0.2856,0,0
+DC1233,fomepizole,P07327,Alcohol dehydrogenase,ADH1A,P07327,1,0.4477,0,0
+DC427,bumetanide,P05023,Sodium/potassium-transporting ATPase subunit alpha-1,ATP1A1,P05023,1,0.3899,0,0
+DC1364,hexachlorophene,Q92731,Estrogen receptor beta,ESR2,Q92731,1,0.3424,0,0
+DC2561,tamoxifen,Q9UBM7,Anti-estrogen binding site (AEBS),DHCR7,Q9UBM7,1,0.3845,0,0
+DC770,cytarabine,P15309,Prostatic acid phosphatase,ACPP,P15309,1,0.1414,0,0
+DC760,ciclosporin,Q02127,"Dihydroorotate dehydrogenase (quinone), mitochondrial",DHODH,Q02127,1,0.3184,0,0
+DC2145,phenylbutazone,P21462,fMet-Leu-Phe receptor,FPR1,P21462,1,0.4564,0,0
+DC629,cianidanol,P00734,Prothrombin,F2,P00734,1,0.4925,0,0
+DC1137,febuxostat,P47989,Xanthine dehydrogenase/oxidase,XDH,P47989,1,0.4472,0,0
+DC576,cefradine,P14780,Matrix metalloproteinase-9,MMP9,P14780,1,0.2009,0,0
+DC2834,riboflavin,P30043,Flavin reductase (NADPH),BLVRB,P30043,1,0.4493,0,0
+DC5389,tucatinib,P04626,Receptor tyrosine-protein kinase erbB-2,ERBB2,P04626,1,0.4324,0,0
+DC1048,erythromycin,O43193,Motilin receptor,MLNR,O43193,1,0.4803,0,0
+DC2852,ximelagatran,P00750,Tissue-type plasminogen activator,PLAT,P00750,1,0.4628,0,0
+DC3631,triclosan,P16152,Carbonyl reductase [NADPH] 1,CBR1,P16152,1,0.4377,0,0
+DC1612,lovastatin,Q8TDS4,Hydroxycarboxylic acid receptor 2,HCAR2,Q8TDS4,1,0.3395,0,0
+DC1526,ketobemidone,Q8TCU5,"Glutamate receptor ionotropic, NMDA 3A",GRIN3A,Q8TCU5,1,0.4897,0,0
+DC2351,raloxifene,P03372,Estrogen receptor,ESR1,P03372,1,0.471,0,0
+DC302,bendamustine,P56524,Histone deacetylase 4,HDAC4,P56524,1,0.3388,0,0
+DC2355,ramelteon,P48039,Melatonin receptor type 1A,MTNR1A,P48039,1,0.4774,0,0
+DC74,acetylsalicylic acid,P19440,Gamma-glutamyltranspeptidase 1,GGT1,P19440,1,0.3842,0,0
+DC2852,ximelagatran,P00747,Plasminogen,PLG,P00747,1,0.352,0,0
+DC4109,dronabinol,O75311,Glycine receptor subunit alpha-3,GLRA3,O75311,1,0.4268,0,0
+DC3257,gabexate,O15244,Solute carrier family 22 member 2,SLC22A2,O15244,1,0.4233,0,0
+DC2836,pyridoxine,O00764,Pyridoxal kinase,PDXK,O00764,1,0.3895,0,0
+DC4113,prasugrel,Q9H244,P2Y purinoceptor 12,P2RY12,Q9H244,1,0.473,0,0
+DC776,dabigatran etexilate,P16083,Ribosyldihydronicotinamide dehydrogenase [quinone],NQO2,P16083,1,0.476,0,0
+DC1364,hexachlorophene,P11142,Heat shock cognate 71 kDa protein,HSPA8,P11142,1,0.4539,0,0
+DC5185,gallium (68Ga) edotreotide,P30874,Somatostatin receptor type 2,SSTR2,P30874,1,0.1116,0,0
+DC2966,suramin,Q9BPV8,P2Y purinoceptor 13,P2RY13,Q9BPV8,1,0.0306,0,0
+DC2836,pyridoxine,P34896,"Serine hydroxymethyltransferase, cytosolic",SHMT1,P34896,1,0.1667,0,0
+DC4742,bleomycin,Q12797,Aspartyl/asparaginyl beta-hydroxylase,ASPH,Q12797,1,0.2981,0,0
+DC1513,itraconazole,P25024,C-X-C chemokine receptor type 1,CXCR1,P25024,1,0.2349,0,0
+DC4366,voclosporin,P62937,Peptidyl-prolyl cis-trans isomerase A,PPIA,P62937,1,0.1951,0,0
+DC4119,romidepsin,Q13547,Histone deacetylase 1,HDAC1,Q13547,1,0.4218,0,0
+DC1725,metformin,O43181,Mitochondrial complex I (NADH dehydrogenase),NDUFS4,O43181,1,0.1966,0,0
+DC738,coumarin,Q07820,Induced myeloid leukemia cell differentiation protein Mcl-1,MCL1,Q07820,1,0.4709,0,0
+DC391,bortezomib,Q99460,26S proteasome non-ATPase regulatory subunit 1,PSMD1,Q99460,1,0.2424,0,0
+DC4619,levomenol,P40763,Signal transducer and activator of transcription 3,STAT3,P40763,1,0.4487,0,0
+DC4876,belinostat,Q13547,Histone deacetylase 1,HDAC1,Q13547,1,0.3666,0,0
+DC1314,glibenclamide,Q96P20,"NACHT, LRR and PYD domains-containing protein 3",NLRP3,Q96P20,1,0.4161,0,0
+DC776,dabigatran etexilate,P07477,Trypsin-1,PRSS1,P07477,1,0.375,0,0
+DC1517,ixabepilone,P10415,Apoptosis regulator Bcl-2,BCL2,P10415,1,0.4417,0,0
+DC5480,vosoritide,P20594,Atrial natriuretic peptide receptor 2,NPR2,P20594,1,0.4743,0,0
+DC1989,omapatrilat,P05067,Amyloid beta A4 protein,APP,P05067,1,0.4679,0,0
+DC1548,lapatinib,O75747,Phosphatidylinositol 4-phosphate 3-kinase C2 domain-containing subunit gamma,PIK3C2G,O75747,1,0.4064,0,0
+DC4172,boceprevir,P10619,Lysosomal protective protein,CTSA,P10619,1,0.4806,0,0
+DC5269,netarsudil,O75116,Rho-associated protein kinase 2,ROCK2,O75116,1,0.4343,0,0
+DC1859,mycophenolate mofetil,P12268,Inosine-5'-monophosphate dehydrogenase 2,IMPDH2,P12268,1,0.4522,0,0
+DC2836,pyridoxine,Q96GD0,Pyridoxal phosphate phosphatase,PDXP,Q96GD0,1,0.4794,0,0
+DC4820,tasimelteon,P48039,Melatonin receptor type 1A,MTNR1A,P48039,1,0.4262,0,0
+DC2832,thiamine,O60779,Thiamine transporter 1,SLC19A2,O60779,1,0.3828,0,0
+DC1277,ganciclovir,P41594,Metabotropic glutamate receptor 5,GRM5,P41594,1,0.3072,0,0
+DC1725,metformin,O95299,Mitochondrial complex I (NADH dehydrogenase),NDUFA10,O95299,1,0.1274,0,0
+DC2706,topiramate,Q13003,"Glutamate receptor ionotropic, kainate 3",GRIK3,Q13003,1,0.2773,0,0
+DC2997,somatostatin,P30874,Somatostatin receptor type 2,SSTR2,P30874,1,0.3923,0,0
+DC2552,tacrolimus,Q08209,Serine/threonine-protein phosphatase 2B catalytic subunit alpha isoform,PPP3CA,Q08209,1,0.4993,0,0
+DC594,chlordiazepoxide,P32238,Cholecystokinin receptor type A,CCKAR,P32238,1,0.2997,0,0
+DC5403,abametapir,P32246,C-C chemokine receptor type 1,CCR1,P32246,1,0.112,0,0
+DC4870,vorapaxar,P25116,Proteinase-activated receptor 1,F2R,P25116,1,0.1817,0,0
+DC5502,diroximel fumarate,Q16236,Nuclear factor erythroid 2-related factor 2,NFE2L2,Q16236,1,0.4492,0,0
+DC5346,upadacitinib,Q2M2I8,AP2-associated protein kinase 1,AAK1,Q2M2I8,1,0.4367,0,0
+DC3157,diosmin,O60341,Lysine-specific histone demethylase 1A,KDM1A,O60341,1,0.3753,0,0
+DC575,cefapirin,P31391,Somatostatin receptor type 4,SSTR4,P31391,1,0.4748,0,0
+DC1996,orlistat,P49327,Fatty acid synthase,FASN,P49327,1,0.3897,0,0
+DC2505,sulfaguanidine,P35030,Trypsin,PRSS3,P35030,1,0.1791,0,0
+DC4566,sodium oxybate,Q9UQM7,Calcium/calmodulin-dependent protein kinase type II subunit alpha,CAMK2A,Q9UQM7,1,0.1465,0,0
+DC5688,carotegrast methyl,P26010,Integrin alpha-4/beta-7,ITGB7,P26010,1,0.3971,0,0
+DC1364,hexachlorophene,P06239,Tyrosine-protein kinase Lck,LCK,P06239,1,0.3537,0,0
+DC703,clonazepam,O00591,GABA-A receptor; anion channel,GABRP,O00591,1,0.4016,0,0
+DC4226,ingenol mebutate,P05771,Protein kinase C beta type,PRKCB,P05771,1,0.4771,0,0
+DC1045,erlotinib,O60341,Lysine-specific histone demethylase 1A,KDM1A,O60341,1,0.4829,0,0
+DC5383,ozanimod,P21453,Sphingosine 1-phosphate receptor 1,S1PR1,P21453,1,0.3262,0,0
+DC461,cadralazine,P05164,Myeloperoxidase,MPO,P05164,1,0.4594,0,0
+DC4910,felypressin,P37288,Vasopressin V1a receptor,AVPR1A,P37288,1,0.372,0,0
+DC2831,retinol,P12271,Retinaldehyde-binding protein 1,RLBP1,P12271,1,0.4347,0,0
+DC5420,vadadustat,Q9NWT6,Hypoxia-inducible factor 1-alpha inhibitor,HIF1AN,Q9NWT6,1,0.4569,0,0
+DC2413,rupatadine,P25105,Platelet-activating factor receptor,PTAFR,P25105,1,0.452,0,0
+DC5425,dotinurad,Q4U2R8,Solute carrier family 22 member 6,SLC22A6,Q4U2R8,1,0.3254,0,0
+DC2808,varenicline,P07510,Muscle-type nicotinic acetylcholine receptor,CHRNG,P07510,1,0.4427,0,0
+DC1395,hydroxychloroquine,Q9NYK1,Toll-like receptor 7,TLR7,Q9NYK1,1,0.3007,0,0
+DC691,clofarabine,Q9BZX2,Uridine-cytidine kinase 2,UCK2,Q9BZX2,1,0.1344,0,0
+DC4966,ustekinumab,P29459,Interleukin-12,IL12A,P29459,1,0.2729,0,0
+DC2831,retinol,P00352,Retinal dehydrogenase 1,ALDH1A1,P00352,1,0.4923,0,0
+DC1725,metformin,P03886,Mitochondrial complex I (NADH dehydrogenase),MT-ND1,P03886,1,0.3222,0,0
+DC1663,mefenamic acid,O60218,Aldo-keto reductase family 1 member B10,AKR1B10,O60218,1,0.4744,0,0
+DC4826,metreleptin,P48357,Leptin receptor,LEPR,P48357,1,0.4177,0,0
+DC4901,insulin glargine,P06213,Insulin receptor,INSR,P06213,1,0.4698,0,0
+DC607,chloroquine,P05067,Amyloid beta A4 protein,APP,P05067,1,0.4703,0,0
+DC1021,epalrestat,Q02928,Cytochrome P450 4A11,CYP4A11,Q02928,1,0.4866,0,0
+DC703,clonazepam,Q9UN88,GABA-A receptor; anion channel,GABRQ,Q9UN88,1,0.4016,0,0
+DC54,acetanilide,Q6XQN6,Nicotinate phosphoribosyltransferase,NAPRT,Q6XQN6,1,0.2826,0,0
+DC3535,rutoside,Q9GZQ4,Neuromedin-U receptor 2,NMUR2,Q9GZQ4,1,0.2249,0,0
+DC5183,olaratumab,P16234,Platelet-derived growth factor receptor alpha,PDGFRA,P16234,1,0.3178,0,0
+DC1974,novobiocin,Q9UNQ0,ATP-binding cassette sub-family G member 2,ABCG2,Q9UNQ0,1,0.4461,0,0
+DC1508,isotretinoin,Q92781,11-cis retinol dehydrogenase,RDH5,Q92781,1,0.317,0,0
+DC1193,flufenamic acid,P10275,Androgen receptor,AR,P10275,1,0.4756,0,0
+DC1725,metformin,P28331,Mitochondrial complex I (NADH dehydrogenase),NDUFS1,P28331,1,0.1274,0,0
+DC882,digoxin,P50993,Sodium/potassium-transporting ATPase,ATP1A2,P50993,1,0.2012,0,0
+DC314,benserazide,Q9UBT2,SUMO-activating enzyme,UBA2,Q9UBT2,1,0.2987,0,0
+DC1579,lidocaine,P11230,Muscle-type nicotinic acetylcholine receptor,CHRNB1,P11230,1,0.4243,0,0
+DC4055,baicalin,P06493,Cyclin-dependent kinase 1,CDK1,P06493,1,0.3882,0,0
+DC5326,siponimod,Q9H228,Sphingosine 1-phosphate receptor 5,S1PR5,Q9H228,1,0.3391,0,0
+DC2448,sitagliptin,Q6V1X1,Dipeptidyl peptidase 8,DPP8,Q6V1X1,1,0.2919,0,0
+DC776,dabigatran etexilate,P05981,Serine protease hepsin,HPN,P05981,1,0.2553,0,0
+DC4973,tucidinostat,P43490,Nicotinamide phosphoribosyltransferase,NAMPT,P43490,1,0.3429,0,0
+DC2044,paclitaxel,Q12866,Tyrosine-protein kinase Mer,MERTK,Q12866,1,0.3201,0,0
+DC1919,nicorandil,Q14654,"Sulfonylurea receptor 1, Kir6.2",KCNJ11,Q14654,1,0.4932,0,0
+DC548,cefotiam,P32241,Vasoactive intestinal polypeptide receptor 1,VIPR1,P32241,1,0.2631,0,0
+DC700,clomifene,P03372,Estrogen receptor,ESR1,P03372,1,0.4733,0,0
+DC972,duloxetine,P34897,"Serine hydroxymethyltransferase, mitochondrial",SHMT2,P34897,1,0.3017,0,0
+DC4192,tafamidis,Q9UNQ0,ATP-binding cassette sub-family G member 2,ABCG2,Q9UNQ0,1,0.3741,0,0
+DC89,adenine,Q5S007,Leucine-rich repeat serine/threonine-protein kinase 2,LRRK2,Q5S007,1,0.1993,0,0
+DC5516,tirzepatide,P48546,Gastric inhibitory polypeptide receptor,GIPR,P48546,1,0.3682,0,0
+DC174,aminoquinuride,P14780,Matrix metalloproteinase-9,MMP9,P14780,1,0.2723,0,0
+DC3102,cinromide,Q695T7,Sodium-dependent neutral amino acid transporter B(0)AT1,SLC6A19,Q695T7,1,0.1615,0,0
+DC2044,paclitaxel,P32238,Cholecystokinin receptor type A,CCKAR,P32238,1,0.3157,0,0
+DC937,dobutamine,P06239,Tyrosine-protein kinase Lck,LCK,P06239,1,0.4696,0,0
+DC4163,fampridine,P22460,Potassium voltage-gated channel subfamily A member 5,KCNA5,P22460,1,0.4817,0,0
+DC489,carbamazepine,Q15822,Neuronal acetylcholine receptor subunit alpha-2,CHRNA2,Q15822,1,0.4084,0,0
+DC171,aminophenazone,Q6XQN6,Nicotinate phosphoribosyltransferase,NAPRT,Q6XQN6,1,0.4107,0,0
+DC3553,stallimycin,P03372,Estrogen receptor,ESR1,P03372,1,0.3331,0,0
+DC1821,mitoxantrone,P08922,Proto-oncogene tyrosine-protein kinase ROS,ROS1,P08922,1,0.3753,0,0
+DC5267,semaglutide,P43220,Glucagon-like peptide 1 receptor,GLP1R,P43220,1,0.4822,0,0
+DC1358,heparin,P01008,Antithrombin-III,SERPINC1,P01008,1,0.2089,0,0
+DC2852,ximelagatran,P00734,Prothrombin,F2,P00734,1,0.4092,0,0
+DC5488,pabinafusp alfa,P55899,IgG receptor FcRn large subunit p51,FCGRT,P55899,1,0.365,0,0
+DC5687,ferric derisomaltose,P02787,Serotransferrin,TF,P02787,1,0.4607,0,0
+DC1193,flufenamic acid,O94759,Transient receptor potential cation channel subfamily M member 2,TRPM2,O94759,1,0.3466,0,0
+DC1385,hydrochlorothiazide,P48454,Serine/threonine-protein phosphatase 2B catalytic subunit gamma isoform,PPP3CC,P48454,0,0.901,1,0
+DC4392,cisplatin,P51854,Transketolase-like protein 1,TKTL1,P51854,0,0.8094,1,0
+DC2686,tocainide,Q9UK17,Voltage-gated potassium channel,KCND3,Q9UK17,0,0.6481,1,0
+DC2843,phytomenadione,O00206,Toll-like receptor 4,TLR4,O00206,0,0.5165,1,0
+DC1508,isotretinoin,P42574,Caspase-3,CASP3,P42574,0,0.8377,1,0
+DC4175,linagliptin,P18825,Alpha-2C adrenergic receptor,ADRA2C,P18825,0,0.873,1,0
+DC2684,tobramycin,O75899,GABA-B receptor,GABBR2,O75899,0,0.7788,1,0
+DC722,clozapine,P07478,Trypsin,PRSS2,P07478,0,0.6214,1,0
+DC4810,ibrutinib,P24385,CDK6/cyclin D1,CCND1,P24385,0,0.6738,1,0
+DC1640,mazindol,P05362,Intercellular adhesion molecule 1,ICAM1,P05362,0,0.5368,1,0
+DC5006,cangrelor,P07550,Beta-2 adrenergic receptor,ADRB2,P07550,0,0.7266,1,0
+DC2672,tinoridine,P60568,Interleukin-2,IL2,P60568,0,0.5289,1,0
+DC951,dosulepin,Q16790,Carbonic anhydrase 9,CA9,Q16790,0,0.7025,1,0
+DC3402,orotic acid,O14746,Telomerase reverse transcriptase,TERT,O14746,0,0.5302,1,0
+DC1101,etilefrine,Q12879,Glutamate NMDA receptor; GRIN1/GRIN2A,GRIN2A,Q12879,0,0.513,1,0
+DC4234,peginesatide,Q9HCF6,Transient receptor potential cation channel subfamily M member 3,TRPM3,Q9HCF6,0,0.8103,1,0
+DC2552,tacrolimus,P28335,5-hydroxytryptamine receptor 2C,HTR2C,P28335,0,0.8706,1,0
+DC197,amphotericin B,Q9UL62,Short transient receptor potential channel 5,TRPC5,Q9UL62,0,0.5197,1,0
+DC4180,fidaxomicin,Q16850,Lanosterol 14-alpha demethylase,CYP51A1,Q16850,0,0.7397,1,0
+DC2805,valrubicin,P24385,CDK6/cyclin D1,CCND1,P24385,0,0.6228,1,0
+DC2775,tropisetron,Q13093,Platelet-activating factor acetylhydrolase,PLA2G7,Q13093,0,0.5248,1,0
+DC588,chlorambucil,Q96NT5,Proton-coupled folate transporter,SLC46A1,Q96NT5,0,0.5689,1,0
+DC1076,ethanol,Q9ULQ1,Two pore calcium channel protein 1,TPCN1,Q9ULQ1,0,0.6319,1,0
+DC633,ciclesonide,O14684,Prostaglandin E synthase,PTGES,O14684,0,0.7817,1,0
+DC1045,erlotinib,Q6ZSR9,Uncharacterized protein FLJ45252,,Q6ZSR9,0,0.7904,1,0
+DC4157,lercanidipine,P31358,CAMPATH-1 antigen,CD52,P31358,0,0.5393,1,0
+DC4264,carbamide,Q07869,Peroxisome proliferator-activated receptor alpha,PPARA,Q07869,0,0.524,1,0
+DC4235,oxygen,P41595,5-hydroxytryptamine receptor 2B,HTR2B,P41595,0,0.8954,1,0
+DC1122,exemestane,Q9UBC3,DNA (cytosine-5)-methyltransferase 3B,DNMT3B,Q9UBC3,0,0.7517,1,0
+DC668,clarithromycin,P21817,Ryanodine receptor 1,RYR1,P21817,0,0.5276,1,0
+DC3401,ornithine,P08908,5-hydroxytryptamine receptor 1A,HTR1A,P08908,0,0.8245,1,0
+DC1283,gemcitabine,O60218,Aldo-keto reductase family 1 member B10,AKR1B10,O60218,0,0.5297,1,0
+DC1999,orphenadrine,Q92769,Histone deacetylase 2,HDAC2,Q92769,0,0.8452,1,0
+DC2730,tribenoside,O15439,Multidrug resistance-associated protein 4,ABCC4,O15439,0,0.7337,1,0
+DC1817,misoprostol,Q14145,Kelch-like ECH-associated protein 1,KEAP1,Q14145,0,0.9174,1,0
+DC4501,armodafinil,Q6SZW1,Sterile alpha and TIR motif-containing protein 1,SARM1,Q6SZW1,0,0.8362,1,0
+DC3434,phenacaine,P21731,Thromboxane A2 receptor,TBXA2R,P21731,0,0.525,1,0
+DC4174,rilpivirine,P31749,RAC-alpha serine/threonine-protein kinase,AKT1,P31749,0,0.5818,1,0
+DC520,carteolol,P78536,Disintegrin and metalloproteinase domain-containing protein 17,ADAM17,P78536,0,0.5825,1,0
+DC134,alpidem,P22894,Neutrophil collagenase,MMP8,P22894,0,0.5863,1,0
+DC2832,thiamine,P0DMS8,Adenosine receptor A3,ADORA3,P0DMS8,0,0.7631,1,0
+DC1758,methsuximide,Q00975,Voltage-dependent N-type calcium channel subunit alpha-1B,CACNA1B,Q00975,0,0.7324,1,0
+DC795,prasterone,Q8WXA8,Serotonin 3 (5-HT3) receptor,HTR3C,Q8WXA8,0,0.636,1,0
+DC2273,procaterol,P17752,Tryptophan 5-hydroxylase 1,TPH1,P17752,0,0.6555,1,0
+DC1111,etoperidone,Q96RJ0,Trace amine-associated receptor 1,TAAR1,Q96RJ0,0,0.7633,1,0
+DC1549,arginine,Q13507,Short transient receptor potential channel 3,TRPC3,Q13507,0,0.5503,1,0
+DC4530,cupric chloride,P25103,Substance-P receptor,TACR1,P25103,0,0.7392,1,0
+DC1183,floxacillin,P29466,Caspase-1,CASP1,P29466,0,0.8148,1,0
+DC4683,paraoxon,P12821,Angiotensin-converting enzyme,ACE,P12821,0,0.753,1,0
+DC356,betaxolol,P22001,Voltage-gated potassium channel,KCNA3,P22001,0,0.6239,1,0
+DC4848,somatropin,B2RXH2,Lysine-specific demethylase 4E,KDM4E,B2RXH2,0,0.7292,1,0
+DC1180,flopropione,P47989,Xanthine dehydrogenase/oxidase,XDH,P47989,0,0.5431,1,0
+DC124,allopurinol,Q05586,Glutamate NMDA receptor; GRIN1/GRIN2A,GRIN1,Q05586,0,0.6259,1,0
+DC157,amikacin,P05164,Myeloperoxidase,MPO,P05164,0,0.6615,1,0
+DC1028,epinephrine,P14635,Cyclin-dependent kinase 1/cyclin B,CCNB1,P14635,0,0.5995,1,0
+DC1530,ketotifen,Q9H3S4,Thiamin pyrophosphokinase 1,TPK1,Q9H3S4,0,0.5185,1,0
+DC431,levobunolol,Q07973,"1,25-dihydroxyvitamin D(3) 24-hydroxylase, mitochondrial",CYP24A1,Q07973,0,0.7753,1,0
+DC2534,sulindac,Q9UPY5,Cystine/glutamate transporter,SLC7A11,Q9UPY5,0,0.729,1,0
+DC1165,fentiazac,P09455,Retinol-binding protein 1,RBP1,P09455,0,0.5318,1,0
+DC214,androstenediol,P37231,Peroxisome proliferator-activated receptor gamma,PPARG,P37231,0,0.5244,1,0
+DC4479,calcium citrate,P24462,Cytochrome P450 3A,CYP3A7,P24462,0,0.9337,1,0
+DC4296,potassium iodide,P11509,Cytochrome P450 2A6,CYP2A6,P11509,0,0.8121,1,0
+DC1817,misoprostol,P48169,GABA A receptor alpha-4/beta-3/delta,GABRA4,P48169,0,0.5173,1,0
+DC806,denopamine,Q9NY46,"Sodium channel alpha subunits; brain (Types I, II, III)",SCN3A,Q9NY46,0,0.8123,1,0
+DC4426,bufylline,Q13946,"High affinity cAMP-specific 3',5'-cyclic phosphodiesterase 7A",PDE7A,Q13946,0,0.6252,1,0
+DC4899,ledipasvir,P07858,Cathepsin B,CTSB,P07858,0,0.5524,1,0
+DC3042,broxuridine,P09960,Leukotriene A-4 hydrolase,LTA4H,P09960,0,0.5649,1,0
+DC2683,tizanidine,P35610,Sterol O-acyltransferase 1,SOAT1,P35610,0,0.5175,1,0
+DC1875,nalidixic acid,P28335,5-hydroxytryptamine receptor 2C,HTR2C,P28335,0,0.8196,1,0
+DC4523,quinine,Q9NY47,Voltage-dependent calcium channel subunit alpha-2/delta-2,CACNA2D2,Q9NY47,0,0.8969,1,0
+DC5375,cepharanthine,P20813,Cytochrome P450 2B6,CYP2B6,P20813,0,0.5479,1,0
+DC2270,procainamide,O60658,"High affinity cAMP-specific and IBMX-insensitive 3',5'-cyclic phosphodiesterase 8A",PDE8A,O60658,0,0.5186,1,0
+DC4470,fosaprepitant,P43119,Prostacyclin receptor,PTGIR,P43119,0,0.5289,1,0
+DC2875,zotepine,P13945,Beta-3 adrenergic receptor,ADRB3,P13945,0,0.961,1,0
+DC1569,levofloxacin,O00255,Menin,MEN1,O00255,0,0.5625,1,0
+DC2723,tretoquinol,Q16236,Nuclear factor erythroid 2-related factor 2,NFE2L2,Q16236,0,0.5901,1,0
+DC2303,propranolol,Q05932,"Folylpolyglutamate synthase, mitochondrial",FPGS,Q05932,0,0.5906,1,0
+DC2808,varenicline,P47898,5-hydroxytryptamine receptor 5A,HTR5A,P47898,0,0.5581,1,0
+DC200,amprenavir,P08183,Multidrug resistance protein 1,ABCB1,P08183,0,0.6844,1,0
+DC5051,collagenase,O14756,17-beta-hydroxysteroid dehydrogenase type 6,HSD17B6,O14756,0,0.6619,1,0
+DC3277,hexetidine,P55011,Solute carrier family 12 member 2,SLC12A2,P55011,0,0.5764,1,0
+DC4814,olodaterol,P48050,Inward rectifier potassium channel 4,KCNJ4,P48050,0,0.6799,1,0
+DC1207,fluorescein,Q08499,"cAMP-specific 3',5'-cyclic phosphodiesterase 4D",PDE4D,Q08499,0,0.6382,1,0
+DC1523,ketamine,P11474,Steroid hormone receptor ERR1,ESRRA,P11474,0,0.6963,1,0
+DC3584,terazosin,P30411,B2 bradykinin receptor,BDKRB2,P30411,0,0.7179,1,0
+DC3142,difluprednate,P07339,Cathepsin D,CTSD,P07339,0,0.7599,1,0
+DC2754,trimethobenzamide,O75751,Solute carrier family 22 member 3,SLC22A3,O75751,0,0.9332,1,0
+DC1655,medetomidine,O60840,Voltage-dependent L-type calcium channel subunit alpha-1F,CACNA1F,O60840,0,0.8934,1,0
+DC5002,insulin lispro,Q86VL8,Multidrug and toxin extrusion protein 2,SLC47A2,Q86VL8,0,0.9093,1,0
+DC270,azelaic acid,Q96FL8,Multidrug and toxin extrusion protein 1,SLC47A1,Q96FL8,0,0.6084,1,0
+DC2676,tiopronin,P37088,"Amiloride-sensitive sodium channel, ENaC",SCNN1A,P37088,0,0.5638,1,0
+DC2717,trazodone,Q9P1Z3,Potassium/sodium hyperpolarization-activated cyclic nucleotide-gated channel 3,HCN3,Q9P1Z3,0,0.8284,1,0
+DC1729,acetylmethadol,P24530,Endothelin B receptor,EDNRB,P24530,0,0.6197,1,0
+DC2239,pravastatin,Q96FL8,Multidrug and toxin extrusion protein 1,SLC47A1,Q96FL8,0,0.951,1,0
+DC765,cyproheptadine,P19801,Amiloride-sensitive amine oxidase [copper-containing],AOC1,P19801,0,0.6163,1,0
+DC4589,linsidomine,P0DP24,Calmodulin,CALM2,P0DP24,0,0.6222,1,0
+DC4957,pertuzumab,P25105,Platelet-activating factor receptor,PTAFR,P25105,0,0.8624,1,0
+DC2633,thiopental,P06401,Progesterone receptor,PGR,P06401,0,0.5915,1,0
+DC1685,menatetrenone,P05113,Interleukin-5,IL5,P05113,0,0.669,1,0
+DC1856,moxonidine,O95259,Voltage-gated potassium channel,KCNH1,O95259,0,0.5743,1,0
+DC2705,tolterodine,P07101,Tyrosine 3-monooxygenase,TH,P07101,0,0.6307,1,0
+DC1236,fondaparinux,Q9HAW8,UDP-glucuronosyltransferase 1-10,UGT1A10,Q9HAW8,0,0.7497,1,0
+DC252,asulacrine,Q96NT5,Proton-coupled folate transporter,SLC46A1,Q96NT5,0,0.5455,1,0
+DC332,benzthiazide,O75899,GABA-B receptor,GABBR2,O75899,0,0.5533,1,0
+DC409,brotizolam,Q92769,Histone deacetylase 2,HDAC2,Q92769,0,0.7617,1,0
+DC1676,meloxicam,P28845,Corticosteroid 11-beta-dehydrogenase isozyme 1,HSD11B1,P28845,0,0.5366,1,0
+DC1635,maraviroc,P17787,Neuronal acetylcholine receptor; alpha4/beta2,CHRNB2,P17787,0,0.7278,1,0
+DC2095,pentobarbital,P25105,Platelet-activating factor receptor,PTAFR,P25105,0,0.739,1,0
+DC160,aminoacridine,P41143,Delta-type opioid receptor,OPRD1,P41143,0,0.6391,1,0
+DC3521,rasagiline,P49895,Type I iodothyronine deiodinase,DIO1,P49895,0,0.902,1,0
+DC1594,lomefloxacin,P08173,Muscarinic acetylcholine receptor M4,CHRM4,P08173,0,0.5525,1,0
+DC4409,cypermethrin,P16050,Arachidonate 15-lipoxygenase,ALOX15,P16050,0,0.5995,1,0
+DC4099,levamlodipine,P22894,Neutrophil collagenase,MMP8,P22894,0,0.5678,1,0
+DC5428,sofpironium bromide,P42336,"Phosphatidylinositol 4,5-bisphosphate 3-kinase catalytic subunit alpha isoform",PIK3CA,P42336,0,0.6782,1,0
+DC5296,duvelisib,P52895,Aldo-keto reductase family 1 member C2,AKR1C2,P52895,0,0.5831,1,0
+DC4634,teriflunomide,P28065,Proteasome subunit beta type-9,PSMB9,P28065,0,0.5132,1,0
+DC112,alendronic acid,O95264,5-hydroxytryptamine receptor 3B,HTR3B,O95264,0,0.5229,1,0
+DC1610,losartan,Q8WXA8,Serotonin 3 (5-HT3) receptor,HTR3C,Q8WXA8,0,0.9432,1,0
+DC87,adapalene,P05093,"Steroid 17-alpha-hydroxylase/17,20 lyase",CYP17A1,P05093,0,0.604,1,0
+DC788,debrisoquine,Q9HAW8,UDP-glucuronosyltransferase 1-10,UGT1A10,Q9HAW8,0,0.57,1,0
+DC4528,ferrous sulfate,P22309,UDP-glucuronosyltransferase 1-1,UGT1A1,P22309,0,0.8483,1,0
+DC4867,dexrabeprazole,P23975,Sodium-dependent noradrenaline transporter,SLC6A2,P23975,0,0.6125,1,0
+DC1814,minoxidil,P35869,Aryl hydrocarbon receptor,AHR,P35869,0,0.7486,1,0
+DC660,cisapride,P14735,Insulin-degrading enzyme,IDE,P14735,0,0.6806,1,0
+DC1034,epoprostenol,P56817,Beta-secretase 1,BACE1,P56817,0,0.7347,1,0
+DC2302,propofol,P00750,Tissue-type plasminogen activator,PLAT,P00750,0,0.8441,1,0
+DC4704,semustine,P42336,"Phosphatidylinositol 4,5-bisphosphate 3-kinase catalytic subunit alpha isoform",PIK3CA,P42336,0,0.6286,1,0
+DC128,almotriptan,Q9Y2I1,Nischarin,NISCH,Q9Y2I1,0,0.8876,1,0
+DC4965,denosumab,O95069,Potassium channel subfamily K member 2,KCNK2,O95069,0,0.6525,1,0
+DC1018,entacapone,P15121,Aldose reductase,AKR1B1,P15121,0,0.8388,1,0
+DC269,azathioprine,O76083,"High affinity cGMP-specific 3',5'-cyclic phosphodiesterase 9A",PDE9A,O76083,0,0.9103,1,0
+DC852,diazepam,Q13946,"High affinity cAMP-specific 3',5'-cyclic phosphodiesterase 7A",PDE7A,Q13946,0,0.6199,1,0
+DC4951,ofatumumab,P23415,Glycine receptor subunit alpha-1,GLRA1,P23415,0,0.5877,1,0
+DC4230,Ioflupane I-123,P08913,Alpha-2A adrenergic receptor,ADRA2A,P08913,0,0.7459,1,0
+DC4592,magnesium lactate,Q13698,Voltage-dependent L-type calcium channel subunit alpha-1S,CACNA1S,Q13698,0,0.785,1,0
+DC648,cinalukast,Q99873,Protein arginine N-methyltransferase 1,PRMT1,Q99873,0,0.6743,1,0
+DC2298,propiomazine,P11511,Aromatase,CYP19A1,P11511,0,0.9099,1,0
+DC2105,pergolide,P05129,Protein kinase C gamma type,PRKCG,P05129,0,0.6982,1,0
+DC588,chlorambucil,O15439,Multidrug resistance-associated protein 4,ABCC4,O15439,0,0.7876,1,0
+DC2271,procaine,Q01668,Voltage-gated L-type calcium channel,CACNA1D,Q01668,0,0.669,1,0
+DC2123,phenelzine,P08319,Alcohol dehydrogenase 4,ADH4,P08319,0,0.624,1,0
+DC1919,nicorandil,P17405,Sphingomyelin phosphodiesterase,SMPD1,P17405,0,0.7817,1,0
+DC2134,phenobarbital,Q8NFI3,Cytosolic endo-beta-N-acetylglucosaminidase,ENGASE,Q8NFI3,0,0.9118,1,0
+DC1100,etilamfetamine,P13945,Beta-3 adrenergic receptor,ADRB3,P13945,0,0.6537,1,0
+DC2132,pheniramine,P21397,Amine oxidase [flavin-containing] A,MAOA,P21397,0,0.821,1,0
+DC2161,picotamide,P31327,"Carbamoyl-phosphate synthase [ammonia], mitochondrial",CPS1,P31327,0,0.5195,1,0
+DC249,astemizole,Q16620,BDNF/NT-3 growth factors receptor,NTRK2,Q16620,0,0.5394,1,0
+DC3658,xylometazoline,Q14145,Kelch-like ECH-associated protein 1,KEAP1,Q14145,0,0.5762,1,0
+DC2860,zeranol,P05412,Transcription factor AP-1,JUN,P05412,0,0.5701,1,0
+DC2060,paramethasone acetate,P17302,Gap junction alpha-1 protein,GJA1,P17302,0,0.5828,1,0
+DC5634,toceranib,Q96J66,ATP-binding cassette sub-family C member 11,ABCC11,Q96J66,0,0.5722,1,0
+DC1005,enalapril,P68106,Peptidyl-prolyl cis-trans isomerase FKBP1B,FKBP1B,P68106,0,0.5109,1,0
+DC2286,promethazine,P00742,Coagulation factor X,F10,P00742,0,0.6045,1,0
+DC5306,gilteritinib,Q7L7X3,Serine/threonine-protein kinase TAO1,TAOK1,Q7L7X3,0,0.9549,1,0
+DC1595,lomerizine,O60840,Voltage-dependent L-type calcium channel subunit alpha-1F,CACNA1F,O60840,0,0.7666,1,0
+DC4374,lorcaserin,P08913,Alpha-2A adrenergic receptor,ADRA2A,P08913,0,0.9458,1,0
+DC5490,esaxerenone,P01584,Interleukin-1 beta,IL1B,P01584,0,0.6452,1,0
+DC2393,rizatriptan,P07339,Cathepsin D,CTSD,P07339,0,0.8143,1,0
+DC3508,pyrithione,P42574,Caspase-3,CASP3,P42574,0,0.5319,1,0
+DC577,cerivastatin,P49895,Type I iodothyronine deiodinase,DIO1,P49895,0,0.7289,1,0
+DC284,balsalazide,P08842,Steryl-sulfatase,STS,P08842,0,0.5884,1,0
+DC2502,sulfadimidine,Q9Y271,Cysteinyl leukotriene receptor 1,CYSLTR1,Q9Y271,0,0.6896,1,0
+DC1782,metoclopramide,P11509,Cytochrome P450 2A6,CYP2A6,P11509,0,0.8178,1,0
+DC1689,mepenzolate,P11021,78 kDa glucose-regulated protein,HSPA5,P11021,0,0.5139,1,0
+DC4528,ferrous sulfate,P08912,Muscarinic acetylcholine receptor M5,CHRM5,P08912,0,0.8354,1,0
+DC3244,formaldehyde,Q06432,Voltage-dependent calcium channel gamma-1 subunit,CACNG1,Q06432,0,0.5437,1,0
+DC245,artemether,P16152,Carbonyl reductase [NADPH] 1,CBR1,P16152,0,0.6744,1,0
+DC5692,teplizumab,P46721,Solute carrier organic anion transporter family member 1A2,SLCO1A2,P46721,0,0.5886,1,0
+DC4185,vemurafenib,P80370,Protein delta homolog 1,DLK1,P80370,0,0.7089,1,0
+DC621,chlorpromazine,Q15910,Histone-lysine N-methyltransferase EZH2,EZH2,Q15910,0,0.7343,1,0
+DC4240,zinc oxide,Q9Y2I1,Nischarin,NISCH,Q9Y2I1,0,0.7159,1,0
+DC1501,isosorbide,P46059,Solute carrier family 15 member 1,SLC15A1,P46059,0,0.6327,1,0
+DC176,amiodarone,P18405,3-oxo-5-alpha-steroid 4-dehydrogenase 1,SRD5A1,P18405,0,0.8948,1,0
+DC2392,rivastigmine,O15439,Multidrug resistance-associated protein 4,ABCC4,O15439,0,0.8983,1,0
+DC4704,semustine,P08912,Muscarinic acetylcholine receptor M5,CHRM5,P08912,0,0.7979,1,0
+DC4172,boceprevir,Q9ULQ1,Two pore calcium channel protein 1,TPCN1,Q9ULQ1,0,0.6727,1,0
+DC1824,mizolastine,P21452,Substance-K receptor,TACR2,P21452,0,0.8243,1,0
+DC836,dexmethylphenidate,Q07001,Muscle-type nicotinic acetylcholine receptor,CHRND,Q07001,0,0.5095,1,0
+DC82,acrivastine,P22310,UDP-glucuronosyltransferase 1-4,UGT1A4,P22310,0,0.5371,1,0
+DC2730,tribenoside,Q9NQA5,Transient receptor potential cation channel subfamily V member 5,TRPV5,Q9NQA5,0,0.7175,1,0
+DC5592,orgotein,Q70Z44,Serotonin 3 (5-HT3) receptor,HTR3D,Q70Z44,0,0.8466,1,0
+DC2551,tacrine,Q9UK17,Voltage-gated potassium channel,KCND3,Q9UK17,0,0.6422,1,0
+DC4381,dapoxetine,Q9H3N8,Histamine H4 receptor,HRH4,Q9H3N8,0,0.5306,1,0
+DC4061,timolol,P69905,hemoglobin subunit alpha,HBA1,P69905,0,0.6157,1,0
+DC4801,dabrafenib,Q9Y4K4,Mitogen-activated protein kinase kinase kinase kinase 5,MAP4K5,Q9Y4K4,0,0.9061,1,0
+DC2834,riboflavin,P05112,Interleukin-4,IL4,P05112,0,0.7908,1,0
+DC2368,reproterol,P11086,Phenylethanolamine N-methyltransferase,PNMT,P11086,0,0.6061,1,0
+DC1525,ketazolam,P25021,Histamine H2 receptor,HRH2,P25021,0,0.5154,1,0
+DC948,dopexamine,P24557,Thromboxane-A synthase,TBXAS1,P24557,0,0.7892,1,0
+DC2610,tetracaine,P13500,C-C motif chemokine 2,CCL2,P13500,0,0.7007,1,0
+DC2848,xamoterol,P03372,Estrogen receptor,ESR1,P03372,0,0.5102,1,0
+DC2586,temocapril,O60779,Thiamine transporter 1,SLC19A2,O60779,0,0.5968,1,0
+DC2284,promazine,Q13258,Prostaglandin D2 receptor,PTGDR,Q13258,0,0.6232,1,0
+DC4246,Polymyxin B,O60911,Cathepsin L2,CTSV,O60911,0,0.6739,1,0
+DC2179,pioglitazone,P15559,NAD(P)H dehydrogenase [quinone] 1,NQO1,P15559,0,0.6796,1,0
+DC577,cerivastatin,Q9Y256,CAAX prenyl protease 2,RCE1,Q9Y256,0,0.7085,1,0
+DC1336,guaifenesin,P11229,Muscarinic acetylcholine receptor M1,CHRM1,P11229,0,0.7646,1,0
+DC2815,verapamil,Q5T3U5,Multidrug resistance-associated protein 7,ABCC10,Q5T3U5,0,0.7919,1,0
+DC639,cidofovir,P54750,"Calcium/calmodulin-dependent 3',5'-cyclic nucleotide phosphodiesterase 1A",PDE1A,P54750,0,0.5041,1,0
+DC832,dexfenfluramine,Q9HAW7,UDP-glucuronosyltransferase 1-7,UGT1A7,Q9HAW7,0,0.6857,1,0
+DC5495,asciminib,O15528,"25-hydroxyvitamin D-1 alpha hydroxylase, mitochondrial",CYP27B1,O15528,0,0.5741,1,0
+DC4501,armodafinil,P19801,Amiloride-sensitive amine oxidase [copper-containing],AOC1,P19801,0,0.6107,1,0
+DC2228,polythiazide,P38435,Vitamin K-dependent gamma-carboxylase,GGCX,P38435,0,0.5591,1,0
+DC403,bromocriptine,P07711,Cathepsin L1,CTSL,P07711,0,0.7902,1,0
+DC1992,ondansetron,P21918,D(1B) dopamine receptor,DRD5,P21918,0,0.8309,1,0
+DC2363,remifentanil,P48764,Sodium/hydrogen exchanger 3,SLC9A3,P48764,0,0.5399,1,0
+DC4267,arbutin,P08908,5-hydroxytryptamine receptor 1A,HTR1A,P08908,0,0.8439,1,0
+DC605,chloroprocaine,Q92769,Histone deacetylase 2,HDAC2,Q92769,0,0.801,1,0
+DC1601,lopinavir,O94759,Transient receptor potential cation channel subfamily M member 2,TRPM2,O94759,0,0.5903,1,0
+DC784,darifenacin,P08185,Corticosteroid-binding globulin,SERPINA6,P08185,0,0.6201,1,0
+DC700,clomifene,P42330,Aldo-keto reductase family 1 member C3,AKR1C3,P42330,0,0.5015,1,0
+DC257,atorvastatin,P23443,Ribosomal protein S6 kinase beta-1,RPS6KB1,P23443,0,0.5413,1,0
+DC4713,tofacitinib,O15244,Solute carrier family 22 member 2,SLC22A2,O15244,0,0.8113,1,0
+DC1086,profenamine,O15244,Solute carrier family 22 member 2,SLC22A2,O15244,0,0.5199,1,0
+DC1067,estriol succinate,O75469,Nuclear receptor subfamily 1 group I member 2,NR1I2,O75469,0,0.6986,1,0
+DC1432,indalpine,Q8TCU5,"Glutamate receptor ionotropic, NMDA 3A",GRIN3A,Q8TCU5,0,0.6501,1,0
+DC1673,melevodopa,P49763,Placenta growth factor,PGF,P49763,0,0.6005,1,0
+DC4867,dexrabeprazole,Q9UQB9,Aurora kinase C,AURKC,Q9UQB9,0,0.8146,1,0
+DC1164,fentanyl,Q86VL8,Multidrug and toxin extrusion protein 2,SLC47A2,Q86VL8,0,0.9297,1,0
+DC2105,pergolide,P07451,Carbonic anhydrase 3,CA3,P07451,0,0.8818,1,0
+DC1339,guanadrel,O00206,Toll-like receptor 4,TLR4,O00206,0,0.5558,1,0
+DC4972,omalizumab,P20839,Inosine-5'-monophosphate dehydrogenase 1,IMPDH1,P20839,0,0.5084,1,0
+DC4189,hydroxyprogesterone caproate,Q9Y466,Nuclear receptor subfamily 2 group E member 1,NR2E1,Q9Y466,0,0.5277,1,0
+DC1897,neostigmine,P08235,Mineralocorticoid receptor,NR3C2,P08235,0,0.677,1,0
+DC5115,gallium nitrate,Q14432,Phosphodiesterase 3,PDE3A,Q14432,0,0.6486,1,0
+DC1064,estradiol valerate,Q92769,Histone deacetylase 2,HDAC2,Q92769,0,0.6108,1,0
+DC4284,silicon dioxide,P05112,Interleukin-4,IL4,P05112,0,0.7275,1,0
+DC1628,maltose,P13569,Cystic fibrosis transmembrane conductance regulator,CFTR,P13569,0,0.5054,1,0
+DC329,benzphetamine,P54289,Voltage-dependent calcium channel subunit alpha-2/delta-1,CACNA2D1,P54289,0,0.7322,1,0
+DC5419,filgotinib,P36894,Bone morphogenetic protein receptor type-1A,BMPR1A,P36894,0,0.7413,1,0
+DC3123,cyclomethycaine,P30926,Neuronal acetylcholine receptor; alpha4/beta4,CHRNB4,P30926,0,0.528,1,0
+DC954,doxazosin,P43116,Prostaglandin E2 receptor EP2 subtype,PTGER2,P43116,0,0.5859,1,0
+DC5706,teclistamab,Q9Y6L6,Solute carrier organic anion transporter family member 1B1,SLCO1B1,Q9Y6L6,0,0.6466,1,0
+DC520,carteolol,P48549,Kir3.1/Kir3.4,KCNJ3,P48549,0,0.6396,1,0
+DC654,cinnarizine,O75762,Transient receptor potential cation channel subfamily A member 1,TRPA1,O75762,0,0.6658,1,0
+DC230,aprepitant,Q07343,"cAMP-specific 3',5'-cyclic phosphodiesterase 4B",PDE4B,Q07343,0,0.5616,1,0
+DC1443,indoramin,P09960,Leukotriene A-4 hydrolase,LTA4H,P09960,0,0.6854,1,0
+DC2733,trichlormethiazide,O43193,Motilin receptor,MLNR,O43193,0,0.5079,1,0
+DC1437,indinavir,P56817,Beta-secretase 1,BACE1,P56817,0,0.7305,1,0
+DC667,cladribine,Q13304,Uracil nucleotide/cysteinyl leukotriene receptor,GPR17,Q13304,0,0.6224,1,0
+DC1395,hydroxychloroquine,P41595,5-hydroxytryptamine receptor 2B,HTR2B,P41595,0,0.9163,1,0
+DC85,acyclovir,O15554,Intermediate conductance calcium-activated potassium channel protein 4,KCNN4,O15554,0,0.7012,1,0
+DC144,amantadine,Q9UDY8,Mucosa-associated lymphoid tissue lymphoma translocation protein 1,MALT1,Q9UDY8,0,0.5668,1,0
+DC2133,phenmetrazine,Q9Y5Y9,Sodium channel alpha subunit,SCN10A,Q9Y5Y9,0,0.7348,1,0
+DC859,cinchocaine,Q99720,Sigma non-opioid intracellular receptor 1,SIGMAR1,Q99720,0,0.7945,1,0
+DC375,bisacodyl,Q8TCU5,"Glutamate receptor ionotropic, NMDA 3A",GRIN3A,Q8TCU5,0,0.6568,1,0
+DC484,captopril,Q6ZMT4,Lysine-specific demethylase 7A,KDM7A,Q6ZMT4,0,0.7045,1,0
+DC3141,diflucortolone,O00571,ATP-dependent RNA helicase DDX3X,DDX3X,O00571,0,0.6968,1,0
+DC820,desoxycortone,O60779,Thiamine transporter 1,SLC19A2,O60779,0,0.6092,1,0
+DC5070,asparaginase,P16444,Dipeptidase 1,DPEP1,P16444,0,0.6003,1,0
+DC4401,casopitant,O95264,5-hydroxytryptamine receptor 3B,HTR3B,O95264,0,0.5183,1,0
+DC2272,procarbazine,P27695,DNA-(apurinic or apyrimidinic site) lyase,APEX1,P27695,0,0.7636,1,0
+DC299,benazepril,O75343,Soluble guanylate cyclase,GUCY1B2,O75343,0,0.5481,1,0
+DC103,albendazole,P07686,Beta-hexosaminidase subunit beta,HEXB,P07686,0,0.5661,1,0
+DC2815,verapamil,O43570,Carbonic anhydrase 12,CA12,O43570,0,0.8132,1,0
+DC3125,dantron,P35372,Mu-type opioid receptor,OPRM1,P35372,0,0.681,1,0
+DC4390,choline theophyllinate,P05177,Cytochrome P450 1A2,CYP1A2,P05177,0,0.6892,1,0
+DC2544,sunitinib,P28482,Mitogen-activated protein kinase 1,MAPK1,P28482,0,0.6423,1,0
+DC4116,telavancin,P43088,Prostaglandin F2-alpha receptor,PTGFR,P43088,0,0.7075,1,0
+DC1385,hydrochlorothiazide,P29372,DNA-3-methyladenine glycosylase,MPG,P29372,0,0.6575,1,0
+DC2716,travoprost,P29460,Interleukin-23,IL12B,P29460,0,0.5419,1,0
+DC2707,topotecan,P10415,Apoptosis regulator Bcl-2,BCL2,P10415,0,0.5356,1,0
+DC4357,anidulafungin,P37268,Squalene synthase,FDFT1,P37268,0,0.8425,1,0
+DC4190,ruxolitinib,O43683,Mitotic checkpoint serine/threonine-protein kinase BUB1,BUB1,O43683,0,0.8019,1,0
+DC463,caffeine,P09874,Poly [ADP-ribose] polymerase 1,PARP1,P09874,0,0.7879,1,0
+DC2355,ramelteon,P54289,Voltage-dependent calcium channel subunit alpha-2/delta-1,CACNA2D1,P54289,0,0.9376,1,0
+DC3021,bergapten,Q13639,5-hydroxytryptamine receptor 4,HTR4,Q13639,0,0.738,1,0
+DC975,dydrogesterone,P35348,Alpha-1A adrenergic receptor,ADRA1A,P35348,0,0.6399,1,0
+DC2298,propiomazine,Q9GZQ4,Neuromedin-U receptor 2,NMUR2,Q9GZQ4,0,0.5738,1,0
+DC1774,methyprylon,O15244,Solute carrier family 22 member 2,SLC22A2,O15244,0,0.5523,1,0
+DC1641,mebendazole,Q92843,Apoptosis regulator Bcl-W,BCL2L2,Q92843,0,0.5287,1,0
+DC1786,metoprolol,P0DP25,Calmodulin,CALM3,P0DP25,0,0.9277,1,0
+DC3032,bithionol,P55072,Transitional endoplasmic reticulum ATPase,VCP,P55072,0,0.5065,1,0
+DC2679,tiracizine,P25098,Beta-adrenergic receptor kinase 1,GRK2,P25098,0,0.5363,1,0
+DC2638,thiotepa,P28223,5-hydroxytryptamine receptor 2A,HTR2A,P28223,0,0.872,1,0
+DC691,clofarabine,O15392,Baculoviral IAP repeat-containing protein 5,BIRC5,O15392,0,0.6521,1,0
+DC2704,tolrestat,Q9NZ45,CDGSH iron-sulfur domain-containing protein 1,CISD1,Q9NZ45,0,0.5791,1,0
+DC820,desoxycortone,P35610,Sterol O-acyltransferase 1,SOAT1,P35610,0,0.5444,1,0
+DC1887,nebivolol,P35504,UDP-glucuronosyltransferase 1-5,UGT1A5,P35504,0,0.797,1,0
+DC2320,protriptyline,Q13118,Krueppel-like factor 10,KLF10,Q13118,0,0.6838,1,0
+DC2699,tolmetin,P19838,Nuclear factor NF-kappa-B p105 subunit,NFKB1,P19838,0,0.565,1,0
+DC2362,regadenoson,Q99808,Equilibrative nucleoside transporter 1,SLC29A1,Q99808,0,0.7858,1,0
+DC4183,indacaterol,Q01064,"Calcium/calmodulin-dependent 3',5'-cyclic nucleotide phosphodiesterase 1B",PDE1B,Q01064,0,0.7486,1,0
+DC1659,medroxyprogesterone,P32297,Neuronal acetylcholine receptor subunit alpha-3,CHRNA3,P32297,0,0.7674,1,0
+DC1571,levomethadyl acetate,P32245,Melanocortin receptor 4,MC4R,P32245,0,0.5647,1,0
+DC1732,methamphetamine,P14780,Matrix metalloproteinase-9,MMP9,P14780,0,0.9015,1,0
+DC1365,hexafluronium,P43166,Carbonic anhydrase 7,CA7,P43166,0,0.5753,1,0
+DC385,bivalirudin,P48169,GABA A receptor alpha-4/beta-3/delta,GABRA4,P48169,0,0.7503,1,0
+DC4955,panitumumab,P09960,Leukotriene A-4 hydrolase,LTA4H,P09960,0,0.702,1,0
+DC1767,methylphenidate,Q16555,Dihydropyrimidinase-related protein 2,DPYSL2,Q16555,0,0.818,1,0
+DC1142,felodipine,Q05586,Glutamate NMDA receptor; GRIN1/GRIN2A,GRIN1,Q05586,0,0.626,1,0
+DC1836,montelukast,O00571,ATP-dependent RNA helicase DDX3X,DDX3X,O00571,0,0.8,1,0
+DC305,bendroflumethiazide,P54289,Voltage-dependent calcium channel subunit alpha-2/delta-1,CACNA2D1,P54289,0,0.9538,1,0
+DC1087,ethosuximide,Q13224,Glutamate NMDA receptor; GRIN1/GRIN2B,GRIN2B,Q13224,0,0.6861,1,0
+DC2222,plaunotol,P08588,Beta-1 adrenergic receptor,ADRB1,P08588,0,0.7671,1,0
+DC1045,erlotinib,P27815,Phosphodiesterase 4,PDE4A,P27815,0,0.5055,1,0
+DC115,alfuzosin,Q9ULX7,Carbonic anhydrase 14,CA14,Q9ULX7,0,0.7902,1,0
+DC2744,triflusal,P07550,Beta-2 adrenergic receptor,ADRB2,P07550,0,0.5859,1,0
+DC2402,ropinirole,P51449,Nuclear receptor ROR-gamma,RORC,P51449,0,0.7453,1,0
+DC1195,flumazenil,P08588,Beta-1 adrenergic receptor,ADRB1,P08588,0,0.5481,1,0
+DC1053,escitalopram,Q9Y6L6,Solute carrier organic anion transporter family member 1B1,SLCO1B1,Q9Y6L6,0,0.8007,1,0
+DC2123,phenelzine,P42336,"Phosphatidylinositol 4,5-bisphosphate 3-kinase catalytic subunit alpha isoform",PIK3CA,P42336,0,0.5549,1,0
+DC4907,olaparib,Q00535,Cyclin-dependent-like kinase 5,CDK5,Q00535,0,0.7435,1,0
+DC4164,liraglutide,P06276,Cholinesterase,BCHE,P06276,0,0.6175,1,0
+DC2446,sirolimus,P19174,"1-phosphatidylinositol 4,5-bisphosphate phosphodiesterase gamma-1",PLCG1,P19174,0,0.7277,1,0
+DC2537,sulpiride,Q13451,Peptidyl-prolyl cis-trans isomerase FKBP5,FKBP5,Q13451,0,0.8395,1,0
+DC4109,dronabinol,P27815,Phosphodiesterase 4,PDE4A,P27815,0,0.7531,1,0
+DC5007,epoetin theta,Q13507,Short transient receptor potential channel 3,TRPC3,Q13507,0,0.5703,1,0
+DC4302,glycopyrronium bromide,P29274,Adenosine receptor A2a,ADORA2A,P29274,0,0.777,1,0
+DC5401,fostemsavir,P35367,Histamine H1 receptor,HRH1,P35367,0,0.7812,1,0
+DC5187,ferrous bisglycinate,P49763,Placenta growth factor,PGF,P49763,0,0.5891,1,0
+DC668,clarithromycin,O00555,Voltage-dependent P/Q-type calcium channel subunit alpha-1A,CACNA1A,O00555,0,0.8445,1,0
+DC1272,galantamine,P30542,Adenosine receptor A1,ADORA1,P30542,0,0.9068,1,0
+DC2448,sitagliptin,P14867,GABA-A receptor alpha-1/beta-2/gamma-2,GABRA1,P14867,0,0.6784,1,0
+DC972,duloxetine,P48050,Inward rectifier potassium channel 4,KCNJ4,P48050,0,0.8724,1,0
+DC5047,saroglitazar,P80365,Corticosteroid 11-beta-dehydrogenase isozyme 2,HSD11B2,P80365,0,0.683,1,0
+DC2077,penamecillin,P11086,Phenylethanolamine N-methyltransferase,PNMT,P11086,0,0.517,1,0
+DC4162,dexlansoprazole,P28845,Corticosteroid 11-beta-dehydrogenase isozyme 1,HSD11B1,P28845,0,0.5849,1,0
+DC2044,paclitaxel,P10145,Interleukin-8,CXCL8,P10145,0,0.758,1,0
+DC839,dexrazoxane,O15245,Solute carrier family 22 member 1,SLC22A1,O15245,0,0.8678,1,0
+DC824,dexamethasone,Q04760,Lactoylglutathione lyase,GLO1,Q04760,0,0.7181,1,0
+DC2358,ranitidine,P02768,Serum albumin,ALB,P02768,0,0.7456,1,0
+DC2028,oxybutynin,P28065,Proteasome subunit beta type-9,PSMB9,P28065,0,0.5846,1,0
+DC5354,givosiran,Q5BJF2,Transmembrane protein 97,TMEM97,Q5BJF2,0,0.5325,1,0
+DC4382,mirabegron,P48544,Kir3.1/Kir3.4,KCNJ5,P48544,0,0.8155,1,0
+DC966,droperidol,P31644,GABA-A receptor; benzodiazepine binding site,GABRA5,P31644,0,0.6681,1,0
+DC5687,ferric derisomaltose,O15438,Canalicular multispecific organic anion transporter 2,ABCC3,O15438,0,0.5209,1,0
+DC1690,pethidine,P11511,Aromatase,CYP19A1,P11511,0,0.7024,1,0
+DC4702,esatenolol,P00915,Carbonic anhydrase 1,CA1,P00915,0,0.7585,1,0
+DC1563,levetiracetam,Q14524,Sodium channel protein type 5 subunit alpha,SCN5A,Q14524,0,0.8007,1,0
+DC3465,fytic acid,P52333,Tyrosine-protein kinase JAK3,JAK3,P52333,0,0.5692,1,0
+DC1419,ifenprodil,P02787,Serotransferrin,TF,P02787,0,0.544,1,0
+DC1032,eplerenone,P24530,Endothelin B receptor,EDNRB,P24530,0,0.5522,1,0

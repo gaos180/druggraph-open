@@ -1,0 +1,53 @@
+{
+  "bbbp": {
+    "endpoint": "bbbp",
+    "label": "Penetración barrera hematoencefálica (BBBP)",
+    "task": "classification",
+    "n_test": 408,
+    "roc_auc": 0.9519,
+    "confusion_at_0.5": {
+      "tp": 298,
+      "fp": 27,
+      "tn": 69,
+      "fn": 14
+    },
+    "accuracy": 0.8995
+  },
+  "esol": {
+    "endpoint": "esol",
+    "label": "Solubilidad acuosa (ESOL, logS)",
+    "task": "regression",
+    "n_test": 226,
+    "rmse": 0.7976,
+    "r2": 0.8654,
+    "pearson": 0.9307
+  },
+  "tox21_nr_ar": {
+    "endpoint": "tox21_nr_ar",
+    "label": "Actividad receptor de andrógenos (Tox21 NR-AR)",
+    "task": "classification",
+    "n_test": 1452,
+    "roc_auc": 0.7621,
+    "confusion_at_0.5": {
+      "tp": 25,
+      "fp": 15,
+      "tn": 1375,
+      "fn": 37
+    },
+    "accuracy": 0.9642
+  },
+  "tox21_sr_p53": {
+    "endpoint": "tox21_sr_p53",
+    "label": "Vía de estrés p53 (Tox21 SR-p53)",
+    "task": "classification",
+    "n_test": 1354,
+    "roc_auc": 0.8902,
+    "confusion_at_0.5": {
+      "tp": 20,
+      "fp": 8,
+      "tn": 1261,
+      "fn": 65
+    },
+    "accuracy": 0.9461
+  }
+}

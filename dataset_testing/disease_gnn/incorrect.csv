@@ -1,0 +1,626 @@
+drug_id,drug_name,disease_id,disease_name,gene,ot_score,label,model_prob,predicted,correct
+DC882,digoxin,Orphanet_1171,Cerebellar ataxia - areflexia - pes cavus - optic atrophy - sensorineural hearing loss,ATP1A3,0.7924,1,0.158,0,0
+DC4508,racepinefrine,MONDO_0010811,benign prostatic hyperplasia,ADRA1A,0.6124,1,0.478,0,0
+DC260,atropine,HP_0000975,Hyperhidrosis,CHRM3,0.6331,1,0.4589,0,0
+DC1193,flufenamic acid,Orphanet_871,Familial progressive cardiac conduction defect,TRPM4,0.7753,1,0.2088,0,0
+DC2825,vincristine,MONDO_0012399,complex cortical dysplasia with other brain malformations 7,TUBB2B,0.8157,1,0.4909,0,0
+DC2966,suramin,Orphanet_1334,Chronic mucocutaneous candidosis,STAT1,0.8142,1,0.277,0,0
+DC1375,histamine,MONDO_0005271,allergic disease,HRH1,0.6095,1,0.4375,0,0
+DC1973,noscapine,MONDO_0005542,acute coronary syndrome,CYP2C19,0.4265,1,0.4161,0,0
+DC4175,linagliptin,HP_0000975,Hyperhidrosis,CHRM1,0.5569,1,0.3982,0,0
+DC2997,somatostatin,MONDO_0005070,neoplasm,SSTR2,0.5709,1,0.1838,0,0
+DC4128,valine,MONDO_0005258,autism spectrum disorder,SLC7A5,0.1418,1,0.3849,0,0
+DC5282,burosumab,MONDO_0004992,cancer,FGF23,0.6104,1,0.2037,0,0
+DC640,cilastatin,MONDO_0002531,skin neoplasm,DPEP1,0.3484,1,0.3318,0,0
+DC2424,scopolamine,EFO_0006865,urgency urinary incontinence,CHRM3,0.5942,1,0.4791,0,0
+DC4965,denosumab,MONDO_0005381,bone disorder,TNFSF11,0.5634,1,0.2753,0,0
+DC1364,hexachlorophene,MONDO_0007254,breast cancer,ESR1,0.7357,1,0.2785,0,0
+DC5389,tucatinib,MONDO_0019263,autosomal erythropoietic protoporphyria,FECH,0.8454,1,0.2755,0,0
+DC1546,lanreotide,MONDO_0005559,neurodegenerative disease,SSTR5,0.4487,1,0.4049,0,0
+DC2720,treprostinil,MONDO_0001999,idiopathic pulmonary arterial hypertension,PTGIR,0.5106,1,0.4484,0,0
+DC4267,arbutin,MONDO_0018137,temperature-sensitive oculocutaneous albinism type 1,TYR,0.5755,1,0.4268,0,0
+DC1925,niflumic acid,MONDO_0015231,Bartter syndrome,CLCNKB,0.7576,1,0.2879,0,0
+DC1971,nortriptyline,MONDO_0008233,pheochromocytoma,RET,0.781,1,0.2056,0,0
+DC2600,terfenadine,EFO_0009062,Temple-Baraitser syndrome,KCNH1,0.7908,1,0.3835,0,0
+DC3032,bithionol,MONDO_0971004,"amyloidosis, hereditary systemic 1",TTR,0.8464,1,0.2134,0,0
+DC1132,fasudil,MONDO_0019625,familial thoracic aortic aneurysm and aortic dissection,MYLK,0.7021,1,0.3917,0,0
+DC4144,sodium lauryl sulfate,EFO_0005670,smoking initiation,EPHX2,0.2838,1,0.466,0,0
+DC1319,glycine,MONDO_0005559,neurodegenerative disease,SLC6A9,0.4185,1,0.3205,0,0
+DC913,dinoprostone,MONDO_0005178,osteoarthritis,PTGER3,0.5841,1,0.2254,0,0
+DC1132,fasudil,MONDO_0004981,atrial fibrillation,KCNH2,0.7329,1,0.4389,0,0
+DC3613,Vitamin E,HP_0000556,Retinal dystrophy,TTPA,0.4451,1,0.348,0,0
+DC589,chloramphenicol,MONDO_0005231,hepatitis C virus infection,CYP3A4,0.5703,1,0.3829,0,0
+DC3514,quercetin,MONDO_0017884,papillary renal cell carcinoma,MET,0.8307,1,0.309,0,0
+DC4109,dronabinol,Orphanet_171848,Polyneuropathy - hearing loss - ataxia - retinitis pigmentosa - cataract,ABHD12,0.8156,1,0.4373,0,0
+DC4120,dexfosfoserine,HP_0001263,Global developmental delay,GRM7,0.4559,1,0.1746,0,0
+DC1285,gemfibrozil,MONDO_0007100,familial amyloid neuropathy,TTR,0.7307,1,0.2384,0,0
+DC5137,peginterferon beta-1a,MONDO_0005301,multiple sclerosis,IFNAR1,0.608,1,0.4391,0,0
+DC1314,glibenclamide,MONDO_0009061,cystic fibrosis,CFTR,0.9182,1,0.2674,0,0
+DC1672,melatonin,MONDO_0000365,primary congenital glaucoma,CYP1B1,0.6778,1,0.4017,0,0
+DC3535,rutoside,MONDO_0010209,xanthinuria type I,XDH,0.7357,1,0.415,0,0
+DC4969,eculizumab,MONDO_0100244,paroxysmal nocturnal hemoglobinuria,C5,0.6076,1,0.2903,0,0
+DC4267,arbutin,HP_0001000,Abnormality of skin pigmentation,TYR,0.6815,1,0.4991,0,0
+DC749,cyclizine,MONDO_0007032,prune belly syndrome,CHRM3,0.6994,1,0.4954,0,0
+DC4872,ataluren,MONDO_0019087,cholangiocarcinoma,BLVRB,0.0739,1,0.3651,0,0
+DC1920,nicotine,MONDO_0009926,autosomal recessive multiple pterygium syndrome,CHRNG,0.8057,1,0.461,0,0
+DC647,cinacalcet,MONDO_0018458,familial hypocalciuric hypercalcemia,CASR,0.7312,1,0.0784,0,0
+DC2484,strychnine,MONDO_0021022,hereditary hyperekplexia,GLRA1,0.8318,1,0.2422,0,0
+DC1193,flufenamic acid,MONDO_0007100,familial amyloid neuropathy,TTR,0.7307,1,0.4659,0,0
+DC1747,methocarbamol,MONDO_0002081,musculoskeletal system disorder,CA1,0.3696,1,0.2184,0,0
+DC1725,metformin,MONDO_0032610,"mitochondrial complex I deficiency, nuclear type 5",NDUFS1,0.8094,1,0.4636,0,0
+DC5185,gallium (68Ga) edotreotide,MONDO_0004992,cancer,SSTR2,0.4183,1,0.2272,0,0
+DC3032,bithionol,MONDO_0013150,"parkinsonism-dystonia, infantile",SLC6A3,0.7471,1,0.4839,0,0
+DC5185,gallium (68Ga) edotreotide,MONDO_0007256,hepatocellular carcinoma,SSTR2,0.389,1,0.2212,0,0
+DC2106,perhexiline,MONDO_0005061,lung adenocarcinoma,EGFR,0.7744,1,0.3003,0,0
+DC419,budesonide,MONDO_0011517,pseudohyperaldosteronism type 2,NR3C2,0.6882,1,0.3458,0,0
+DC4227,vismodegib,MONDO_0009436,congenital hypothalamic hamartoma syndrome,SMO,0.6367,1,0.473,0,0
+DC780,dantrolene,EFO_0009143,ryr1-related disorders,RYR1,0.5768,1,0.1131,0,0
+DC1193,flufenamic acid,MONDO_0971004,"amyloidosis, hereditary systemic 1",TTR,0.8464,1,0.492,0,0
+DC968,drospirenone,MONDO_0011517,pseudohyperaldosteronism type 2,NR3C2,0.6882,1,0.472,0,0
+DC1817,misoprostol,MONDO_0005362,erectile dysfunction,PTGER2,0.5696,1,0.4916,0,0
+DC3064,capsaicin,MONDO_0030375,"neurologic, endocrine, and pancreatic disease, multisystem, infantile-onset 2",YARS,0.7061,1,0.441,0,0
+DC1277,ganciclovir,MONDO_0013501,frontotemporal dementia and/or amyotrophic lateral sclerosis 6,VCP,0.7657,1,0.4659,0,0
+DC3323,linoleic acid,MONDO_0859257,intellectual developmental disorder with language impairment and early-onset DOPA-responsive dystonia-parkinsonism,NR4A2,0.7459,1,0.4969,0,0
+DC3514,quercetin,MONDO_0005233,non-small cell lung carcinoma,EGFR,0.8526,1,0.2785,0,0
+DC916,diphenhydramine,MONDO_0011904,"seizures, benign familial infantile, 3",SCN2A,0.8076,1,0.4927,0,0
+DC2825,vincristine,Orphanet_300573,Polymicrogyria due to TUBB2B mutation,TUBB2B,0.7811,1,0.4909,0,0
+DC1364,hexachlorophene,MONDO_0009274,ghosal hematodiaphyseal dysplasia,TBXAS1,0.7828,1,0.2579,0,0
+DC1973,noscapine,MONDO_0005010,coronary artery disorder,SLC22A2,0.4013,1,0.3291,0,0
+DC1319,glycine,MONDO_0003847,hereditary disease,SLC6A9,0.1928,1,0.3313,0,0
+DC333,benzatropine,MONDO_0009324,Hartnup disease,SLC6A19,0.8447,1,0.4024,0,0
+DC5420,vadadustat,MONDO_0012353,"erythrocytosis, familial, 3",EGLN1,0.7289,1,0.4101,0,0
+DC939,docetaxel,MONDO_0012399,complex cortical dysplasia with other brain malformations 7,TUBB2B,0.8157,1,0.4158,0,0
+DC576,cefradine,MONDO_0005070,neoplasm,SSTR4,0.5637,1,0.3186,0,0
+DC1377,histidine,MONDO_0005338,open-angle glaucoma,SLC7A5,0.26,1,0.4451,0,0
+DC578,cerulenin,MONDO_0008559,thrombophilia due to thrombin defect,F13A1,0.4853,1,0.4538,0,0
+DC971,droxidopa,MONDO_0005068,myocardial infarction,ADRB1,0.624,1,0.4828,0,0
+DC480,capecitabine,MONDO_0021085,gastric neoplasm,TYMS,0.5803,1,0.4817,0,0
+DC576,cefradine,MONDO_0005502,dengue disease,MMP9,0.4757,1,0.3539,0,0
+DC780,dantrolene,MONDO_0005336,myopathy,RYR1,0.5785,1,0.1008,0,0
+DC1896,framycetin,MONDO_0001741,hyperparathyroidism,MEN1,0.6361,1,0.0837,0,0
+DC1836,montelukast,MONDO_0007032,prune belly syndrome,CHRM3,0.6994,1,0.4179,0,0
+DC1622,lysine,MONDO_0021042,glioma,GSR,0.4748,1,0.2766,0,0
+DC1996,orlistat,HP_0040175,Platelet-activating factor acetylhydrolase deficiency,PLA2G7,0.6429,1,0.3827,0,0
+DC2457,solifenacin,EFO_0006865,urgency urinary incontinence,CHRM3,0.5942,1,0.4363,0,0
+DC3032,bithionol,MONDO_0009274,ghosal hematodiaphyseal dysplasia,TBXAS1,0.7828,1,0.4977,0,0
+DC1423,imatinib,Orphanet_137667,Capillary malformation - arteriovenous malformation,EPHB4,0.8399,1,0.4951,0,0
+DC3032,bithionol,MONDO_0054835,classic dopamine transporter deficiency syndrome,SLC6A3,0.7623,1,0.4855,0,0
+DC2144,phenylalanine,MONDO_0003847,hereditary disease,XIAP,0.4688,1,0.412,0,0
+DC89,adenine,MONDO_0005180,Parkinson disease,LRRK2,0.7412,1,0.2887,0,0
+DC5275,lutetium (177Lu) oxodotreotide,MONDO_0004992,cancer,SSTR2,0.4183,1,0.2272,0,0
+DC939,docetaxel,MONDO_0012905,hypomyelinating leukodystrophy 6,TUBB4A,0.7721,1,0.3841,0,0
+DC2484,strychnine,MONDO_0005027,epilepsy,SCN1A,0.8037,1,0.4226,0,0
+DC4318,afatinib,MONDO_0004992,cancer,ERBB2,0.7753,1,0.3289,0,0
+DC3972,ivermectin,MONDO_0015762,progressive familial intrahepatic cholestasis,NR1H4,0.7254,1,0.444,0,0
+DC65,acetylcholine,EFO_0010282,gastrointestinal disease,CHRM3,0.6558,1,0.3939,0,0
+DC5389,tucatinib,MONDO_0005061,lung adenocarcinoma,EGFR,0.7744,1,0.3726,0,0
+DC1906,nicotinamide,MONDO_0004981,atrial fibrillation,SIRT1,0.3552,1,0.4898,0,0
+DC2997,somatostatin,MONDO_0004992,cancer,SSTR2,0.4183,1,0.2014,0,0
+DC647,cinacalcet,MONDO_0009397,neonatal severe primary hyperparathyroidism,CASR,0.8187,1,0.0784,0,0
+DC1082,ethinylestradiol,MONDO_0013150,"parkinsonism-dystonia, infantile",SLC6A3,0.7471,1,0.4441,0,0
+DC391,bortezomib,MONDO_0010879,CODAS syndrome,LONP1,0.8248,1,0.2145,0,0
+DC5480,vosoritide,MONDO_0003847,hereditary disease,NPR2,0.3794,1,0.2694,0,0
+DC945,domperidone,MONDO_0013966,catecholaminergic polymorphic ventricular tachycardia 4,CALM1,0.7469,1,0.4488,0,0
+DC738,coumarin,MONDO_0009818,autosomal recessive osteopetrosis 3,CA2,0.7841,1,0.3345,0,0
+DC597,chlorhexidine,MONDO_0005066,metabolic disease,SLC22A1,0.4968,1,0.2132,0,0
+DC2302,propofol,MONDO_0007986,metatropic dysplasia,TRPV4,0.834,1,0.2072,0,0
+DC4072,ascorbic acid,MONDO_0008745,oculocutaneous albinism type 1A,TYR,0.8573,1,0.1509,0,0
+DC946,donepezil,Orphanet_98913,Postsynaptic congenital myasthenic syndromes,CHRNE,0.7085,1,0.282,0,0
+DC174,aminoquinuride,EFO_0000544,infection,MMP1,0.5513,1,0.3945,0,0
+DC5338,ropeginterferon alfa-2b,MONDO_0005070,neoplasm,IFNAR1,0.6082,1,0.4507,0,0
+DC690,clodronic acid,MONDO_0019212,disseminated superficial actinic porokeratosis,SLC17A9,0.6461,1,0.3042,0,0
+DC89,adenine,MONDO_0005393,gout,XDH,0.7019,1,0.4057,0,0
+DC726,colchicine,MONDO_0957921,Cornelia de Lange syndrome 6,BRD4,0.6888,1,0.3553,0,0
+DC4508,racepinefrine,MONDO_0005068,myocardial infarction,ADRA1A,0.609,1,0.3963,0,0
+DC875,diethylstilbestrol,MONDO_0054835,classic dopamine transporter deficiency syndrome,SLC6A3,0.7623,1,0.3046,0,0
+DC973,dutasteride,MONDO_0021022,hereditary hyperekplexia,GLRA1,0.8318,1,0.4995,0,0
+DC3317,lenalidomide,MONDO_0957921,Cornelia de Lange syndrome 6,BRD4,0.6888,1,0.3617,0,0
+DC2666,tiludronic acid,MONDO_0011438,acne,MMP1,0.615,1,0.4109,0,0
+DC661,cisatracurium,MONDO_0018940,congenital myasthenic syndrome,CHRNA1,0.3493,1,0.2638,0,0
+DC39,acarbose,MONDO_0009114,congenital sucrase-isomaltase deficiency,SI,0.8128,1,0.4424,0,0
+DC2487,succinic acid,EFO_0009909,stage 5 chronic kidney disease,EGLN1,0.3339,1,0.3333,0,0
+DC2236,pramlintide,HP_0003072,Hypercalcemia,CALCR,0.4662,1,0.3542,0,0
+DC1125,ezetimibe,MONDO_0005789,hepatitis D virus infection,SLC10A1,0.4762,1,0.2876,0,0
+DC376,bisantrene,MONDO_0044970,mitochondrial disease,NQO1,0.3061,1,0.4605,0,0
+DC865,diclofenac,MONDO_0004994,cardiomyopathy,TTR,0.7331,1,0.407,0,0
+DC318,benzbromarone,MONDO_0018997,Noonan syndrome,MAPK1,0.6719,1,0.4034,0,0
+DC971,droxidopa,MONDO_0005044,hypertensive disorder,ADRB1,0.7471,1,0.4587,0,0
+DC1949,nitrofurantoin,MONDO_0007750,"hypercholesterolemia, familial, 1",G6PD,0.34,1,0.3562,0,0
+DC2487,succinic acid,MONDO_0005240,kidney disorder,EGLN1,0.2594,1,0.4773,0,0
+DC647,cinacalcet,MONDO_0021022,hereditary hyperekplexia,GLRA1,0.8318,1,0.3898,0,0
+DC1314,glibenclamide,MONDO_0010178,congenital bilateral aplasia of vas deferens from CFTR mutation,CFTR,0.8242,1,0.2253,0,0
+DC2372,retinol acetate,MONDO_0004975,Alzheimer disease,APP,0.8065,1,0.49,0,0
+DC1125,ezetimibe,MONDO_0002525,inherited lipid metabolism disorder,NPC1L1,0.5449,1,0.419,0,0
+DC2997,somatostatin,MONDO_0019933,acromegaly,SSTR5,0.6113,1,0.2812,0,0
+DC2705,tolterodine,MONDO_0007032,prune belly syndrome,CHRM3,0.6994,1,0.4194,0,0
+DC5214,telotristat ethyl,EFO_0005670,smoking initiation,TPH1,0.2558,1,0.4029,0,0
+DC4778,ridaforolimus,MONDO_0005005,clear cell renal carcinoma,MTOR,0.5249,1,0.2265,0,0
+DC2786,tyrosine,MONDO_0013600,insomnia,SLC7A5,0.2694,1,0.417,0,0
+DC1375,histamine,MONDO_0005709,common cold,HRH1,0.6036,1,0.4529,0,0
+DC3514,quercetin,MONDO_0018997,Noonan syndrome,BRAF,0.8381,1,0.4052,0,0
+DC1996,orlistat,MONDO_0013533,hyperlipidemia due to hepatic triglyceride lipase deficiency,LIPC,0.6808,1,0.3827,0,0
+DC1971,nortriptyline,MONDO_0018309,Hirschsprung disease,RET,0.7904,1,0.357,0,0
+DC690,clodronic acid,MONDO_0044970,mitochondrial disease,SLC25A4,0.5103,1,0.3501,0,0
+DC1129,famotidine,MONDO_0007747,isolated hyperchlorhidrosis,CA12,0.6795,1,0.3896,0,0
+DC1725,metformin,MONDO_0032609,"mitochondrial complex I deficiency, nuclear type 4",NDUFV1,0.7233,1,0.4636,0,0
+DC90,adenosine,MONDO_0007064,"severe combined immunodeficiency, autosomal recessive, T cell-negative, B cell-negative, NK cell-negative, due to adenosine deaminase deficiency",ADA,0.8558,1,0.3921,0,0
+DC2044,paclitaxel,Orphanet_300573,Polymicrogyria due to TUBB2B mutation,TUBB2B,0.7811,1,0.3499,0,0
+DC780,dantrolene,HP_0002047,Malignant hyperthermia,RYR1,0.653,1,0.1131,0,0
+DC1925,niflumic acid,MONDO_0004994,cardiomyopathy,TTR,0.7331,1,0.4821,0,0
+DC4125,proline,MONDO_0005009,congestive heart failure,ACE,0.6125,1,0.4195,0,0
+DC1920,nicotine,MONDO_0009668,lethal multiple pterygium syndrome,CHRNG,0.7837,1,0.4703,0,0
+DC1364,hexachlorophene,MONDO_0004992,cancer,ERBB2,0.7753,1,0.2762,0,0
+DC4933,tocilizumab,MONDO_0019100,neuromyelitis optica,IL6R,0.5848,1,0.4493,0,0
+DC4072,ascorbic acid,MONDO_0018910,oculocutaneous albinism,TYR,0.6714,1,0.2003,0,0
+DC690,clodronic acid,MONDO_0004975,Alzheimer disease,PTPN1,0.475,1,0.1742,0,0
+DC1725,metformin,Orphanet_2556,Microphthalmia with linear skin defects syndrome,NDUFB11,0.7308,1,0.4636,0,0
+DC3313,khellin,MONDO_0005300,chronic kidney disease,CYP1A1,0.2902,1,0.4631,0,0
+DC3514,quercetin,MONDO_0018874,acute myeloid leukemia,FLT3,0.8354,1,0.3669,0,0
+DC1996,orlistat,Orphanet_79211,Combined hyperlipidemia,LPL,0.7695,1,0.4222,0,0
+DC1973,noscapine,MONDO_0005559,neurodegenerative disease,SLC47A1,0.4605,1,0.4225,0,0
+DC4120,dexfosfoserine,MONDO_0030063,"neurodevelopmental disorder with seizures, hypotonia, and brain imaging abnormalities",GRM7,0.792,1,0.3134,0,0
+DC391,bortezomib,Orphanet_2686,Cyclic neutropenia,ELANE,0.8281,1,0.1608,0,0
+DC769,cysteine,MONDO_0005046,immune system disorder,SLC7A11,0.2416,1,0.402,0,0
+DC1949,nitrofurantoin,MONDO_0021559,non-autoimmune hemolytic anemia,G6PD,0.4785,1,0.27,0,0
+DC751,cyclobenzaprine,MONDO_0019003,multiple endocrine neoplasia type 2,RET,0.7748,1,0.3801,0,0
+DC875,diethylstilbestrol,MONDO_0014421,glucocorticoid resistance,NR3C1,0.8089,1,0.2789,0,0
+DC576,cefradine,MONDO_0000386,"digestive system neuroendocrine tumor, grade 1/2",SSTR4,0.4036,1,0.3957,0,0
+DC2561,tamoxifen,MONDO_0010035,Smith-Lemli-Opitz syndrome,DHCR7,0.8673,1,0.415,0,0
+DC1364,hexachlorophene,MONDO_0005233,non-small cell lung carcinoma,EGFR,0.8526,1,0.2402,0,0
+DC738,coumarin,MONDO_0019200,retinitis pigmentosa,CA4,0.6936,1,0.4279,0,0
+DC2825,vincristine,Orphanet_300570,Cortical dysgenesis with pontocerebellar hypoplasia due to TUBB3 mutation,TUBB3,0.7491,1,0.4248,0,0
+DC3201,kainic acid,MONDO_0004979,asthma,ADORA3,0.6052,1,0.4764,0,0
+DC1505,isosorbide dinitrate,MONDO_0005149,pulmonary hypertension,GUCY1B3,0.562,1,0.4791,0,0
+DC4072,ascorbic acid,MONDO_0011749,oculocutaneous albinism type 1B,TYR,0.8166,1,0.2003,0,0
+DC92,adenosine phosphate,MONDO_0015277,medullary thyroid gland carcinoma,SRC,0.546,1,0.4493,0,0
+DC4318,afatinib,MONDO_0005061,lung adenocarcinoma,EGFR,0.7744,1,0.4294,0,0
+DC2351,raloxifene,MONDO_0014751,palatal anomalies-widely spaced teeth-facial dysmorphism-developmental delay syndrome,KDM1A,0.7377,1,0.4506,0,0
+DC2714,tranilast,MONDO_0005338,open-angle glaucoma,HPGDS,0.3546,1,0.4871,0,0
+DC3323,linoleic acid,MONDO_0018614,undetermined early-onset epileptic encephalopathy,KCNB1,0.7435,1,0.4107,0,0
+DC3639,uridine triphosphate,HP_0012735,Cough,P2RX3,0.5406,1,0.3889,0,0
+DC1219,flurbiprofen,,Kir3.1/Kir3.4,,,0,0.7049,1,0
+DC4995,epoetin alfa,,Transient receptor potential cation channel subfamily V member 5,,,0,0.9498,1,0
+DC4004,mozavaptan,,Alpha-synuclein,,,0,0.6175,1,0
+DC1468,iopromide,,Potassium voltage-gated channel subfamily H member 2,,,0,0.5041,1,0
+DC1140,felbamate,,Renin,,,0,0.5762,1,0
+DC4072,ascorbic acid,,Peptidyl-prolyl cis-trans isomerase FKBP3,,,0,0.8556,1,0
+DC2825,vincristine,,GABA A receptor alpha-4/beta-3/delta,,,0,0.5312,1,0
+DC1236,fondaparinux,,Transketolase,,,0,0.8329,1,0
+DC85,acyclovir,,Carbonic anhydrase 1,,,0,0.605,1,0
+DC4630,sodium pyrophosphate,,Prostaglandin G/H synthase 1,,,0,0.811,1,0
+DC2599,terconazole,,Nuclear receptor subfamily 1 group I member 2,,,0,0.8322,1,0
+DC4390,choline theophyllinate,,Cytochrome P450 1A2,,,0,0.683,1,0
+DC2848,xamoterol,,Estrogen receptor,,,0,0.8196,1,0
+DC385,bivalirudin,,Inward rectifier potassium channel 4,,,0,0.9593,1,0
+DC4281,magnesium citrate,,Equilibrative nucleoside transporter 1,,,0,0.5524,1,0
+DC4676,obidoxime,,Glucose-6-phosphate 1-dehydrogenase,,,0,0.5046,1,0
+DC4275,zinc sulfate,,Proton-coupled folate transporter,,,0,0.6073,1,0
+DC4417,diethyl ether,,Adenosine receptor A3,,,0,0.6853,1,0
+DC245,artemether,,"Sodium channel alpha subunits; brain (Types I, II, III)",,,0,0.8775,1,0
+DC5368,botulinum toxin type A,,Serotonin 3 (5-HT3) receptor,,,0,0.7914,1,0
+DC5690,tremelimumab,,Voltage-dependent calcium channel subunit alpha-2/delta-2,,,0,0.6083,1,0
+DC1125,ezetimibe,,Muscarinic acetylcholine receptor M1,,,0,0.5428,1,0
+DC5237,sarilumab,,Mitogen-activated protein kinase 14,,,0,0.5569,1,0
+DC4454,testosterone cypionate,,Equilibrative nucleoside transporter 1,,,0,0.7819,1,0
+DC1092,ethyl loflazepate,,Phosphodiesterase 6,,,0,0.6493,1,0
+DC992,efonidipine,,Progesterone receptor,,,0,0.6415,1,0
+DC47,acemetacin,,Inward rectifier potassium channel 4,,,0,0.9252,1,0
+DC1708,mercaptopurine,,Voltage-dependent P/Q-type calcium channel subunit alpha-1A,,,0,0.8644,1,0
+DC1618,lumiracoxib,,Cytochrome P450 1B1,,,0,0.5502,1,0
+DC1490,isocarboxazid,,Sigma non-opioid intracellular receptor 1,,,0,0.762,1,0
+DC4031,razoxane,,Amine oxidase [flavin-containing] A,,,0,0.6464,1,0
+DC2337,quetiapine,,5-hydroxytryptamine receptor 1A,,,0,0.6658,1,0
+DC1876,nalmefene,,Annexin A1,,,0,0.8584,1,0
+DC3308,iophenoic acid,,Thiamine transporter 1,,,0,0.5309,1,0
+DC329,benzphetamine,,Voltage-dependent calcium channel subunit alpha-2/delta-1,,,0,0.9051,1,0
+DC1934,nilvadipine,,Peptidyl-prolyl cis-trans isomerase FKBP3,,,0,0.6286,1,0
+DC1150,fenfluramine,,Voltage-dependent calcium channel subunit alpha-2/delta-1,,,0,0.639,1,0
+DC4123,lubiprostone,,Cytochrome P450 2C9,,,0,0.7469,1,0
+DC1010,enfuvirtide,,Transient receptor potential cation channel subfamily M member 2,,,0,0.5202,1,0
+DC4846,ecallantide,,D(1A) dopamine receptor,,,0,0.6075,1,0
+DC4135,lisdexamfetamine,,DNA repair protein RAD52 homolog,,,0,0.5756,1,0
+DC4118,pazopanib,,Mitogen-activated protein kinase 9,,,0,0.7324,1,0
+DC2046,palonosetron,,Potassium channel subfamily K member 3,,,0,0.6745,1,0
+DC85,acyclovir,,Intermediate conductance calcium-activated potassium channel protein 4,,,0,0.741,1,0
+DC1067,estriol succinate,,Corticosteroid-binding globulin,,,0,0.9342,1,0
+DC1416,idebenone,,Muscarinic acetylcholine receptor M1,,,0,0.6658,1,0
+DC1977,nystatin,,Neuronal acetylcholine receptor subunit alpha-10,,,0,0.5349,1,0
+DC1087,ethosuximide,,"Carbonic anhydrase 5A, mitochondrial",,,0,0.8603,1,0
+DC2861,zidovudine,,Hepatic triacylglycerol lipase,,,0,0.5128,1,0
+DC3220,femoxetine,,Deoxyhypusine hydroxylase,,,0,0.5364,1,0
+DC4523,quinine,,Serine/threonine-protein phosphatase 2B catalytic subunit gamma isoform,,,0,0.8789,1,0
+DC1640,mazindol,,Intercellular adhesion molecule 1,,,0,0.5704,1,0
+DC4185,vemurafenib,,Transmembrane protein 97,,,0,0.7681,1,0
+DC3881,benzydamine,,Cocaine- and amphetamine-regulated transcript protein,,,0,0.5483,1,0
+DC2754,trimethobenzamide,,Cathepsin D,,,0,0.5568,1,0
+DC1641,mebendazole,,Apoptosis regulator Bcl-W,,,0,0.6581,1,0
+DC404,bromazine,,GABA-A receptor; benzodiazepine binding site,,,0,0.5315,1,0
+DC2413,rupatadine,,Protein arginine N-methyltransferase 1,,,0,0.5825,1,0
+DC1694,mephentermine,,"Carbonic anhydrase 5B, mitochondrial",,,0,0.7491,1,0
+DC4366,voclosporin,,Histamine N-methyltransferase,,,0,0.6048,1,0
+DC1821,mitoxantrone,,"DNA topoisomerase I, mitochondrial",,,0,0.9264,1,0
+DC5467,belumosudil,,Mitogen-activated protein kinase 3,,,0,0.7364,1,0
+DC4617,lycopene,,Corticosteroid 11-beta-dehydrogenase isozyme 2,,,0,0.6275,1,0
+DC1709,meropenem,,Deoxycytidine kinase,,,0,0.5986,1,0
+DC4382,mirabegron,,"Cytochrome P450 11B2, mitochondrial",,,0,0.7802,1,0
+DC836,dexmethylphenidate,,gp100 peptide‐HLA‐A*02:01 complex,,,0,0.8212,1,0
+DC186,amodiaquine,,Glycine receptor subunit alpha-3,,,0,0.5004,1,0
+DC2179,pioglitazone,,Nischarin,,,0,0.5987,1,0
+DC2181,pipamperone,,Acetylcholinesterase,,,0,0.7557,1,0
+DC2758,trimipramine,,Solute carrier family 22 member 2,,,0,0.8143,1,0
+DC2403,ropivacaine,,Cytosolic endo-beta-N-acetylglucosaminidase,,,0,0.8133,1,0
+DC2139,phensuximide,,High mobility group protein B1,,,0,0.6149,1,0
+DC2572,tazobactam,,Kappa-type opioid receptor,,,0,0.8086,1,0
+DC2856,zalcitabine,,Glycine receptor subunit alpha-1,,,0,0.8853,1,0
+DC836,dexmethylphenidate,,Muscle-type nicotinic acetylcholine receptor,,,0,0.6745,1,0
+DC1449,iobitridol,,Thromboxane-A synthase,,,0,0.6895,1,0
+DC2861,zidovudine,,Aldose reductase,,,0,0.8646,1,0
+DC1609,lornoxicam,,Intercellular adhesion molecule 1,,,0,0.5852,1,0
+DC4285,Florbetapir F-18,,5-hydroxytryptamine receptor 3B,,,0,0.5525,1,0
+DC438,busulfan,,G-protein coupled receptor 35,,,0,0.6207,1,0
+DC5375,cepharanthine,,D(2) dopamine receptor,,,0,0.5232,1,0
+DC317,benzarone,,5-hydroxytryptamine receptor 1A,,,0,0.5598,1,0
+DC4296,potassium iodide,,Cytochrome P450 2A6,,,0,0.6819,1,0
+DC548,cefotiam,,Apoptosis regulator Bcl-W,,,0,0.5811,1,0
+DC1990,omeprazole,,Muscarinic acetylcholine receptor M1,,,0,0.6369,1,0
+DC2527,sulfathiazole,,Steroid hormone receptor ERR1,,,0,0.5106,1,0
+DC2282,proguanil,,Cytochrome P450 1A2,,,0,0.9287,1,0
+DC2717,trazodone,,UDP-glucuronosyltransferase 1-10,,,0,0.6897,1,0
+DC356,betaxolol,,Voltage-gated potassium channel,,,0,0.5593,1,0
+DC4702,esatenolol,,Carbonic anhydrase 1,,,0,0.8358,1,0
+DC2090,pentamidine,,Cytochrome P450 2C8,,,0,0.8563,1,0
+DC2001,oseltamivir,,Peptidyl-prolyl cis-trans isomerase FKBP1A,,,0,0.6547,1,0
+DC1732,methamphetamine,,Calcium release-activated calcium channel protein 1,,,0,0.6176,1,0
+DC1613,loxapine,,UDP-glucuronosyltransferase 1-4,,,0,0.7199,1,0
+DC5459,infigratinib,,Fibroblast growth factor receptor 1,,,0,0.8264,1,0
+DC3931,dolasetron,,Squalene synthase,,,0,0.8363,1,0
+DC1417,idoxuridine,,Heat-stable enterotoxin receptor,,,0,0.6243,1,0
+DC3434,phenacaine,,Voltage-dependent N-type calcium channel subunit alpha-1B,,,0,0.8829,1,0
+DC4514,teriparatide,,Steroid hormone receptor ERR1,,,0,0.6474,1,0
+DC1343,guanfacine,,Sex hormone-binding globulin,,,0,0.8343,1,0
+DC2672,tinoridine,,Kelch-like ECH-associated protein 1,,,0,0.5061,1,0
+DC2167,pilsicainide,,72 kDa type IV collagenase,,,0,0.5607,1,0
+DC5022,flibanserin,,Alpha-2C adrenergic receptor,,,0,0.912,1,0
+DC4898,netupitant,,Delta-type opioid receptor,,,0,0.5621,1,0
+DC4514,teriparatide,,Histone deacetylase 1,,,0,0.7013,1,0
+DC1393,hydromorphone,,"Superoxide dismutase [Mn], mitochondrial",,,0,0.7392,1,0
+DC3584,terazosin,,B2 bradykinin receptor,,,0,0.5263,1,0
+DC4303,eslicarbazepine acetate,,Platelet-activating factor receptor,,,0,0.5775,1,0
+DC2320,protriptyline,,GABA A receptor alpha-4/beta-3/delta,,,0,0.601,1,0
+DC4589,linsidomine,,"cAMP-specific 3',5'-cyclic phosphodiesterase 4B",,,0,0.5536,1,0
+DC2699,tolmetin,,Nuclear factor NF-kappa-B p105 subunit,,,0,0.7312,1,0
+DC1969,normethadone,,Cytochrome P450 1A2,,,0,0.8304,1,0
+DC3123,cyclomethycaine,,Neuronal acetylcholine receptor; alpha4/beta4,,,0,0.6748,1,0
+DC3170,eburnamonine,,Phosphodiesterase 4,,,0,0.6419,1,0
+DC4609,testosterone enantate,,Thymidylate synthase,,,0,0.7889,1,0
+DC4507,halcinonide,,Tissue-type plasminogen activator,,,0,0.5222,1,0
+DC2661,tigecycline,,Solute carrier family 22 member 1,,,0,0.6949,1,0
+DC4501,armodafinil,,P-selectin,,,0,0.5526,1,0
+DC5400,remimazolam,,Transmembrane protein 97,,,0,0.6198,1,0
+DC1432,indalpine,,Synaptic vesicular amine transporter,,,0,0.8531,1,0
+DC953,doxapram,,Alcohol dehydrogenase [NADP(+)],,,0,0.715,1,0
+DC2443,silymarin,,72 kDa type IV collagenase,,,0,0.5297,1,0
+DC1098,etidronic acid,,Potassium voltage-gated channel subfamily H member 2,,,0,0.8955,1,0
+DC48,acenocoumarol,,Histone-lysine N-methyltransferase EZH2,,,0,0.715,1,0
+DC1272,galantamine,,Adenosine receptor A1,,,0,0.8913,1,0
+DC2540,sultiame,,Thymidylate synthase,,,0,0.7233,1,0
+DC4106,sucralfate,,DNA (cytosine-5)-methyltransferase 1,,,0,0.6954,1,0
+DC4959,efalizumab,,DNA repair protein RAD52 homolog,,,0,0.5752,1,0
+DC1976,buphenine,,Cannabinoid receptor 1,,,0,0.8876,1,0
+DC3875,benzamycin,,D(2) dopamine receptor,,,0,0.631,1,0
+DC729,colforsin daropate,,DNA (cytosine-5)-methyltransferase 3A,,,0,0.7025,1,0
+DC1154,fenoprofen,,Corticosteroid-binding globulin,,,0,0.7191,1,0
+DC2650,tianeptine,,Gamma-aminobutyric acid receptor subunit rho-1,,,0,0.6873,1,0
+DC584,cevimeline,,Heat-stable enterotoxin receptor,,,0,0.692,1,0
+DC729,colforsin daropate,,5-hydroxytryptamine receptor 1B,,,0,0.5949,1,0
+DC4285,Florbetapir F-18,,Retinoic acid receptor RXR-alpha,,,0,0.5106,1,0
+DC648,cinalukast,,Sodium channel alpha subunit,,,0,0.5875,1,0
+DC3521,rasagiline,,Type I iodothyronine deiodinase,,,0,0.8288,1,0
+DC3961,ilaprazole,,Sodium channel subunit beta-3,,,0,0.7709,1,0
+DC4248,pyrithione zinc,,Amine oxidase [flavin-containing] A,,,0,0.8127,1,0
+DC2013,oxaprozin,,"cGMP-specific 3',5'-cyclic phosphodiesterase",,,0,0.6134,1,0
+DC2712,trandolapril,,Vasopressin V2 receptor,,,0,0.5035,1,0
+DC1268,gadoteridol,,Transketolase,,,0,0.7943,1,0
+DC1383,hycanthone,,DNA topoisomerase 2-alpha,,,0,0.7193,1,0
+DC419,budesonide,,Solute carrier family 23 member 1,,,0,0.8188,1,0
+DC3871,artemisinin,,Bcl2-associated agonist of cell death,,,0,0.7501,1,0
+DC3123,cyclomethycaine,,Neuronal acetylcholine receptor; alpha4/beta4,,,0,0.7094,1,0
+DC2718,treosulfan,,Proprotein convertase subtilisin/kexin type 7,,,0,0.5068,1,0
+DC1640,mazindol,,Solute carrier family 22 member 1,,,0,0.881,1,0
+DC1612,lovastatin,,Sodium channel subunit beta-4,,,0,0.6413,1,0
+DC4984,ibritumomab tiuxetan,,Cytochrome P450 3A,,,0,0.8756,1,0
+DC470,camphor,,Taste receptor type 2 member 43,,,0,0.801,1,0
+DC3369,naphazoline,,UDP-glucuronosyltransferase 1-5,,,0,0.5616,1,0
+DC2080,penfluridol,,Histone deacetylase 8,,,0,0.5897,1,0
+DC4950,abciximab,,Alpha-1-acid glycoprotein 1,,,0,0.7786,1,0
+DC4143,darunavir,,G-protein coupled receptor 35,,,0,0.6599,1,0
+DC115,alfuzosin,,Aldo-keto reductase family 1 member C4,,,0,0.714,1,0
+DC1649,meclozine,,FAD-linked sulfhydryl oxidase ALR,,,0,0.7218,1,0
+DC2002,oteracil,,Apoptosis regulator Bcl-W,,,0,0.8099,1,0
+DC2757,trimetrexate,,Voltage-dependent L-type calcium channel subunit alpha-1C,,,0,0.9024,1,0
+DC4314,aceclidine,,Muscarinic acetylcholine receptor M5,,,0,0.7041,1,0
+DC3434,phenacaine,,GABA-A receptor; benzodiazepine binding site,,,0,0.6411,1,0
+DC2107,periciazine,,Prostaglandin G/H synthase 2,,,0,0.6688,1,0
+DC2877,zuclopenthixol,,UDP-glucuronosyltransferase 1-9,,,0,0.8122,1,0
+DC5101,galsulfase,,Histone H1.0,,,0,0.7264,1,0
+DC808,deptropine,,Sodium channel alpha subunit,,,0,0.611,1,0
+DC1875,nalidixic acid,,5-hydroxytryptamine receptor 2C,,,0,0.7307,1,0
+DC3591,tetryzoline,,Multidrug resistance protein 1,,,0,0.8403,1,0
+DC4504,hydrocortisone valerate,,Adenosine receptor A1,,,0,0.5525,1,0
+DC3018,benzethonium,,Proton-coupled folate transporter,,,0,0.5196,1,0
+DC2294,proparacaine,,Sclerostin,,,0,0.7697,1,0
+DC5694,adagrasib,,5-hydroxytryptamine receptor 2A,,,0,0.5634,1,0
+DC829,dexamethasone valerate,,Deoxyhypusine hydroxylase,,,0,0.5649,1,0
+DC4,levobupivacaine,,"DNA topoisomerase I, mitochondrial",,,0,0.7427,1,0
+DC2672,tinoridine,,Signal transducer and activator of transcription 3,,,0,0.7467,1,0
+DC2228,polythiazide,,Vitamin K-dependent gamma-carboxylase,,,0,0.5336,1,0
+DC1837,moperone,,Prostaglandin F2-alpha receptor,,,0,0.5732,1,0
+DC4151,silodosin,,Glutathione synthetase,,,0,0.6909,1,0
+DC5049,asfotase alfa,,Tyrosine 3-monooxygenase,,,0,0.5089,1,0
+DC2703,tolperisone,,Dihydropyrimidinase-related protein 2,,,0,0.616,1,0
+DC1212,fluphenazine,,Alpha-2B adrenergic receptor,,,0,0.9133,1,0
+DC2132,pheniramine,,Solute carrier family 22 member 12,,,0,0.8101,1,0
+DC3366,moxestrol,,Aldo-keto reductase family 1 member C2,,,0,0.6902,1,0
+DC2451,sitosterol,,Neuronal acetylcholine receptor subunit alpha-3,,,0,0.6332,1,0
+DC5141,alteplase,,Voltage-gated potassium channel,,,0,0.5179,1,0
+DC2801,valganciclovir,,Cholesterol 24-hydroxylase,,,0,0.9311,1,0
+DC437,buspirone,,"3-beta-hydroxysteroid-Delta(8),Delta(7)-isomerase",,,0,0.6663,1,0
+DC2261,prenylamine,,Sex hormone-binding globulin,,,0,0.612,1,0
+DC2046,palonosetron,,Solute carrier organic anion transporter family member 2B1,,,0,0.5859,1,0
+DC839,dexrazoxane,,Solute carrier family 22 member 1,,,0,0.8335,1,0
+DC179,amisulpride,,ATP-binding cassette sub-family G member 2,,,0,0.7958,1,0
+DC2113,perphenazine,,Glucocorticoid receptor,,,0,0.596,1,0
+DC1762,methyldopa,,GABA-A receptor; benzodiazepine binding site,,,0,0.6951,1,0
+DC1526,ketobemidone,,Melanocortin receptor 5,,,0,0.6955,1,0
+DC948,dopexamine,,Thromboxane-A synthase,,,0,0.8284,1,0
+DC1539,lamivudine,,"7,8-dihydro-8-oxoguanine triphosphatase",,,0,0.7101,1,0
+DC516,carfenazine,,Cytochrome P450 1B1,,,0,0.7927,1,0
+DC4631,nitroprusside,,5-hydroxytryptamine receptor 2A,,,0,0.6727,1,0
+DC1141,felbinac,,Beta-1 adrenergic receptor,,,0,0.9046,1,0
+DC4300,elvitegravir,,Sphingomyelin phosphodiesterase,,,0,0.5628,1,0
+DC1689,mepenzolate,,"cAMP-specific 3',5'-cyclic phosphodiesterase 4B",,,0,0.7142,1,0
+DC2173,pinacidil,,Nischarin,,,0,0.8445,1,0
+DC4109,dronabinol,,Arachidonate 5-lipoxygenase,,,0,0.6666,1,0
+DC82,acrivastine,,Potassium voltage-gated channel subfamily A member 5,,,0,0.9213,1,0
+DC2123,phenelzine,,Carbonic anhydrase 4,,,0,0.8344,1,0
+DC1123,exenatide,,Histone-lysine N-methyltransferase EZH2,,,0,0.6327,1,0
+DC533,cefdinir,,ATP-sensitive inward rectifier potassium channel 10,,,0,0.7311,1,0
+DC808,deptropine,,Arachidonate 5-lipoxygenase,,,0,0.7796,1,0
+DC87,adapalene,,"Steroid 17-alpha-hydroxylase/17,20 lyase",,,0,0.6524,1,0
+DC4474,trisodium citrate dihydrate,,Alpha-1B adrenergic receptor,,,0,0.6612,1,0
+DC4942,lenvatinib,,"Phosphatidylinositol 3,4,5-trisphosphate 5-phosphatase 2",,,0,0.7444,1,0
+DC384,bitolterol,,High mobility group protein B1,,,0,0.7671,1,0
+DC5526,diprenorphine,,Cocaine- and amphetamine-regulated transcript protein,,,0,0.608,1,0
+DC1571,levomethadyl acetate,,5-hydroxytryptamine receptor 3A,,,0,0.9453,1,0
+DC862,dichloroacetic acid,,Aryl hydrocarbon receptor,,,0,0.7241,1,0
+DC2878,ziconotide,,Sex hormone-binding globulin,,,0,0.8433,1,0
+DC579,ceruletide,,Neuronal acetylcholine receptor; alpha3/alpha6/beta2/beta3,,,0,0.5397,1,0
+DC332,benzthiazide,,Soluble guanylate cyclase,,,0,0.6862,1,0
+DC605,chloroprocaine,,"Calcium/calmodulin-dependent 3',5'-cyclic nucleotide phosphodiesterase 1B",,,0,0.6385,1,0
+DC1513,itraconazole,,DNA polymerase alpha catalytic subunit,,,0,0.623,1,0
+DC2408,roxatidine acetate,,Voltage-dependent N-type calcium channel subunit alpha-1B,,,0,0.7628,1,0
+DC1874,nalbuphine,,D(2) dopamine receptor,,,0,0.5251,1,0
+DC239,argatroban,,Transcriptional enhancer factor TEF-1,,,0,0.5978,1,0
+DC2299,propiram,,Platelet-activating factor receptor,,,0,0.8082,1,0
+DC2130,phenindione,,Cytochrome P450 2C19,,,0,0.663,1,0
+DC4006,oxitriptan,,Multidrug resistance-associated protein 4,,,0,0.6309,1,0
+DC2165,piketoprofen,,Voltage-dependent L-type calcium channel subunit alpha-1C,,,0,0.8687,1,0
+DC2820,viloxazine,,"Alkaline phosphatase, tissue-nonspecific isozyme",,,0,0.7387,1,0
+DC4234,peginesatide,,Potassium/sodium hyperpolarization-activated cyclic nucleotide-gated channel 1,,,0,0.577,1,0
+DC4616,methylnaltrexone,,Voltage-dependent calcium channel gamma-1 subunit,,,0,0.7841,1,0
+DC4436,aluminium chloride,,Solute carrier family 22 member 1,,,0,0.5236,1,0
+DC854,diazoxide,,Thromboxane-A synthase,,,0,0.7306,1,0
+DC2293,propantheline,,Sodium channel alpha subunit,,,0,0.8344,1,0
+DC1406,ibudilast,,Proprotein convertase subtilisin/kexin type 7,,,0,0.7573,1,0
+DC1383,hycanthone,,Peroxisomal acyl-coenzyme A oxidase 1,,,0,0.6702,1,0
+DC826,dexamethasone acetate,,Synaptic vesicular amine transporter,,,0,0.8313,1,0
+DC358,bethanechol,,"Steroid 17-alpha-hydroxylase/17,20 lyase",,,0,0.8413,1,0
+DC1009,enflurane,,Sodium-dependent noradrenaline transporter,,,0,0.7732,1,0
+DC4970,natalizumab,,Vitamin D3 receptor,,,0,0.7962,1,0
+DC2115,phenacetin,,"Phosphatidylinositol 4,5-bisphosphate 3-kinase catalytic subunit delta isoform",,,0,0.5705,1,0
+DC1903,netilmicin,,5-hydroxytryptamine receptor 3B,,,0,0.6325,1,0
+DC3912,clorotepine,,Matrix metalloproteinase-9,,,0,0.5422,1,0
+DC1989,omapatrilat,,Heat shock protein HSP 90-beta,,,0,0.5125,1,0
+DC406,bromopride,,NAD(P)H dehydrogenase [quinone] 1,,,0,0.5949,1,0
+DC659,ciprofloxacin,,Neuronal acetylcholine receptor; alpha4/beta4,,,0,0.6818,1,0
+DC2769,troleandomycin,,"Sulfide:quinone oxidoreductase, mitochondrial",,,0,0.6231,1,0
+DC329,benzphetamine,,Solute carrier family 12 member 3,,,0,0.8753,1,0
+DC2537,sulpiride,,Peptidyl-prolyl cis-trans isomerase FKBP5,,,0,0.7274,1,0
+DC1988,olsalazine,,Cytosolic phospholipase A2,,,0,0.7052,1,0
+DC1562,levamfetamine,,Carbonic anhydrase 14,,,0,0.6249,1,0
+DC1101,etilefrine,,"Phosphatidylinositol 4,5-bisphosphate 3-kinase catalytic subunit gamma isoform",,,0,0.753,1,0
+DC1933,nilutamide,,5-hydroxytryptamine receptor 2B,,,0,0.5275,1,0
+DC1101,etilefrine,,Acid ceramidase,,,0,0.7157,1,0
+DC763,cycrimine,,"Nitric oxide synthase, inducible",,,0,0.5964,1,0
+DC115,alfuzosin,,Nuclear receptor subfamily 2 group E member 1,,,0,0.9398,1,0
+DC707,cloperastine,,Voltage-dependent calcium channel gamma-1 subunit,,,0,0.6291,1,0
+DC1965,norethynodrel,,Solute carrier organic anion transporter family member 2B1,,,0,0.6429,1,0
+DC2638,thiotepa,,"7,8-dihydro-8-oxoguanine triphosphatase",,,0,0.7885,1,0
+DC4523,quinine,,Voltage-dependent calcium channel subunit alpha-2/delta-2,,,0,0.9109,1,0
+DC874,diethylpropion,,Glucagon-like peptide 1 receptor,,,0,0.5308,1,0
+DC4807,riociguat,,Cyclin-dependent kinase 1,,,0,0.5928,1,0
+DC2769,troleandomycin,,Cytochrome P450 3A4,,,0,0.9464,1,0
+DC4491,ferrous gluconate,,Cytochrome P450 3A,,,0,0.6739,1,0
+DC2376,rifabutin,,Multidrug resistance-associated protein 5,,,0,0.6643,1,0
+DC5491,mirogabalin,,Muscle-type nicotinic acetylcholine receptor,,,0,0.5344,1,0
+DC5461,sotorasib,,Muscle-type nicotinic acetylcholine receptor,,,0,0.5542,1,0
+DC1971,nortriptyline,,Voltage-gated potassium channel,,,0,0.6888,1,0
+DC946,donepezil,,CAMPATH-1 antigen,,,0,0.5214,1,0
+DC4135,lisdexamfetamine,,7-alpha-hydroxycholest-4-en-3-one 12-alpha-hydroxylase,,,0,0.5297,1,0
+DC2602,terizidone,,GABA-A receptor alpha-1/beta-2/gamma-2,,,0,0.5991,1,0
+DC1611,loteprednol etabonate,,Delta-type opioid receptor,,,0,0.7359,1,0
+DC1782,metoclopramide,,"Solute carrier family 2, facilitated glucose transporter member 1",,,0,0.5869,1,0
+DC2729,triazolam,,GABA A receptor alpha-4/beta-3/delta,,,0,0.8505,1,0
+DC2856,zalcitabine,,Thromboxane-A synthase,,,0,0.9479,1,0
+DC1999,orphenadrine,,Histone deacetylase 2,,,0,0.7546,1,0
+DC4417,diethyl ether,,ATP-binding cassette sub-family C member 11,,,0,0.6436,1,0
+DC4968,certolizumab pegol,,Splicing factor 3B subunit 3,,,0,0.9081,1,0
+DC5400,remimazolam,,Histone deacetylase 8,,,0,0.523,1,0
+DC2845,voglibose,,Prostaglandin E2 receptor EP1 subtype,,,0,0.5858,1,0
+DC3542,saralasin,,Neuronal acetylcholine receptor; alpha4/beta4,,,0,0.6752,1,0
+DC224,antazoline,,"Phosphatidylinositol 4,5-bisphosphate 3-kinase catalytic subunit delta isoform",,,0,0.6181,1,0
+DC701,clomipramine,,Solute carrier family 22 member 11,,,0,0.7512,1,0
+DC2075,pemoline,,Voltage-gated potassium channel,,,0,0.598,1,0
+DC2100,perazine,,G protein-activated inward rectifier potassium channel 2,,,0,0.8179,1,0
+DC2439,sevoflurane,,Aldo-keto reductase family 1 member C3,,,0,0.5811,1,0
+DC2168,pimecrolimus,,ATP-sensitive inward rectifier potassium channel 1,,,0,0.6983,1,0
+DC2036,oxyphenbutazone,,Deoxyhypusine hydroxylase,,,0,0.6961,1,0
+DC1207,fluorescein,,Nuclear factor NF-kappa-B p105 subunit,,,0,0.6902,1,0
+DC1054,esmolol,,Methionine aminopeptidase 2,,,0,0.7203,1,0
+DC718,clotiazepam,,Tissue-type plasminogen activator,,,0,0.5335,1,0
+DC4401,casopitant,,Mitogen-activated protein kinase 1,,,0,0.5446,1,0
+DC5329,bremelanotide,,Gonadotropin-releasing hormone receptor,,,0,0.6889,1,0
+DC5176,pegloticase,,Phosphodiesterase 6,,,0,0.6147,1,0
+DC1027,epinastine,,5-hydroxytryptamine receptor 7,,,0,0.5602,1,0
+DC3959,hydrocortisone butyrate,,Androgen receptor,,,0,0.7436,1,0
+DC3290,oxyquinoline,,Sex hormone-binding globulin,,,0,0.7269,1,0
+DC3377,neridronic acid,,Neuronal acetylcholine receptor subunit alpha-10,,,0,0.8291,1,0
+DC3927,androstanolone,,Synaptic vesicular amine transporter,,,0,0.5543,1,0
+DC2658,tienilic acid,,Transmembrane protein 97,,,0,0.8269,1,0
+DC43,aceclofenac,,G-protein coupled receptor 39,,,0,0.5594,1,0
+DC897,diltiazem,,Dipeptidase 1,,,0,0.7455,1,0
+DC1285,gemfibrozil,,Voltage-dependent T-type calcium channel subunit alpha-1H,,,0,0.78,1,0
+DC1113,etoricoxib,,"DNA topoisomerase I, mitochondrial",,,0,0.6623,1,0
+DC2878,ziconotide,,Aldo-keto reductase family 1 member C2,,,0,0.7789,1,0
+DC897,diltiazem,,Carbonic anhydrase 1,,,0,0.6377,1,0
+DC2552,tacrolimus,,Histone deacetylase 2,,,0,0.7526,1,0
+DC609,chlorothiazide,,"Calcium/calmodulin-dependent 3',5'-cyclic nucleotide phosphodiesterase 1B",,,0,0.6126,1,0
+DC4055,baicalin,,Corticosteroid 11-beta-dehydrogenase isozyme 1,,,0,0.5293,1,0
+DC5723,ozoralizumab,,Adenosine receptor A3,,,0,0.6882,1,0
+DC2074,pemirolast,,5-hydroxytryptamine receptor 3A,,,0,0.8925,1,0
+DC4698,potassium perchlorate,,Sodium-dependent dopamine transporter,,,0,0.8524,1,0
+DC403,bromocriptine,,Cathepsin L1,,,0,0.5238,1,0
+DC5510,oteseconazole,,Lethal(3)malignant brain tumor-like protein 1,,,0,0.7322,1,0
+DC1187,fluconazole,,Multidrug resistance-associated protein 6,,,0,0.7243,1,0
+DC2236,pramlintide,,GABA A receptor alpha-3/beta-1/gamma-2,,,0,0.7053,1,0
+DC5354,givosiran,,"Solute carrier family 2, facilitated glucose transporter member 1",,,0,0.5379,1,0
+DC2820,viloxazine,,Peroxisome proliferator-activated receptor gamma,,,0,0.6739,1,0
+DC2389,risperidone,,Estrogen receptor beta,,,0,0.5147,1,0
+DC4207,lithium carbonate,,Sterol regulatory element-binding protein 1,,,0,0.9074,1,0
+DC1987,olprinone,,Nischarin,,,0,0.8301,1,0
+DC862,dichloroacetic acid,,Canalicular multispecific organic anion transporter 1,,,0,0.7791,1,0
+DC2416,salicylic acid,,Kir3.1/Kir3.4,,,0,0.6102,1,0
+DC2113,perphenazine,,Sodium/calcium exchanger 1,,,0,0.6584,1,0
+DC1392,hydroflumethiazide,,Aromatase,,,0,0.878,1,0
+DC995,eletriptan,,Vitamin K epoxide reductase complex subunit 1,,,0,0.8158,1,0
+DC2362,regadenoson,,Ig epsilon chain C region,,,0,0.7413,1,0
+DC2032,oxymetazoline,,Voltage-dependent T-type calcium channel subunit alpha-1H,,,0,0.8767,1,0
+DC1659,medroxyprogesterone,,Vitamin D 25-hydroxylase,,,0,0.7715,1,0
+DC5296,duvelisib,,Cytochrome P450 2C9,,,0,0.8246,1,0
+DC373,biotin,,Protein cereblon,,,0,0.8131,1,0
+DC2299,propiram,,Methionine aminopeptidase 2,,,0,0.6433,1,0
+DC1130,famprofazone,,"25-hydroxyvitamin D-1 alpha hydroxylase, mitochondrial",,,0,0.7087,1,0
+DC329,benzphetamine,,Calmodulin,,,0,0.5721,1,0
+DC610,chlorotrianisene,,"Sulfonylurea receptor 1, Kir6.2",,,0,0.5501,1,0
+DC626,chlorzoxazone,,ATP-sensitive inward rectifier potassium channel 8,,,0,0.6625,1,0
+DC4996,romiplostim,,Solute carrier family 23 member 2,,,0,0.6254,1,0
+DC4704,semustine,,Phosphodiesterase 3,,,0,0.8184,1,0
+DC1982,olanzapine,,Transketolase-like protein 1,,,0,0.7476,1,0
+DC2546,suprofen,,Hemoglobin HbA,,,0,0.5925,1,0
+DC371,bimatoprost,,Cytochrome P450 3A4,,,0,0.9581,1,0
+DC5467,belumosudil,,Histone deacetylase 2,,,0,0.8941,1,0
+DC1729,acetylmethadol,,Endothelin B receptor,,,0,0.5807,1,0
+DC1596,lomustine,,"Sodium channel alpha subunits; brain (Types I, II, III)",,,0,0.5727,1,0
+DC1402,hyoscyamine,,Cytotoxic T-lymphocyte protein 4,,,0,0.5474,1,0
+DC1202,flunitrazepam,,Sodium-coupled monocarboxylate transporter 1,,,0,0.8254,1,0
+DC4908,acotiamide,,Glutamate NMDA receptor; GRIN1/GRIN2A,,,0,0.563,1,0
+DC4902,imidafenacin,,Beta-3 adrenergic receptor,,,0,0.835,1,0
+DC4474,trisodium citrate dihydrate,,Cytochrome P450 2D6,,,0,0.8897,1,0
+DC2624,thiamphenicol,,Histone-lysine N-methyltransferase EHMT1,,,0,0.5207,1,0
+DC1786,metoprolol,,Calmodulin,,,0,0.6475,1,0
+DC983,econazole,,Prostaglandin E2 receptor EP1 subtype,,,0,0.7678,1,0
+DC3875,benzamycin,,Carbonic anhydrase 1,,,0,0.7122,1,0
+DC4956,bevacizumab,,"Dual 3',5'-cyclic-AMP and -GMP phosphodiesterase 11A",,,0,0.566,1,0
+DC431,levobunolol,,"1,25-dihydroxyvitamin D(3) 24-hydroxylase, mitochondrial",,,0,0.6737,1,0
+DC2717,trazodone,,Potassium/sodium hyperpolarization-activated cyclic nucleotide-gated channel 3,,,0,0.6104,1,0
+DC94,adiphenine,,Vitamin D 25-hydroxylase,,,0,0.5449,1,0
+DC4165,alcaftadine,,Mineralocorticoid receptor,,,0,0.7685,1,0
+DC2704,tolrestat,,Sodium channel alpha subunit,,,0,0.8643,1,0
+DC2140,phentermine,,Cathepsin L2,,,0,0.6201,1,0
+DC1283,gemcitabine,,Trypsin,,,0,0.6897,1,0
+DC2735,triclofos,,Muscle-type nicotinic acetylcholine receptor,,,0,0.6637,1,0
+DC1101,etilefrine,,Glutamate NMDA receptor; GRIN1/GRIN2A,,,0,0.5924,1,0
+DC5240,polmacoxib,,Multidrug resistance-associated protein 5,,,0,0.8786,1,0
+DC2870,zolpidem,,Alpha-1D adrenergic receptor,,,0,0.6346,1,0
+DC4982,vedolizumab,,Alpha-synuclein,,,0,0.6069,1,0
+DC396,brinzolamide,,GABA-A receptor; benzodiazepine binding site,,,0,0.5458,1,0
+DC1417,idoxuridine,,Alpha-2B adrenergic receptor,,,0,0.8131,1,0
+DC2718,treosulfan,,Voltage-gated potassium channel,,,0,0.5212,1,0
+DC642,cilnidipine,,Caspase-1,,,0,0.5288,1,0
+DC1078,ethchlorvynol,,GABA-A receptor; benzodiazepine binding site,,,0,0.9693,1,0
+DC1111,etoperidone,,Nuclear receptor subfamily 1 group I member 2,,,0,0.8399,1,0
+DC5047,saroglitazar,,Prostaglandin G/H synthase 1,,,0,0.7824,1,0
+DC2784,tyramine,,"Calcium/calmodulin-dependent 3',5'-cyclic nucleotide phosphodiesterase 1A",,,0,0.5906,1,0
+DC2435,sertindole,,Transient receptor potential cation channel subfamily M member 8,,,0,0.5232,1,0
+DC1837,moperone,,Mineralocorticoid receptor,,,0,0.6422,1,0
+DC5049,asfotase alfa,,Delta-type opioid receptor,,,0,0.6864,1,0
+DC2781,tubocurarine,,Muscle-type nicotinic acetylcholine receptor,,,0,0.8572,1,0
+DC5143,opicapone,,GABA A receptor alpha-4/beta-3/delta,,,0,0.5545,1,0
+DC134,alpidem,,Sodium/bile acid cotransporter,,,0,0.5602,1,0
+DC3188,estrone,,Interleukin-6,,,0,0.7539,1,0
+DC2079,penciclovir,,CAMPATH-1 antigen,,,0,0.5738,1,0
+DC4994,rasburicase,,Solute carrier family 12 member 1,,,0,0.8124,1,0
+DC1595,lomerizine,,Voltage-dependent L-type calcium channel subunit alpha-1F,,,0,0.9058,1,0
+DC2480,stiripentol,,Glycine Receptor,,,0,0.7479,1,0
+DC818,desogestrel,,Serum albumin,,,0,0.6027,1,0
+DC1101,etilefrine,,Solute carrier family 12 member 3,,,0,0.8814,1,0
+DC158,amiloride,,Protein tyrosine phosphatase type IVA 1,,,0,0.6883,1,0
+DC192,amoxicillin,,Intermediate conductance calcium-activated potassium channel protein 4,,,0,0.738,1,0
+DC4053,garenoxacin,,Solute carrier organic anion transporter family member 2B1,,,0,0.5537,1,0
+DC136,alprazolam,,Cytochrome P450 1A2,,,0,0.8611,1,0
+DC5395,fluoroestradiol F 18,,Cytochrome P450 2C19,,,0,0.7974,1,0
+DC2388,levisoprenaline,,Heat-stable enterotoxin receptor,,,0,0.5478,1,0
+DC1030,epirubicin,,Multidrug resistance-associated protein 7,,,0,0.6396,1,0
+DC1897,neostigmine,,Phosphodiesterase 6,,,0,0.6219,1,0
+DC1920,nicotine,,Prostaglandin G/H synthase 1,,,0,0.7133,1,0
+DC5072,elotuzumab,,Equilibrative nucleoside transporter 1,,,0,0.6558,1,0
+DC3207,ethylmorphine,,5-hydroxytryptamine receptor 2A,,,0,0.6992,1,0
+DC2056,papaverine,,Prostaglandin E2 receptor EP3 subtype,,,0,0.7506,1,0
+DC1298,glibornuride,,ATP-binding cassette sub-family C member 11,,,0,0.6472,1,0
+DC4749,ospemifene,,ATP-sensitive inward rectifier potassium channel 1,,,0,0.5775,1,0
+DC2504,sulfaethidole,,Delta-type opioid receptor,,,0,0.598,1,0
+DC3502,prucalopride,,Multidrug resistance protein 1,,,0,0.8126,1,0
+DC252,asulacrine,,Proton-coupled folate transporter,,,0,0.7555,1,0
+DC5337,risankizumab,,Neuronal acetylcholine receptor; alpha4/beta4,,,0,0.6682,1,0
+DC2202,piribedil,,Platelet-activating factor receptor,,,0,0.9369,1,0
+DC1475,ipratropium,,Voltage-dependent L-type calcium channel subunit alpha-1F,,,0,0.6776,1,0
+DC605,chloroprocaine,,Histone deacetylase 2,,,0,0.8677,1,0
+DC1967,norfloxacin,,Aryl hydrocarbon receptor,,,0,0.6426,1,0
+DC2049,aminobenzoic acid,,Protein arginine N-methyltransferase 1,,,0,0.6054,1,0
+DC1708,mercaptopurine,,Short transient receptor potential channel 3,,,0,0.6069,1,0
+DC3574,sulmazole,,Phosphodiesterase 3,,,0,0.8885,1,0
+DC1942,nisoldipine,,Cytosolic endo-beta-N-acetylglucosaminidase,,,0,0.8544,1,0
+DC2330,pyridostigmine,,Aquaporin-1,,,0,0.7608,1,0
+DC2848,xamoterol,,DNA topoisomerase 2-alpha,,,0,0.6051,1,0
+DC172,aminopicoline,,"Sodium channel alpha subunits; brain (Types I, II, III)",,,0,0.8507,1,0
+DC5452,loncastuximab tesirine,,Nuclear receptor subfamily 1 group I member 2,,,0,0.5493,1,0
+DC5315,fremanezumab,,Renin,,,0,0.6175,1,0
+DC5143,opicapone,,Sodium channel alpha subunit,,,0,0.6037,1,0
+DC5283,fosnetupitant,,Potassium voltage-gated channel subfamily H member 2,,,0,0.8279,1,0
+DC2307,propylparaben,,"Cytochrome P450 11B2, mitochondrial",,,0,0.5853,1,0
+DC1739,methaqualone,,Histamine H1 receptor,,,0,0.5715,1,0
+DC1500,isopropamide,,Muscarinic acetylcholine receptor M5,,,0,0.7473,1,0
+DC5687,ferric derisomaltose,,Canalicular multispecific organic anion transporter 2,,,0,0.6598,1,0
+DC4911,chlormerodrin,,"Sodium channel alpha subunits; brain (Types I, II, III)",,,0,0.5427,1,0
+DC4953,daclizumab,,Potassium voltage-gated channel subfamily H member 2,,,0,0.7253,1,0
+DC4977,siltuximab,,Interleukin-4,,,0,0.5611,1,0
+DC4494,gadodiamide,,"Serine beta-lactamase-like protein LACTB, mitochondrial",,,0,0.7283,1,0
+DC2680,tirofiban,,Corticosteroid-binding globulin,,,0,0.8293,1,0
+DC1658,medroxalol,,Interleukin-5,,,0,0.8954,1,0
+DC401,bromfenac,,Liver carboxylesterase 1,,,0,0.5705,1,0
+DC4482,corbadrine,,Neuronal acetylcholine receptor; alpha4/beta4,,,0,0.7826,1,0
+DC222,anisindione,,Bile salt export pump,,,0,0.5958,1,0
+DC3021,bergapten,,Cytochrome P450 2D6,,,0,0.8561,1,0
+DC1231,folic acid,,Toll-like receptor 9,,,0,0.6518,1,0
+DC5246,guselkumab,,"Sodium channel alpha subunits; brain (Types I, II, III)",,,0,0.7747,1,0
+DC2684,tobramycin,,GABA-B receptor,,,0,0.6283,1,0
+DC4238,nitrous oxide,,Serine/threonine-protein phosphatase 2B catalytic subunit gamma isoform,,,0,0.9054,1,0
+DC884,dihydralazine,,"Cytochrome P450 11B2, mitochondrial",,,0,0.69,1,0
+DC4353,bilastine,,Cytosolic phospholipase A2,,,0,0.5498,1,0
+DC1349,ulobetasol propionate,,Histone deacetylase 8,,,0,0.889,1,0
+DC1923,nifekalant,,Type-1 angiotensin II receptor,,,0,0.7351,1,0
+DC374,biperiden,,Soluble guanylate cyclase,,,0,0.5751,1,0
+DC2330,pyridostigmine,,TAR DNA-binding protein 43,,,0,0.7934,1,0
+DC5465,finerenone,,Neuronal acetylcholine receptor; alpha4/beta4,,,0,0.7188,1,0
+DC1475,ipratropium,,Soluble guanylate cyclase,,,0,0.5566,1,0
+DC4773,ethyl hydroxybenzoate,,Lactoylglutathione lyase,,,0,0.5164,1,0

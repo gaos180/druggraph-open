@@ -1,0 +1,46 @@
+{
+  "disease_gnn": {
+    "model": "disease_gnn",
+    "protocol": "transductive held-out (80/20)",
+    "n_positives": 24790,
+    "n_test": 9916,
+    "roc_auc": 0.9845,
+    "pr_auc_ap": 0.983,
+    "confusion_at_0.5": {
+      "tp": 4779,
+      "fp": 446,
+      "tn": 4512,
+      "fn": 179
+    },
+    "accuracy": 0.937,
+    "precision": 0.9146,
+    "recall": 0.9639,
+    "correlation_prob_vs_ot_score": {
+      "pearson": -0.0233,
+      "spearman": -0.071,
+      "n": 4958
+    },
+    "n_correct": 9291,
+    "n_incorrect": 625
+  },
+  "dti_gnn": {
+    "model": "dti_gnn",
+    "protocol": "transductive held-out (80/20)",
+    "n_positives": 16947,
+    "n_test": 6780,
+    "roc_auc": 0.9757,
+    "pr_auc_ap": 0.974,
+    "confusion_at_0.5": {
+      "tp": 3200,
+      "fp": 333,
+      "tn": 3057,
+      "fn": 190
+    },
+    "accuracy": 0.9229,
+    "precision": 0.9057,
+    "recall": 0.944,
+    "correlation_prob_vs_ot_score": {},
+    "n_correct": 6257,
+    "n_incorrect": 523
+  }
+}
