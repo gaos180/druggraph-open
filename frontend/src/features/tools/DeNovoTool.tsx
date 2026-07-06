@@ -24,7 +24,7 @@ export default function DeNovoTool() {
   usePageTitle('Diseño de novo');
   const [seed, setSeed] = useState('');
   const [mode, setMode] = useState<'grow' | 'mutate' | 'link'>('mutate');
-  const [engine, setEngine] = useState<'crem' | 'reinvent'>('crem');
+  const [engine, setEngine] = useState<'crem' | 'synthemol' | 'reinvent'>('crem');
   const [n, setN] = useState(20);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -60,7 +60,7 @@ export default function DeNovoTool() {
     <div className="max-w-5xl">
       <HandTitle className="text-2xl flex items-center gap-2"><FlaskConical className="w-6 h-6 text-amber-800" /> Diseño de Novo</HandTitle>
       <p className="text-stone-500 text-[13px] font-hand mt-1 mb-5">
-        Genera moléculas nuevas a partir de una semilla y las filtra por propiedades drug-like (QED, sintetizabilidad, similitud). Motor por defecto <b>CReM</b> (Polishchuk 2020); opción <b>REINVENT4</b> (AstraZeneca 2024).
+        Genera moléculas nuevas y las filtra por propiedades drug-like (QED, sintetizabilidad, similitud). Motor por defecto <b>CReM</b> (Polishchuk 2020); opciones <b>SyntheMol</b> (Stanford, <i>Nat. Mach. Intell.</i> 2024 — síntesis garantizada) y <b>REINVENT4</b> (AstraZeneca 2024). SyntheMol ignora la semilla y el modo: hace búsqueda combinatoria optimizando un predictor de bioactividad.
       </p>
 
       <div className={cardCls}>
@@ -82,6 +82,7 @@ export default function DeNovoTool() {
             <label className="text-[11px] text-stone-500 block mb-1 font-mono">MOTOR</label>
             <select className={inpCls} value={engine} onChange={e => setEngine(e.target.value as any)}>
               <option value="crem">CReM</option>
+              <option value="synthemol">SyntheMol</option>
               <option value="reinvent">REINVENT4</option>
             </select>
           </div>

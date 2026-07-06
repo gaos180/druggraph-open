@@ -12,6 +12,13 @@
 torch
 transformers
 
+# ── Tier 4.4c — motor generativo SyntheMol (de novo, Stanford, MIT) ──
+# Búsqueda combinatoria (MCTS/RL) sobre bloques comprables + reacciones reales: síntesis
+# garantizada por construcción. Requiere además descargar la biblioteca de bloques (Enamine
+# REAL/WuXi) y entrenar un predictor de bioactividad (Chemprop). Ver scripts/build_synthemol_space.py.
+# Trae chemprop + chemfunc. https://github.com/swansonk14/SyntheMol
+synthemol
+
 # ── Tier 4.4b — motor generativo REINVENT4 (de novo, AstraZeneca, Apache-2.0) ──
 # Requiere además descargar un modelo prior y definir REINVENT_PRIOR_PATH.
 # Ver https://github.com/MolecularAI/REINVENT4

@@ -3,11 +3,12 @@ denovo.py — Diseño molecular de novo (Tier 4.4).
 
 POST /api/tools/denovo/
     body: { seed: <SMILES|DrugBank ID>, mode?: 'grow'|'mutate'|'link',
-            engine?: 'crem'|'reinvent', n?: int }
+            engine?: 'crem'|'synthemol'|'reinvent', n?: int }
     → candidatos generados + QED/SA/similitud + disclaimer in-silico + cita del paper.
 
-Requiere el motor correspondiente (CReM + base de fragmentos, o REINVENT4). Degrada con
-503 si el motor/deps no están disponibles.
+Requiere el motor correspondiente (CReM + base de fragmentos, SyntheMol + bloques/predictor, o
+REINVENT4). Degrada con 503 si el motor/deps no están disponibles. Nota: SyntheMol ignora `mode`
+(no parte del seed; hace búsqueda combinatoria optimizando un predictor de bioactividad).
 """
 import logging
 
@@ -21,7 +22,7 @@ log = logging.getLogger(__name__)
 
 MAX_SEED_LENGTH = 500
 VALID_MODES = ("grow", "mutate", "link")
-VALID_ENGINES = ("crem", "reinvent")
+VALID_ENGINES = ("crem", "synthemol", "reinvent")
 
 
 @api_view(["POST"])

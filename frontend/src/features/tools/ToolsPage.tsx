@@ -10,7 +10,7 @@ const TOOLS = [
   { path: '/tools/toxicity', label: 'Toxicidad', Icon: AlertTriangle, description: 'Evalúa anti-targets (hERG, CYPs), off-targets predichos y cluster estructural.' },
   { path: '/tools/ddi', label: 'DDI Checker', Icon: Pill, description: 'Verifica interacciones fármaco-fármaco registradas en Neo4j (pares o perfil completo).' },
   { path: '/tools/chemical-space', label: 'Espacio químico', Icon: MapIcon, description: 'Mapa UMAP+HDBSCAN de los embeddings ChemBERTa del catálogo; ubica moléculas nuevas.' },
-  { path: '/tools/denovo', label: 'Diseño de novo', Icon: FlaskConical, description: 'Genera moléculas nuevas desde una semilla (CReM / REINVENT4) y las filtra por drug-likeness.' },
+  { path: '/tools/denovo', label: 'Diseño de novo', Icon: FlaskConical, description: 'Genera moléculas nuevas (CReM / SyntheMol / REINVENT4) y las filtra por drug-likeness.' },
   { path: '/tools/admet', label: 'Predicción ADMET', Icon: Beaker, description: 'Modelos supervisados propios (Tox21/BBBP/ESOL) que predicen ADMET/toxicidad desde el SMILES.' },
   { path: '/tools/dti-gnn', label: 'Predicción DTI (GNN)', Icon: Share2, description: 'GNN entrenada (GraphSAGE + Link Prediction) que predice dianas no documentadas con AUCPR.' },
 ];

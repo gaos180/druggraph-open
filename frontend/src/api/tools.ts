@@ -248,7 +248,7 @@ export interface AdmetResult {
 export interface DeNovoRequest {
   seed:    string;
   mode?:   'grow' | 'mutate' | 'link';
-  engine?: 'crem' | 'reinvent';
+  engine?: 'crem' | 'synthemol' | 'reinvent';
   n?:      number;
 }
 
@@ -260,6 +260,7 @@ export interface DeNovoCandidate {
   mol_weight:          number;
   logp:                number;
   lipinski_rules:      number;
+  model_score?:        number;  // score del predictor SyntheMol (solo motor synthemol)
 }
 
 export interface DeNovoResult {

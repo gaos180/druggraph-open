@@ -9,6 +9,10 @@ Motores:
   - CReM (Polishchuk, J. Cheminformatics 2020) — POR DEFECTO. Fragment-based, sin GPU ni
     entrenamiento; produce estructuras químicamente válidas y sintetizables por diseño.
     Deps: `pip install crem` + una base de fragmentos SQLite (env CREM_DB_PATH).
+  - SyntheMol (Swanson, Nature Machine Intelligence 2024, Stanford) — opcional, ver
+    denovo_synthemol.py. Búsqueda combinatoria (MCTS/RL) sobre bloques comprables + reacciones
+    reales, guiada por un predictor de bioactividad: síntesis GARANTIZADA por construcción.
+    503 si no está instalado.
   - REINVENT4 (Loeffler, J. Cheminformatics 2024, AstraZeneca) — opcional, ver
     denovo_reinvent.py. Motor generativo RNN. 503 si no está instalado.
 
@@ -28,6 +32,9 @@ CREM_DB_PATH = os.environ.get("CREM_DB_PATH", "")
 PAPERS = {
     "crem": "Polishchuk P. CReM: chemically reasonable mutations framework for structure "
             "generation. J Cheminform. 2020;12:28. doi:10.1186/s13321-020-00431-w",
+    "synthemol": "Swanson K, et al. Generative AI for designing and validating easily "
+                 "synthesizable and structurally novel antibiotics. Nat Mach Intell. "
+                 "2024;6:338-353. doi:10.1038/s42256-024-00809-7",
     "reinvent": "Loeffler HH, et al. REINVENT 4: Modern AI-driven generative molecule "
                 "design. J Cheminform. 2024;16:20. doi:10.1186/s13321-024-00812-5",
 }
@@ -136,6 +143,10 @@ def generate(seed: str, mode: str = "mutate", engine: str = "crem",
     503-friendly: si el motor/deps no están, available=False + reason.
     """
     n = max(1, min(n, 100))
+
+    if engine == "synthemol":
+        from config.services import denovo_synthemol
+        return denovo_synthemol.generate(seed=seed, n=n)
 
     if engine == "reinvent":
         from config.services import denovo_reinvent
