@@ -20,23 +20,36 @@ tiene realmente el equipo, cómo liberarla/ampliarla, y los pasos exactos para a
 
 ### Quién consume la RAM ahora mismo
 
+⚠️ **El proceso `qemu-system-x86_64` (~3 GB, `-m 3477`) es la VM interna de Docker Desktop**
+(LinuxKit; discos `~/.docker/desktop/vms/0/data/Docker.raw`, lanzada por `com.docker.backend`,
+contexto `desktop-linux`). En Linux, Docker Desktop corre **todos** los contenedores *dentro* de
+esa VM. Por tanto sus ~3 GB **SON** los contenedores (Neo4j-open 1.38 GB + Neo4j-original 0.87 GB +
+mongos + postgres ≈ 2.6 GB, bajo el tope de 3.4 GB de la VM), **no** memoria adicional aparte.
+**No la apagues**: matarías Docker y todas las BD de DrugGraph.
+
 | Proceso / contenedor | RSS aprox. | ¿Reclamable? |
 |----------------------|-----------:|--------------|
-| **VM QEMU/KVM** (`-m 3477`) | **~3.0 GB** | **Sí** — si no la usas, apágala |
-| Firefox (varias pestañas) | **~3.0 GB** | Sí — cerrar pestañas/navegador |
-| **Stack DrugGraph ORIGINAL** (`druggraph-neo4j` 0.87 GB + `druggraph-mongodb` 85 MB + backends :8000/:8010 ~0.6 GB) | **~1.5 GB** | **Sí** — si trabajas en el clon open, párala |
-| Stack DrugGraph-OPEN (neo4j 1.38 GB + mongo 136 MB + postgres 35 MB) | ~1.55 GB | **No** (lo necesitas) |
-| GNOME/nautilus/claude/otros | ~1.5 GB | Parcial |
+| **VM Docker Desktop** (`qemu -m 3477`) — contiene TODOS los contenedores | **~3.0 GB** | **No** — es Docker mismo; techo compartido de 3.4 GB para todos los contenedores |
+| Firefox (varias pestañas) | **~3.0 GB** | **Sí** — cerrar pestañas/navegador (RAM del host) |
+| **Stack DrugGraph ORIGINAL** (`druggraph-neo4j` 0.87 GB + `druggraph-mongodb` 85 MB, DENTRO de la VM Docker) | ~1.0 GB | **Sí, pero** libera espacio *dentro* de la VM (no necesariamente al host) |
+| Backends dev del original (:8000 / :8010, procesos del host) | ~0.6 GB | **Sí** (RAM del host) |
+| Stack DrugGraph-OPEN (neo4j 1.38 GB + mongo + postgres, DENTRO de la VM Docker) | ~1.55 GB | **No** (lo necesitas) |
+| GNOME/nautilus/claude/otros (host) | ~1.5 GB | Parcial |
 
 ### Conclusión: cuánta RAM puedes usar
 
-- **Ahora**: solo ~2.5 GB → insuficiente para torch/ChemBERTa (OOM casi seguro, y el swap ya está lleno).
-- **Tras liberar** la VM (~3 GB) + el stack original (~1.5 GB) + Firefox (~2–3 GB): **~9–10 GB disponibles**.
-- Eso es **holgado** para todo el Tier 4: ChemBERTa+torch necesita ~2–4 GB pico; la proyección GDS
-  del grafo (≈150 k nodos/aristas) cabe en unos cientos de MB con el heap ampliado.
+Hay **dos "pools" de RAM distintos** y cada carga del Tier 4 usa uno:
 
-**Regla práctica en este equipo:** cierra la VM y el stack original **antes** de correr cargas ML
-pesadas. Con eso pasas de ~2.5 GB a ~9 GB usables sin comprar hardware.
+- **RAM del HOST** (para 4.1: torch/ChemBERTa corren como proceso del venv, *fuera* de Docker).
+  Hoy ~2.5 GB libres; **cerrando Firefox liberas ~3 GB** → suficiente para torch (~2–4 GB pico).
+  La VM de Docker está capada a 3.4 GB y no molesta a esta carga.
+- **RAM DENTRO de la VM Docker** (para 4.2: GDS corre *dentro* de Neo4j, dentro de la VM). El heap
+  de Neo4j compite con mongo+postgres+el stack original en el tope de **3.4 GB de la VM**. Para
+  darle aire a GDS: **(a) parar el stack ORIGINAL** (libera ~1 GB dentro de la VM) y/o **(b) subir
+  la memoria asignada a la VM de Docker Desktop** (§2.3), y luego subir el heap del contenedor.
+
+**Regla práctica:** para **4.1** cierra Firefox (RAM host). Para **4.2** para el stack original y/o
+amplía la VM de Docker (RAM de la VM). No hay que "apagar QEMU" — eso ES Docker.
 
 ---
 
@@ -44,18 +57,18 @@ pesadas. Con eso pasas de ~2.5 GB a ~9 GB usables sin comprar hardware.
 
 ### 2.1 Liberar RAM del host (rápido, reversible)
 
+⚠️ **No apagues el proceso `qemu-system` — es Docker Desktop** (§1). Para liberar RAM:
+
 ```bash
-# a) Apagar la VM de QEMU/KVM (libera ~3 GB) — usa tu gestor (virt-manager) o:
-virsh list --all && virsh shutdown <nombre-vm>
+# a) Cerrar Firefox o sus pestañas pesadas → libera ~2–3 GB de RAM del HOST (lo que usa 4.1).
 
-# b) Parar el stack DrugGraph ORIGINAL (libera ~1.5 GB). Desde ../druggraph:
+# b) Parar el stack DrugGraph ORIGINAL → libera ~1 GB DENTRO de la VM Docker (aire para 4.2).
+#    Sus contenedores están dentro de la misma VM Docker que el stack open:
 docker stop druggraph-neo4j druggraph-mongodb
-#    y mata los backends de dev del original (:8000 / :8010) si están corriendo:
-#    (identifícalos con `ss -tlnp | grep -E ':8000|:8010'` y ciérralos)
+#    y cierra los backends dev del original (:8000 / :8010), que sí son procesos del host:
+ss -tlnp | grep -E ':8000|:8010'      # identifica los PID y ciérralos
 
-# c) Cerrar Firefox o sus pestañas pesadas (libera ~2–3 GB).
-
-free -h    # verifica que 'disponible' subió a ~9 GB
+free -h    # 'disponible' (host) sube al cerrar Firefox/backends; la VM Docker sigue ~3.4 GB
 ```
 
 ### 2.2 Ampliar swap (colchón anti-OOM; hay 185 GB de disco libre)
@@ -71,9 +84,14 @@ un pico. Útil como red de seguridad para las cargas de 4.1/4.2.
 
 ### 2.3 Subir el heap de Neo4j-open (para GDS y consultas profundas)
 
-Neo4j-open corre con **heap 1 GB / pagecache 500 MB / límite de contenedor 1600 MB** — el mínimo
-que motivó cargar Neo4j en serie y STRING solo a score≥900. Con RAM libre puedes ampliarlo en
-`docker-compose.yml` (servicio `neo4j`):
+**Primero, el techo de la VM Docker.** El heap de Neo4j nunca podrá superar la RAM total de la VM
+de Docker Desktop (hoy **~3.4 GB para TODOS los contenedores**). Si vas a subir el heap de Neo4j,
+sube antes la memoria de la VM: **Docker Desktop → Settings → Resources → Memory** (o edita
+`~/.docker/desktop/settings-store.json`, clave `memoryMiB`, y reinicia Docker Desktop). Súbela a
+p. ej. 6–8 GB si el host lo permite tras cerrar Firefox. Alternativa sin ampliar la VM: **parar el
+stack original** (§2.1b) para liberar ~1 GB dentro de la VM.
+
+Después, amplía el heap del contenedor en `docker-compose.yml` (servicio `neo4j`):
 
 ```yaml
     environment:
