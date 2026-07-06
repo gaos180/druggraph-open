@@ -163,6 +163,7 @@ cd backend && python manage.py test drugs.tests
   - `config/services/chemical_space_service.py` (4.1) — UMAP (2D) + HDBSCAN sobre los embeddings ChemBERTa; `build()` (offline) persiste el modelo `joblib` + la nube en la colección Mongo `chemical_space`; `load_points()`/`locate(smiles)` para los endpoints. Deps: `umap-learn`+`hdbscan`+`joblib` (`SPACE_OK`).
   - `config/services/dti_gnn_service.py` (4.2) — GNN de interacción fármaco-diana: embeddings de grafo GraphSAGE (fallback FastRP) vía GDS + cabezal Link Prediction (regresión logística sklearn, muestreo negativo, AUCPR/AP en test). `train()` escribe top-K `(:Drug)-[:PREDICTED_TARGET {score}]->(:Target)` y persiste métricas en Mongo `model_metrics`; `predict_for_drug()` lee esas aristas. `DTIUnavailable`→503.
   - `config/services/admet_service.py` (4.3) — ADMET/toxicidad supervisada: `featurize()` (descriptores RDKit + Morgan) compartida con el entrenamiento; `predict(smiles)` carga modelos `joblib` desde `backend/models/admet/` + métricas de `metrics.json`. Deps: `scikit-learn`+`joblib` (`ADMET_OK`).
+  - `config/services/chemprop_service.py` (4.6) — GNN **Chemprop** (D-MPNN, Heid *JCIM* 2024; del repo `Antibiotics_Chemprop`): predictor multi-tarea de las 12 toxicidades de Tox21. GNN que APRENDE la representación (vs. features RDKit fijos del ADMET 4.3); también sirve como score model de SyntheMol. `predict(smiles)` invoca el CLI `chemprop predict` por subprocess sobre el modelo de `backend/models/chemprop/tox21/`. Deps `chemprop`+torch (`CHEMPROP_OK`/`model_ready()`). 503 sin paquete/modelo.
   - `config/services/denovo_service.py` (4.4) — diseño de novo: motor **CReM** por defecto (grow/mutate/link; deps `crem` + base de fragmentos en env `CREM_DB_PATH`) con scoring QED/SA/Lipinski/similitud al seed; delega en `denovo_synthemol.py` (`engine='synthemol'`) o `denovo_reinvent.py` (`engine='reinvent'`).
   - `config/services/denovo_synthemol.py` (4.4c, opcional) — motor **SyntheMol** (Swanson, *Nat. Mach. Intell.* 2024, Stanford): búsqueda combinatoria MCTS/RL sobre bloques comprables + reacciones reales guiada por un predictor de bioactividad → **síntesis garantizada por construcción**. No parte del seed (lo usa solo para similitud). Invoca el CLI `synthemol` por subprocess. Deps `synthemol` + env `SYNTHEMOL_BUILDING_BLOCKS` (biblioteca de bloques Enamine/WuXi) + `SYNTHEMOL_SCORE_MODEL`/`SYNTHEMOL_SCORE_TYPE` (predictor entrenado) (`SYNTHEMOL_OK`/`space_ready()`). Setup con `scripts/build_synthemol_space.py`. 503 si falta algo.
   - `config/services/denovo_reinvent.py` (4.4b, opcional) — motor generativo **REINVENT4** (prior RNN ChEMBL); deps `reinvent` + env `REINVENT_PRIOR_PATH` (`REINVENT_OK`). 503 si no está.
@@ -189,6 +190,7 @@ cd backend && python manage.py test drugs.tests
   - `scripts/build_chemical_space.py` (4.1) — ajusta UMAP+HDBSCAN sobre `:Drug.chemberta`, guarda `backend/models/chemical_space/umap.joblib` + la colección Mongo `chemical_space`.
   - `scripts/train_dti_gnn.py` (4.2) — entrena la GNN DTI (GraphSAGE/FastRP + LP), reporta AUCPR/AP, escribe `:PREDICTED_TARGET` y `model_metrics`. Requiere GDS.
   - `scripts/train_admet_models.py` (4.3) — descarga MoleculeNet (Tox21/BBBP/ESOL), entrena RandomForest por endpoint, guarda `backend/models/admet/*.joblib` + `metrics.json`.
+  - `scripts/train_chemprop.py` (4.6) — entrena el GNN **Chemprop** D-MPNN multi-tarea sobre los 12 ensayos de Tox21 (filtra SMILES inválidos, split por scaffold), guarda el checkpoint en `backend/models/chemprop/tox21/` + `metrics.json`. Requiere `pip install chemprop`.
   - `scripts/build_crem_db.py` (4.4) — exporta los SMILES del catálogo y documenta cómo construir/descargar la base de fragmentos de CReM (`CREM_DB_PATH`).
   - `scripts/build_synthemol_space.py` (4.4c) — exporta un CSV de entrenamiento (`smiles,activity`) desde el catálogo y documenta cómo descargar la biblioteca de bloques (Enamine/WuXi) y entrenar el predictor Chemprop para el motor de novo **SyntheMol** (`SYNTHEMOL_BUILDING_BLOCKS`, `SYNTHEMOL_SCORE_MODEL`).
 - `scripts/warm_kegg_cache.py` — pre-warms the persistent KEGG cache (MongoDB `kegg_cache`) for the N drugs with the most UniProt targets (or specific `--drug DBID`s). Cold `pathways/` requests take tens of seconds due to KEGG rate-limiting; warming makes later requests near-instant and survives restarts. Run once offline after loading the graph.
@@ -240,6 +242,7 @@ _Tools (`drugs/urls_tools.py` → `drugs/views/*` + `drugs/views/tools/*`):_
 | `GET  /api/tools/chemical-space/` · `POST /api/tools/chemical-space/locate/` | `drugs/views/tools/chemical_space.py` (Tier 4.1) |
 | `POST /api/tools/denovo/` | `drugs/views/tools/denovo.py` (Tier 4.4) |
 | `POST /api/tools/admet/` | `drugs/views/tools/admet.py` (Tier 4.3) |
+| `POST /api/tools/chemprop-tox/` | `drugs/views/tools/chemprop_tox.py` (Tier 4.6) |
 | `GET  /api/tools/dti-gnn/<drug_id>/` | `drugs/views/tools/dti_gnn.py` (Tier 4.2) |
 
 _AI reporting (`drugs/views/reports.py`, auth required):_
@@ -301,6 +304,7 @@ Frontend API base URL: set `REACT_APP_API_URL` env var (defaults to `http://loca
 | Chemical space map (Tier 4.1) | `pip install umap-learn hdbscan joblib` + ChemBERTa embeddings poblados + `scripts/build_chemical_space.py` run once. `locate` also needs torch+transformers. 503 sin la nube |
 | DTI GNN prediction (Tier 4.2) | Neo4j GDS plugin + `pip install scikit-learn` + `scripts/train_dti_gnn.py` run once (escribe `:PREDICTED_TARGET`). 503 sin GDS/modelo |
 | ADMET supervisado (Tier 4.3) | `pip install scikit-learn pandas joblib` + `scripts/train_admet_models.py` run once (descarga MoleculeNet). 503 sin modelos |
+| GNN Chemprop toxicidad (Tier 4.6) | `pip install chemprop` (compatible torch 2.x) + `scripts/train_chemprop.py` run once (Tox21 multi-tarea). 503 sin paquete/modelo |
 | De novo — CReM (Tier 4.4) | `pip install crem` + base de fragmentos (`scripts/build_crem_db.py` / descarga) + env `CREM_DB_PATH`. 503 sin la base |
 | De novo — SyntheMol (Tier 4.4c, opcional) | `pip install synthemol` + biblioteca de bloques (env `SYNTHEMOL_BUILDING_BLOCKS`) + predictor entrenado (env `SYNTHEMOL_SCORE_MODEL`). Setup con `scripts/build_synthemol_space.py`. 503 sin bloques/predictor |
 | De novo — REINVENT4 (Tier 4.4b, opcional) | `pip install -r requirements-ml.txt` + modelo prior + env `REINVENT_PRIOR_PATH`. 503 sin el prior |

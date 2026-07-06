@@ -193,7 +193,28 @@ export const toolsApi = {
 
   dtiGnn: (drugId: string) =>
     api.get<DtiGnnResult>(`/tools/dti-gnn/${drugId}/`),
+
+  chempropTox: (body: { smiles?: string; drug_id?: string }) =>
+    api.post<ChempropToxResult>('/tools/chemprop-tox/', body),
 };
+
+// ── GNN Chemprop de toxicidad Tox21 (Tier 4.6) ────────────────────────────────────
+
+export interface ChempropToxPrediction {
+  assay:       string;
+  label:       string;
+  probability: number | null;
+}
+
+export interface ChempropToxResult {
+  available:   boolean;
+  engine?:     string;
+  paper?:      string;
+  smiles?:     string;
+  predictions?: ChempropToxPrediction[];
+  disclaimer?: string;
+  reason?:     string;
+}
 
 // ── GNN de predicción fármaco-diana (Tier 4.2) ────────────────────────────────────
 
