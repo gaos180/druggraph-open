@@ -10,11 +10,16 @@ proprietary **DrugBank** catalog is replaced by **open, redistributable sources*
 for the source→field mapping and `backend/scripts/ingest/` for the ingestion pipeline.
 
 It uses **four data stores**:
-- **PostgreSQL** — *staging layer only, used by the ingestion pipeline, never at runtime.*
-  DrugCentral and ChEMBL ship as native Postgres dumps; they are restored here and the ETL
-  (`backend/scripts/ingest/`) projects them into Mongo/Neo4j. Config in
-  `settings.DATABASES_NOSQL['postgres']`, accessed via `config/services/postgres.py`
-  (optional dep `psycopg`, in `requirements-ingest.txt`).
+- **PostgreSQL** — two roles: (1) **ingestion staging** — DrugCentral/ChEMBL ship as native
+  Postgres dumps, restored here and projected by the ETL (`backend/scripts/ingest/`) into
+  Mongo/Neo4j; (2) **runtime, for DDI** — the drug–drug interaction checker reads the flat
+  `ddi` table (147k pairs) via `config/services/ddi_service.py` for fast tabular lookups (SQL
+  is the right tool for a single-hop pairwise lookup; the graph is not). So **Postgres must be
+  running at runtime** for the DDI checker (degrades to 503 otherwise). Config in
+  `settings.DATABASES_NOSQL['postgres']`, accessed via `config/services/postgres.py` (dep
+  `psycopg`). NOTE: the DDI **graph** edges `(:Drug)-[:INTERACTS_WITH]->(:Drug)` are ALSO kept
+  in Neo4j on purpose — for advanced traversal queries (drug chains with shared reactions,
+  neighborhoods). SQL = tabular lookup; Neo4j = graph analytics. Both coexist by design.
 - **MongoDB** — stores user accounts and the drug documents (rich nested JSON). The document
   keeps DrugGraph's legacy field names (`drugbank-id`, `name`, `type`, `groups`, `targets`…)
   for app compatibility, but the primary ID holds an **open ID** derived from DrugCentral
@@ -29,7 +34,23 @@ It uses **four data stores**:
   `config/services/` consume `DATABASES_NOSQL`, never `django.db.connections`.
 
 The Docker stack is **isolated by ports** from an original DrugGraph on the same machine:
-MongoDB **27018**, Neo4j **7475/7688**, Postgres **5433**.
+MongoDB **27018**, Neo4j **7475/7688**, Postgres **5433** (the host Postgres port is
+configurable via `POSTGRES_HOST_PORT` in the root `.env` — this machine uses **5434** because
+it already runs a system Postgres on 5433).
+
+**Current loaded state** (see `docs/DATASET_STATE.md` for counts + the memory-safe load order):
+the databases are populated from real DrugCentral (4995 drugs; Neo4j TARGETS 16947, KEGG
+`:REGULATES` 16778, STITCH `:STITCH_TARGET` 17441, DDI `:INTERACTS_WITH` 147982, STRING
+`:STRING_ASSOC` 100856 at score≥900; Mongo enrichers ChEMBL/PubChem/Open Targets; fingerprints
+4310). **Neo4j runs on a 1 GB heap** on this machine and restarts under heavy concurrent
+writes / deep `shortestPath` queries — load Neo4j layers **serially** (see `run_ingest.sh`)
+and expect the permutation-heavy `proximity_significance` to need more heap for big modules.
+
+**Network-medicine services** implemented on this substrate (from `docs/SYSTEMS_BIOLOGY_REVIEW.md`):
+`propagation_service.propagate_signed` uses a **per-target sign** from the drug's action
+(`sign_for_action`); `proximity_service.proximity_significance` adds a **degree-preserving
+null model** (z-score/p-value, Guney 2016) behind `?significance=true`; `tools/repurposing`
+weights shared targets by **information content / IDF** `log2((N+1)/(n+1))` (Resnik/Lin lineage).
 
 External APIs used (no API key required):
 - **STRING** (`string-db.org`) — PPI neighbors for indirect drug effect + functional enrichment (GO/KEGG/Reactome/WikiPathways with FDR).
