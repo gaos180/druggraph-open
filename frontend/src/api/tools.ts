@@ -196,7 +196,26 @@ export const toolsApi = {
 
   chempropTox: (body: { smiles?: string; drug_id?: string }) =>
     api.post<ChempropToxResult>('/tools/chemprop-tox/', body),
+
+  diseaseGnn: (drugId: string, topN = 20) =>
+    api.get<DiseaseGnnResult>(`/tools/disease-gnn/${drugId}/?top_n=${topN}`),
 };
+
+// ── GNN de repurposing fármaco→enfermedad (Tier 4.7, BiomedGPS) ───────────────────
+
+export interface DiseasePrediction {
+  disease_id:   string;
+  disease_name: string;
+  probability:  number;
+}
+
+export interface DiseaseGnnResult {
+  available:   boolean;
+  drug?:       { drugbank_id: string; name: string };
+  predictions?: DiseasePrediction[];
+  model?:      DtiModelMetrics;
+  error?:      string;
+}
 
 // ── GNN Chemprop de toxicidad Tox21 (Tier 4.6) ────────────────────────────────────
 

@@ -3,7 +3,7 @@ from .views import deg_analysis_view, repurposing_view, toxicity_view
 from .views.tools import (
     proximity_view, disease_evidence_view, signature_reversion_view,
     chemical_space_view, chemical_space_locate_view, denovo_view, admet_view, dti_gnn_view,
-    chemprop_tox_view,
+    chemprop_tox_view, disease_gnn_view,
 )
 
 urlpatterns = [
@@ -19,4 +19,5 @@ urlpatterns = [
     path('admet/',                          admet_view,            name='tools-admet'),
     path('dti-gnn/<str:drug_id>/',          dti_gnn_view,          name='tools-dti-gnn'),
     path('chemprop-tox/',                   chemprop_tox_view,     name='tools-chemprop-tox'),
+    path('disease-gnn/<str:drug_id>/',      disease_gnn_view,      name='tools-disease-gnn'),
 ]
