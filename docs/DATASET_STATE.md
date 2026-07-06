@@ -32,20 +32,23 @@ Datos reales de **DrugCentral** (dump `drugcentral.dump.11012023`) más enriquec
 | `(:Gene)-[:REGULATES {sign}]->(:Gene)` | **16778** | `load_kegg_regulatory` (KEGG KGML) |
 | `(:Drug)-[:STITCH_TARGET]->(:Target)` | **17441** | `step05_stitch_cpi` (STITCH CPI) |
 | `(:Drug)-[:INTERACTS_WITH]-(:Drug)` | **147982** | `step04_ddi_open` (TWOSIDES, modo nombre dedup) |
+| `(:Gene)-[:STRING_ASSOC {score}]->(:Gene)` | **100856** | `load_string_network` (STRING bulk, score≥900) |
 | Fingerprints Morgan (`:Drug.fingerprint`) | **4310** | `populate_fingerprints` |
+
+Con STRING cargado (a score≥900), la **cascada por difusión** (Personalized PageRank) y la
+**proximidad de red** (`proximity_service`) están operativas, además de la **cascada
+dirigida/con signo** (usa `:REGULATES` de KEGG).
 
 ---
 
 ## Qué quedó pendiente
 
-- **STRING bulk `(:Gene)-[:STRING_ASSOC]->(:Gene)`** (`scripts/load_string_network.py`) —
-  **DIFERIDO**. La red PPI humana completa (score ≥ 700, millones de aristas) es
-  demasiado pesada para la RAM del equipo actual y tumba Neo4j durante la carga. Sin ella
-  quedan inactivas las funciones que dependen del interactoma STRING local:
-  la **cascada por difusión** (Personalized PageRank) y la **proximidad de red**
-  (`proximity_service`, que lanza `ProximityUnavailable`). La **cascada dirigida/con
-  signo** sí funciona (usa `:REGULATES` de KEGG, ya cargado). Para habilitarlo hace falta
-  una máquina con memoria holgada; el paso está comentado al final de `run_ingest.sh`.
+- **STRING bulk a score≥700** (el umbral "completo" que documenta `load_string_network.py`)
+  — sigue diferido por RAM: la red humana completa a ese corte es demasiado pesada para
+  este equipo. Se cargó en su lugar a **score≥900** (100856 aristas), suficiente para que
+  difusión y proximidad funcionen, pero con menos cobertura que el corte completo.
+- **Cobertura de péptidos `step08b_uniprot_peptide_seqs`** — parcial (~6/341 secuencias),
+  pendiente de terminar de correr (es idempotente, se puede relanzar sin duplicar datos).
 
 ---
 
@@ -67,7 +70,8 @@ orden:
    `step06_opentargets`.
 8. `ensure_indexes.py` + `seed_admin.py`.
 
-Paso opcional (comentado): `load_string_network.py` — ver "Qué quedó pendiente".
+Paso opcional: `load_string_network.py` — ya ejecutado a score≥900 (ver tabla de Neo4j
+arriba); el corte completo a score≥700 sigue diferido por RAM (ver "Qué quedó pendiente").
 
 ---
 

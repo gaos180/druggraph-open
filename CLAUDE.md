@@ -267,7 +267,7 @@ Defaults work for local development with Docker Compose:
 | Variable | Default | Notes |
 |----------|---------|-------|
 | `MONGODB_URI` | `mongodb://localhost:27017/` | |
-| `MONGODB_DB` | `druggraph` | |
+| `MONGODB_DB` | `druggraph` | Default del código; el `.env` de este proyecto lo sobreescribe a `druggraph_open` (la BD real cargada) |
 | `NEO4J_URI` | `bolt://localhost:7687` | |
 | `NEO4J_USER` | `neo4j` | |
 | `NEO4J_PASSWORD` | `druggraph123` | |
