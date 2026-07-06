@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { BarChart3, Repeat, AlertTriangle, Pill, Wrench, Map as MapIcon, FlaskConical, Beaker, Share2 } from 'lucide-react';
+import { BarChart3, Repeat, AlertTriangle, Pill, Wrench, Map as MapIcon, FlaskConical, Beaker, Share2, Biohazard, Stethoscope } from 'lucide-react';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { NotebookLayout, NotebookNavbar, HandTitle, NotebookCard } from '../../components/notebook';
 
@@ -13,6 +13,8 @@ const TOOLS = [
   { path: '/tools/denovo', label: 'Diseño de novo', Icon: FlaskConical, description: 'Genera moléculas nuevas (CReM / SyntheMol / REINVENT4) y las filtra por drug-likeness.' },
   { path: '/tools/admet', label: 'Predicción ADMET', Icon: Beaker, description: 'Modelos supervisados propios (Tox21/BBBP/ESOL) que predicen ADMET/toxicidad desde el SMILES.' },
   { path: '/tools/dti-gnn', label: 'Predicción DTI (GNN)', Icon: Share2, description: 'GNN entrenada (GraphSAGE + Link Prediction) que predice dianas no documentadas con AUCPR.' },
+  { path: '/tools/chemprop-tox', label: 'Toxicidad GNN', Icon: Biohazard, description: 'GNN Chemprop (D-MPNN) que aprende la representación molecular y predice los 12 ensayos de toxicidad Tox21.' },
+  { path: '/tools/disease-gnn', label: 'Repurposing (GNN)', Icon: Stethoscope, description: 'GNN de enlaces sobre el knowledge graph (Drug↔Target↔Disease) que propone reposicionamientos fármaco→enfermedad.' },
 ];
 
 export default function ToolsPage() {

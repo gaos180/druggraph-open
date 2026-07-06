@@ -23,6 +23,8 @@ import ChemicalSpaceMap from './features/tools/ChemicalSpaceMap';
 import DeNovoTool from './features/tools/DeNovoTool';
 import AdmetTool from './features/tools/AdmetTool';
 import DtiGnnTool from './features/tools/DtiGnnTool';
+import ChempropToxTool from './features/tools/ChempropToxTool';
+import DiseaseGnnTool from './features/tools/DiseaseGnnTool';
 import LandingPage from './pages/LandingPage';
 import TargetComparePage from './features/targets/TargetComparePage';
 import { NotebookSvgDefs } from './components/notebook';
@@ -161,6 +163,8 @@ export default function App() {
             <Route path="denovo"      element={<DeNovoTool />} />
             <Route path="admet"       element={<AdmetTool />} />
             <Route path="dti-gnn"     element={<DtiGnnTool />} />
+            <Route path="chemprop-tox" element={<ChempropToxTool />} />
+            <Route path="disease-gnn" element={<DiseaseGnnTool />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/dashboard" />} />
