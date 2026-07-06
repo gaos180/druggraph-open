@@ -31,16 +31,20 @@ services:
     environment:
       - NEO4J_AUTH=neo4j/druggraphopen123
       - NEO4J_PLUGINS=["apoc", "graph-data-science"]
-      - NEO4J_server_memory_heap_initial__size=800m
-      - NEO4J_server_memory_heap_max__size=1000m
-      - NEO4J_server_memory_pagecache_size=500m
+      # Heap ampliado para GDS (materialización de comunidades/centralidad) y consultas
+      # profundas. REQUIERE que la VM de Docker Desktop tenga memoria suficiente (Settings →
+      # Resources → Memory ≥ 8 GB): el heap+pagecache+overhead no puede exceder la VM,
+      # compartida con el resto de contenedores. Ver docs/TIER4_ACTIVATION.md §2.3.
+      - NEO4J_server_memory_heap_initial__size=1200m
+      - NEO4J_server_memory_heap_max__size=2000m
+      - NEO4J_server_memory_pagecache_size=1000m
     volumes:
       - neo4j_data:/data
       - neo4j_logs:/logs
     deploy:
       resources:
         limits:
-          memory: 1600M
+          memory: 3200M
         reservations:
           memory: 500M
 
