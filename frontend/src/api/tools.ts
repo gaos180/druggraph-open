@@ -207,6 +207,8 @@ export const toolsApi = {
     api.get<{ available: boolean; targets: DockingTarget[] }>('/tools/docking/targets/'),
   docking: (body: { smiles?: string; drug_id?: string; target: string; exhaustiveness?: number }) =>
     api.post<DockingResult>('/tools/docking/', body),
+  dockingScreen: (target: string, limit = 50) =>
+    api.get<{ available: boolean; target: string; results: DockingScreenHit[] }>(`/tools/docking/screen/${target}/?limit=${limit}`),
 };
 
 // ── Docking estructural con AutoDock Vina (Tier 5.3) ──────────────────────────────
@@ -214,6 +216,10 @@ export const toolsApi = {
 export interface DockingTarget {
   target: string; name: string; pdb_id?: string;
   center?: number[]; box_size?: number[];
+}
+
+export interface DockingScreenHit {
+  drug_id: string; name: string; affinity_kcal_mol: number; smiles?: string;
 }
 
 export interface DockingResult {

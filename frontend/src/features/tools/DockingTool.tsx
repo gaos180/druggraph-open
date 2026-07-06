@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Target } from 'lucide-react';
-import { toolsApi, DockingResult, DockingTarget } from '../../api/tools';
+import { toolsApi, DockingResult, DockingTarget, DockingScreenHit } from '../../api/tools';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { HandTitle, PencilButton } from '../../components/notebook';
 
@@ -21,12 +21,18 @@ export default function DockingTool() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [result, setResult] = useState<DockingResult | null>(null);
+  const [hits, setHits] = useState<DockingScreenHit[]>([]);
 
   useEffect(() => {
     toolsApi.dockingTargets()
       .then(res => { setTargets(res.data.targets || []); if (res.data.targets?.[0]) setTarget(res.data.targets[0].target); })
       .catch(err => setUnavailable(err?.response?.data?.error || 'Docking no disponible.'));
   }, []);
+
+  useEffect(() => {
+    if (!target) { setHits([]); return; }
+    toolsApi.dockingScreen(target, 15).then(res => setHits(res.data.results || [])).catch(() => setHits([]));
+  }, [target]);
 
   const run = async () => {
     const s = ligand.trim();
@@ -98,6 +104,28 @@ export default function DockingTool() {
           </div>
           <div className="text-stone-400 text-[11px] font-hand mb-4">{result.note}</div>
         </>
+      )}
+
+      {hits.length > 0 && (
+        <div className={cardCls}>
+          <div className="text-stone-600 text-[12px] font-mono mb-2">CRIBADO BATCH — top hits del catálogo (repurposing)</div>
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse text-xs">
+              <thead><tr className="border-b border-stone-800/10">{['#', 'Fármaco', 'ID', 'Afinidad (kcal/mol)'].map((h, i) => <th key={i} className="px-2 py-1.5 text-left text-stone-500 font-mono text-[11px]">{h}</th>)}</tr></thead>
+              <tbody>
+                {hits.map((h, i) => (
+                  <tr key={i} className={`border-b border-stone-800/5 ${i % 2 ? 'bg-stone-500/5' : ''}`}>
+                    <td className="px-2 py-1.5 text-stone-500">{i + 1}</td>
+                    <td className="px-2 py-1.5 text-stone-800">{h.name || '—'}</td>
+                    <td className="px-2 py-1.5 font-mono text-sky-700">{h.drug_id}</td>
+                    <td className="px-2 py-1.5 font-mono" style={{ color: affColor(h.affinity_kcal_mol) }}>{h.affinity_kcal_mol.toFixed(2)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="text-stone-400 text-[10px] font-hand mt-1">Resultados precomputados con scripts/run_docking_screen.py.</div>
+        </div>
       )}
     </div>
   );

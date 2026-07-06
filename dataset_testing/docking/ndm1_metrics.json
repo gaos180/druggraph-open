@@ -1,0 +1,10 @@
+{
+  "target": "ndm1",
+  "n_actives_docked": 29,
+  "n_decoys_docked": 59,
+  "roc_auc": 0.775,
+  "EF_1pct": 3.03,
+  "EF_5pct": 2.28,
+  "mean_affinity_active": -7.06,
+  "mean_affinity_decoy": -6.12
+}

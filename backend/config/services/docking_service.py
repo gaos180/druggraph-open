@@ -135,6 +135,47 @@ def dock(smiles: str, target: str, exhaustiveness: int = 8, n_poses: int = 5) ->
     }
 
 
+def dock_many(smiles_list, target: str, exhaustiveness: int = 8, on_progress=None) -> dict:
+    """
+    Acopla muchos ligandos a `target` calculando los mapas de Vina UNA sola vez (mucho más
+    rápido que dock() por ligando). Devuelve {smiles: afinidad|None}. Usado por el cribado
+    batch (run_docking_screen) y la validación (eval_docking).
+    """
+    if not DOCKING_OK:
+        raise DockingUnavailable("vina/meeko/openbabel no disponibles.")
+    from vina import Vina
+    rec_path, box = _receptor_paths(target)
+    v = Vina(sf_name="vina", verbosity=0)
+    v.set_receptor(rec_path)
+    v.compute_vina_maps(center=box["center"], box_size=box["box_size"])
+    res: dict = {}
+    for i, smi in enumerate(smiles_list):
+        try:
+            v.set_ligand_from_string(prepare_ligand_pdbqt(smi))
+            v.dock(exhaustiveness=exhaustiveness, n_poses=1)
+            res[smi] = round(float(v.energies(n_poses=1)[0][0]), 2)
+        except Exception as exc:
+            log.debug("dock_many skip (%s): %s", smi[:30], exc)
+            res[smi] = None
+        if on_progress and (i + 1) % 20 == 0:
+            on_progress(i + 1, len(smiles_list))
+    return res
+
+
+def screen_results(target: str, limit: int = 50) -> list[dict]:
+    """Lee los resultados del cribado batch (Mongo `docking_results`) rankeados por afinidad."""
+    try:
+        from config.services.mongo import get_db
+        rows = list(get_db().docking_results.find({"target": target})
+                    .sort("affinity_kcal_mol", 1).limit(max(1, min(limit, 500))))
+    except Exception as exc:
+        log.debug("screen_results error: %s", exc)
+        return []
+    return [{"drug_id": r.get("drug_id"), "name": r.get("name", ""),
+             "affinity_kcal_mol": r.get("affinity_kcal_mol"), "smiles": r.get("smiles", "")}
+            for r in rows]
+
+
 def dock_for_drug(drug_id: str, target: str, **kw) -> dict:
     """Acopla un fármaco del catálogo (por ID) al receptor `target`."""
     try:

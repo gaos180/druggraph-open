@@ -30,6 +30,20 @@ def docking_targets_view(request):
     return Response({"available": True, "targets": docking_service.list_targets()})
 
 
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def docking_screen_view(request, target: str):
+    """Resultados del cribado batch de una diana (ranking por afinidad), si se corrió."""
+    if not docking_service.DOCKING_OK:
+        return Response({"available": False, "results": []}, status=503)
+    try:
+        limit = int(request.GET.get("limit", 50))
+    except (TypeError, ValueError):
+        limit = 50
+    results = docking_service.screen_results(target.strip(), limit=limit)
+    return Response({"available": True, "target": target, "results": results})
+
+
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def docking_view(request):
