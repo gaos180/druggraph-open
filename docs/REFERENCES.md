@@ -94,7 +94,8 @@ Las **licencias** de código en [`LICENSE`](../LICENSE).
 | Altschul SF, et al. *Basic Local Alignment Search Tool (BLAST).* J Mol Biol. 1990;215:403 | **[lib][método]** búsqueda de homología de secuencia |
 | Raudvere U, et al. *g:Profiler.* Nucleic Acids Res. 2019;47:W191 | **[lib]** enriquecimiento GO (DEG, repurposing) |
 | Subramanian A, et al. *LINCS L1000.* Cell. 2017;171:1437 | **[datos][método]** reversión de firma transcriptómica (Tier 3.1) |
-| Trott O, Olson AJ. *AutoDock Vina.* J Comput Chem. 2010;31:455 · Eberhardt J, et al. *Vina 1.2.* JCIM 2021;61:3891 | **[método][lib]** docking del Tier 5 (planeado, `docs/TIER5_PLAN.md`) |
+| Trott O, Olson AJ. *AutoDock Vina.* J Comput Chem. 2010;31:455 · Eberhardt J, et al. *Vina 1.2.* JCIM 2021;61:3891 | **[método][lib]** motor de docking estructural (Tier 5.3) |
+| Eberhardt J, et al. *Meeko.* (AutoDock suite) · O'Boyle NM, et al. *Open Babel.* J Cheminform. 2011;3:33 | **[lib]** preparación de ligando (Meeko) y receptor (OpenBabel) a PDBQT para el docking (Tier 5.3) |
 
 ## 8. Sistema de evaluación (protocolos y métricas)
 
