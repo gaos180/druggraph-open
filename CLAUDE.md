@@ -70,11 +70,18 @@ docker compose up -d        # MongoDB (27018), Neo4j (7475/7688), Postgres (5433
 ```
 
 ### 1b. Ingest open-source data (first time)
-See `backend/scripts/ingest/README.md`. In short: restore the DrugCentral dump into the
-Postgres staging DB, then run `step01…step04` (DrugCentral → Mongo → Neo4j → DDI), followed
-by the inherited enrichers (`populate_targets.py`, `populate_fingerprints.py`,
-`load_ctd_interactions.py`, `ensure_indexes.py`). Use `step01 --limit 200` for a quick
-end-to-end smoke test without loading the full catalog.
+See `backend/scripts/ingest/README.md` (the definitive step list) and `run_ingest.sh` (root
+orchestrator). In short: `pip install -r requirements-ingest.txt`, restore the DrugCentral
+dump into the Postgres staging DB, then run the numbered `scripts.ingest.stepNN` modules in
+order — `step01` DrugCentral→Mongo, `step02` ChEMBL enrich, `step03` build Neo4j graph,
+`step04` DDI (TWOSIDES), `step05` STITCH chem-protein, `step06` Open Targets, `step07`
+PubChem, `step08b` UniProt peptide sequences, `step08` ToxinPred (manual FASTA round-trip, no
+API). Then the inherited enrichers from `scripts/` (`populate_targets.py`, `populate_uniprot.py`,
+`populate_fingerprints.py`, `load_ctd_interactions.py`, `load_string_network.py`,
+`load_kegg_regulatory.py`, `ensure_indexes.py`, `seed_admin.py`). Steps are idempotent
+(upsert/MERGE). Use `step01 --limit 200` + `step03` for a quick end-to-end smoke test without
+loading the full catalog. **Load Neo4j layers serially** — the 1 GB heap on this machine
+restarts under heavy concurrent writes.
 
 ### 2. Backend (Django, port 8000)
 ```bash

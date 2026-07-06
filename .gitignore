@@ -1,30 +1,80 @@
-# Python
-backend/venv/
-backend/db.sqlite3
+# ============================================================================
+#  DrugGraph Open — .gitignore
+#  Cubre: app (Django + React), pipeline de ingesta open-source, modelos ML
+#  entrenados y artefactos generados. Todo lo ignorado se regenera con los
+#  scripts del repo o se descarga desde las fuentes externas (no redistribuible).
+# ============================================================================
 
-# Modelos ML entrenados (los regeneran los scripts de entrenamiento — pesados)
-backend/models/
+# ------------------------------- Python ------------------------------------
+backend/venv/
+venv/
+.venv/
 __pycache__/
 **/__pycache__/
 **/*.pyc
+*.pyo
 *.egg-info/
 dist/
 build/
 .pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.coverage
+.coverage.*
+htmlcov/
+.ipynb_checkpoints/
 
-# Node
+# Django: sqlite throwaway (solo admin/sessions/test-runner; el dominio va en Mongo/Neo4j/PG)
+backend/db.sqlite3
+*.sqlite3
+
+# --------------------------- Node / Frontend -------------------------------
 frontend/node_modules/
 frontend/build/
-frontend/.env.local
+frontend/coverage/
+frontend/.pnp
+frontend/.pnp.js
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+# Tailwind CSS generado (build step del CLI)
+frontend/src/styles/notebook.gen.css
 
-# Entorno
+# ------------------------------- Entorno -----------------------------------
+# Ignora TODOS los .env (traen secretos: JWT_SECRET, GEMINI_API_KEY, credenciales
+# de BD) y deja versionadas solo las plantillas .env.example.
 .env
 *.env
 .env.*
 !.env.example
 !**/.env.example
 
-# BLAST índices binarios
+# ============================================================================
+#  Datos externos — NO redistribuibles (licencias de terceros) y/o pesados.
+#  Se descargan una vez con los scripts de scripts/ingest/. Ver docs/DATA_SOURCES.md.
+# ============================================================================
+data/
+
+# Dumps de staging (DrugCentral / ChEMBL — nativos de Postgres, varios GB)
+*.dump
+*.dump.*
+*.sql
+*.sql.gz
+
+# Bulks comprimidos de las fuentes (STRING, TWOSIDES, STITCH, CTD, KEGG…)
+*.tsv.gz
+*.txt.gz
+*.csv.gz
+
+# Derivados intermedios de la ingesta
+*.fasta
+*.ndjson
+
+# Estructuras moleculares de ejemplo (fixtures locales, no usadas por el build)
+*.cif
+
+# ------------------- Índices BLAST binarios (build_blast_db) ----------------
 *.nsi
 *.nsd
 *.nsq
@@ -38,34 +88,30 @@ frontend/.env.local
 *.pto
 *.ptf
 
-# Datos locales (no redistribuir — requieren licencias externas)
-data/
-*.fasta
-*.ndjson
+# ============================================================================
+#  Modelos ML entrenados / descargados — se regeneran con los scripts de
+#  entrenamiento (train_admet_models, build_chemical_space, train_dti_gnn) o
+#  se descargan (ChemBERTa, prior REINVENT4, base de fragmentos CReM).
+# ============================================================================
+backend/models/
+*.joblib
+*.pkl
+*.pt
+*.pth
+*.onnx
+*.ckpt
+*.chkpt
+*.prior
+*.safetensors
+# Base de fragmentos SQLite de CReM (env CREM_DB_PATH, normalmente fuera del repo)
+*.db
+# Cachés de pesos descargados (HuggingFace / torch)
+.cache/
+.torch/
 
-# Archivos de sesión / planificación
+# ---------------------- Sesión / planificación / docs ----------------------
 handoff.md
 carta_gantt*.xlsx
-*.cif
-
-# Claude Code
-.claude/
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Logs
-*.log
-logs/
-
-# Presentación (no subir)
 presentacion/
 
 # Auxiliares LaTeX
@@ -78,5 +124,20 @@ presentacion/
 *.fls
 *.fdb_latexmk
 
-# Tailwind CSS generado (build step del CLI)
-frontend/src/styles/notebook.gen.css
+# ------------------------------ Claude Code --------------------------------
+.claude/
+
+# --------------------------------- IDE -------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ---------------------------------- OS -------------------------------------
+.DS_Store
+Thumbs.db
+
+# --------------------------------- Logs ------------------------------------
+*.log
+logs/
+*.pid
