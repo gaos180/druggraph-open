@@ -53,4 +53,14 @@ TWOSIDES / nSIDES
   Science Translational Medicine. https://nsides.io
   Licencia: CC0 1.0
 
+Agradecimientos metodológicos (no código)
+------------------------------------------
+
+pharmaco-suite (Eduardo Cubillos) — https://github.com/EduardoCubillos/pharmaco-suite
+  El módulo de pharmacóforos del Tier 5 (config/services/pharmacophore_service.py) se inspira en
+  el enfoque SBP/LBP/RBP + consenso de este proyecto. La implementación de DrugGraph Open es
+  PROPIA y usa solo RDKit (para mantener la edición open/redistribuible); no incorpora código de
+  pharmaco-suite. Se reconoce la autoría de Eduardo Cubillos por la inspiración metodológica.
+  Referencias de fondo: Wolber & Langer (2005); Gobbi & Poppinger (1998); RDKit (Landrum).
+
 DrugGraph Open no incluye ni redistribuye datos de DrugBank.

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { BarChart3, Repeat, AlertTriangle, Pill, Wrench, Map as MapIcon, FlaskConical, Beaker, Share2, Biohazard, Stethoscope } from 'lucide-react';
+import { BarChart3, Repeat, AlertTriangle, Pill, Wrench, Map as MapIcon, FlaskConical, Beaker, Share2, Biohazard, Stethoscope, Atom } from 'lucide-react';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { NotebookLayout, NotebookNavbar, HandTitle, NotebookCard } from '../../components/notebook';
 
@@ -15,6 +15,7 @@ const TOOLS = [
   { path: '/tools/dti-gnn', label: 'Predicción DTI (GNN)', Icon: Share2, description: 'GNN entrenada (GraphSAGE + Link Prediction) que predice dianas no documentadas con AUCPR.' },
   { path: '/tools/chemprop-tox', label: 'Toxicidad GNN', Icon: Biohazard, description: 'GNN Chemprop (D-MPNN) que aprende la representación molecular y predice los 12 ensayos de toxicidad Tox21.' },
   { path: '/tools/disease-gnn', label: 'Repurposing (GNN)', Icon: Stethoscope, description: 'GNN de enlaces sobre el knowledge graph (Drug↔Target↔Disease) que propone reposicionamientos fármaco→enfermedad.' },
+  { path: '/tools/pharmacophore', label: 'Pharmacóforos 3D', Icon: Atom, description: 'Modelo pharmacofórico ligand-based (RDKit): rasgos 3D y geometría, o consenso multi-ligando. Base del Tier 5 estructural.' },
 ];
 
 export default function ToolsPage() {

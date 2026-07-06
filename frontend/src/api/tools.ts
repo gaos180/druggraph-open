@@ -199,7 +199,38 @@ export const toolsApi = {
 
   diseaseGnn: (drugId: string, topN = 20) =>
     api.get<DiseaseGnnResult>(`/tools/disease-gnn/${drugId}/?top_n=${topN}`),
+
+  pharmacophore: (body: { smiles?: string; drug_id?: string; min_fraction?: number }) =>
+    api.post<PharmacophoreResult>('/tools/pharmacophore/', body),
 };
+
+// ── Pharmacóforos 3D ligand-based (Tier 5.1) ──────────────────────────────────────
+
+export interface PharmaFeature {
+  family: string; label: string; role: string;
+  x?: number; y?: number; z?: number;
+  present_in?: number; fraction?: number;
+}
+
+export interface PharmaDistance {
+  a: number; b: number; family_a: string; family_b: string; distance: number;
+}
+
+export interface PharmacophoreResult {
+  available:  boolean;
+  mode?:      string;
+  n_molecules?: number;
+  drug_id?:   string;
+  seed_smiles?: string;
+  features?:  PharmaFeature[];
+  feature_counts?: Record<string, number>;
+  distances?: PharmaDistance[];
+  consensus_features?: PharmaFeature[];
+  references?: string[];
+  note?:      string;
+  reason?:    string;
+  error?:     string;
+}
 
 // ── GNN de repurposing fármaco→enfermedad (Tier 4.7, BiomedGPS) ───────────────────
 

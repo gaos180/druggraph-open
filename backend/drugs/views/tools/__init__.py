@@ -21,8 +21,9 @@ from .admet import admet_view
 from .dti_gnn import dti_gnn_view
 from .chemprop_tox import chemprop_tox_view
 from .disease_gnn import disease_gnn_view
+from .pharmacophore import pharmacophore_view
 
 __all__ = ["deg_analysis_view", "repurposing_view", "toxicity_view", "proximity_view",
            "disease_evidence_view", "signature_reversion_view",
            "chemical_space_view", "chemical_space_locate_view", "denovo_view", "admet_view",
-           "dti_gnn_view", "chemprop_tox_view", "disease_gnn_view"]
+           "dti_gnn_view", "chemprop_tox_view", "disease_gnn_view", "pharmacophore_view"]
