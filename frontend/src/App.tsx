@@ -27,6 +27,7 @@ import ChempropToxTool from './features/tools/ChempropToxTool';
 import DiseaseGnnTool from './features/tools/DiseaseGnnTool';
 import PharmacophoreTool from './features/tools/PharmacophoreTool';
 import DockingTool from './features/tools/DockingTool';
+import MoleculeLabTool from './features/tools/MoleculeLabTool';
 import LandingPage from './pages/LandingPage';
 import TargetComparePage from './features/targets/TargetComparePage';
 import { NotebookSvgDefs } from './components/notebook';
@@ -157,6 +158,7 @@ export default function App() {
           <Route path="/tools" element={
             <ProtectedRoute><ToolsPage /></ProtectedRoute>
           }>
+            <Route path="lab"         element={<MoleculeLabTool />} />
             <Route path="deg"         element={<DegAnalysisTool />} />
             <Route path="repurposing" element={<RepurposingTool />} />
             <Route path="toxicity"    element={<ToxicityTool />} />

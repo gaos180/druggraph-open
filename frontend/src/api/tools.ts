@@ -209,7 +209,37 @@ export const toolsApi = {
     api.post<DockingResult>('/tools/docking/', body),
   dockingScreen: (target: string, limit = 50) =>
     api.get<{ available: boolean; target: string; results: DockingScreenHit[] }>(`/tools/docking/screen/${target}/?limit=${limit}`),
+
+  moleculeAnalysis: (body: { smiles?: string; drug_id?: string }) =>
+    api.post<MoleculeAnalysisResult>('/tools/molecule-analysis/', body),
 };
+
+// ── Análisis molecular integral (panel tipo sandbox, Tier 4+5) ────────────────────
+
+export interface MolNeighbor { similarity: number; drug_id: string; name: string; }
+export interface MolTarget { name?: string; gene?: string; uniprot?: string;
+  target_name?: string; gene_name?: string; probability?: number; }
+export interface MolDisease { disease_name: string; probability: number; }
+
+export interface MoleculeAnalysisResult {
+  available:  boolean;
+  query?:     string;
+  drug_id?:   string | null;
+  smiles?:    string;
+  properties?: any;
+  neighbors?: MolNeighbor[];
+  chemical_space?: any;
+  pharmacophore?: PharmacophoreResult;
+  admet?:     AdmetResult | { available: boolean };
+  network?: {
+    reference_drug_id?: string;
+    proxy_drug?: MolNeighbor | null;
+    documented_targets?: MolTarget[];
+    predicted_targets?: MolTarget[];
+    repurposing?: MolDisease[];
+  };
+  reason?:    string;
+}
 
 // ── Docking estructural con AutoDock Vina (Tier 5.3) ──────────────────────────────
 

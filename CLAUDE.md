@@ -257,6 +257,7 @@ _Tools (`drugs/urls_tools.py` → `drugs/views/*` + `drugs/views/tools/*`):_
 | `POST /api/tools/admet/` | `drugs/views/tools/admet.py` (Tier 4.3) |
 | `POST /api/tools/chemprop-tox/` | `drugs/views/tools/chemprop_tox.py` (Tier 4.6) |
 | `GET  /api/tools/disease-gnn/<drug_id>/` | `drugs/views/tools/disease_gnn.py` (Tier 4.7, BiomedGPS) |
+| `POST /api/tools/molecule-analysis/` | `drugs/views/tools/molecule_analysis.py` — **panel integral** (agrega propiedades, vecinos, espacio químico, pharmacóforo, ADMET, dianas predichas y repurposing en una llamada; Chemprop/docking son extras aparte). Frontend `MoleculeLabTool` en `/tools/lab`. Si la molécula no está en el catálogo, la red usa el vecino más cercano como proxy. |
 | `POST /api/tools/pharmacophore/` | `drugs/views/tools/pharmacophore.py` (Tier 5.1) |
 | `POST /api/tools/docking/` · `GET /api/tools/docking/targets/` | `drugs/views/tools/docking.py` (Tier 5.3) |
 | `GET  /api/tools/dti-gnn/<drug_id>/` | `drugs/views/tools/dti_gnn.py` (Tier 4.2) |

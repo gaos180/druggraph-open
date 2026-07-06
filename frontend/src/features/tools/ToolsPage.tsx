@@ -1,10 +1,11 @@
 import React from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { BarChart3, Repeat, AlertTriangle, Pill, Wrench, Map as MapIcon, FlaskConical, Beaker, Share2, Biohazard, Stethoscope, Atom, Target } from 'lucide-react';
+import { BarChart3, Repeat, AlertTriangle, Pill, Wrench, Map as MapIcon, FlaskConical, Beaker, Share2, Biohazard, Stethoscope, Atom, Target, Microscope } from 'lucide-react';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { NotebookLayout, NotebookNavbar, HandTitle, NotebookCard } from '../../components/notebook';
 
 const TOOLS = [
+  { path: '/tools/lab', label: 'Laboratorio molecular', Icon: Microscope, description: 'Panel integral: analiza una molécula con todas las herramientas de una vez (propiedades, similitud, pharmacóforo, ADMET, dianas, repurposing) + toxicidad y docking como extras.' },
   { path: '/tools/deg', label: 'Análisis DEG', Icon: BarChart3, description: 'Cruza genes diferencialmente expresados con targets del fármaco y calcula enriquecimiento GO.' },
   { path: '/tools/repurposing', label: 'Reposicionamiento', Icon: Repeat, description: 'Encuentra fármacos con perfiles de target similares para proponer nuevas indicaciones.' },
   { path: '/tools/toxicity', label: 'Toxicidad', Icon: AlertTriangle, description: 'Evalúa anti-targets (hERG, CYPs), off-targets predichos y cluster estructural.' },
