@@ -8,6 +8,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 proprietary **DrugBank** catalog is replaced by **open, redistributable sources**
 (DrugCentral, ChEMBL, Open Targets, PubChem, UniProt, CTD). See `docs/DATA_SOURCES.md`
 for the source→field mapping and `backend/scripts/ingest/` for the ingestion pipeline.
+Atribución de métodos/papers (código, ideas, esquemas de puntaje, defaults, evaluación) en
+`docs/REFERENCES.md`; atribución de datos en `NOTICE`.
 
 It uses **four data stores**:
 - **PostgreSQL** — two roles: (1) **ingestion staging** — DrugCentral/ChEMBL ship as native
