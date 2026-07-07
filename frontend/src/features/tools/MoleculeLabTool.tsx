@@ -3,6 +3,8 @@ import { Microscope, Target as TargetIcon, Biohazard } from 'lucide-react';
 import { toolsApi, MoleculeAnalysisResult, ChempropToxResult, DockingResult, DockingTarget, MolTarget, DockingFunnelResult } from '../../api/tools';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { HandTitle, PencilButton } from '../../components/notebook';
+import MarkdownView from '../reports/MarkdownView';
+import { DossierResult } from '../../api/tools';
 
 const cardCls = 'bg-[#faf6ee] border-2 border-stone-800/15 rounded-xl p-4 mb-4 shadow-[2px_2.5px_0_rgba(30,25,21,0.06)]';
 const inpCls = 'bg-[#faf6ee] border-2 border-[#3f3429] rounded-lg px-3 py-2 text-[13px] font-hand outline-none';
@@ -34,6 +36,9 @@ export default function MoleculeLabTool() {
   const [funnelLoading, setFunnelLoading] = useState(false);
   const [md, setMd] = useState<any>(null);
   const [mdLoading, setMdLoading] = useState(false);
+  const [dossier, setDossier] = useState<DossierResult | null>(null);
+  const [dossierLoading, setDossierLoading] = useState(false);
+  const [incDock, setIncDock] = useState(true);
 
   const analyze = async () => {
     const s = q.trim();
@@ -80,6 +85,14 @@ export default function MoleculeLabTool() {
     try { const res = await toolsApi.dockingFunnel(choiceBody(choice, ph)); setFunnel(res.data); }
     catch (e: any) { setFunnel({ available: false, reason: e?.response?.data?.error } as any); }
     finally { setFunnelLoading(false); }
+  };
+
+  const runDossier = async () => {
+    if (!r) return;
+    setDossierLoading(true); setDossier(null);
+    try { const res = await toolsApi.dossier({ ...(molBody() as any), include_docking: incDock }); setDossier(res.data); }
+    catch (e: any) { setDossier({ available: false, reason: e?.response?.data?.reason || e?.response?.data?.error } as any); }
+    finally { setDossierLoading(false); }
   };
 
   const runRefine = async () => {
@@ -236,6 +249,24 @@ export default function MoleculeLabTool() {
               <div className="text-stone-400 text-[10px] font-hand mt-1">Flujo: dianas posibles → <b>dock</b> → funnel (escoge pose) → <b>MD</b> (comprueba estabilidad). <b>NDM-1</b> es solo para antibióticos.</div>
             </div>
           )}
+        </div>
+
+        {/* INFORME IA */}
+        <div className={cardCls}>
+          <H>Informe completo (IA · Gemini)</H>
+          <div className="flex items-center gap-3 flex-wrap mb-1">
+            <PencilButton variant="solid" onClick={runDossier} disabled={dossierLoading}>{dossierLoading ? 'Generando informe…' : '📄 Generar informe'}</PencilButton>
+            <label className="flex items-center gap-1 text-[12px] font-hand cursor-pointer"><input type="checkbox" checked={incDock} onChange={e => setIncDock(e.target.checked)} /> incluir docking + funnel (más lento)</label>
+          </div>
+          <div className="text-stone-400 text-[11px] font-hand">Integra todo el análisis (dianas, rutas KEGG, cascada, enfermedades, ADMET, toxicidad, docking/funnel, especies) en un informe estructurado por IA.</div>
+          {dossierLoading && <div className="text-stone-500 text-[12px] mt-2">Agregando datos y redactando con Gemini… (puede tardar 1–4 min si incluye docking)</div>}
+          {dossier && (dossier.available
+            ? <div className="mt-3 border-t border-stone-800/10 pt-3">
+                {dossier.funnel_plot && <img src={dossier.funnel_plot} alt="funnel de poses" className="max-w-[420px] w-full rounded border border-stone-300 mb-3" />}
+                <div className="prose-sm"><MarkdownView markdown={dossier.report_markdown || ''} /></div>
+                <div className="text-stone-400 text-[10px] font-mono mt-2">Modelo: {dossier.model} · {dossier.disclaimer}</div>
+              </div>
+            : dossier && <div className="text-amber-800 text-[12px] mt-2">{(dossier as any).reason || 'Informe no disponible (¿GEMINI_API_KEY?)'}</div>)}
         </div>
 
         <div className="text-stone-400 text-[11px] font-hand mb-4">Todo es predicción in silico (hipótesis), no validación experimental.</div>

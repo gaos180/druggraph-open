@@ -216,7 +216,18 @@ export const toolsApi = {
 
   moleculeAnalysis: (body: { smiles?: string; drug_id?: string }) =>
     api.post<MoleculeAnalysisResult>('/tools/molecule-analysis/', body),
+
+  dossier: (body: { smiles?: string; drug_id?: string; style?: string; include_docking?: boolean }) =>
+    api.post<DossierResult>('/tools/dossier/', body),
 };
+
+export interface DossierResult {
+  available: boolean;
+  query?: string; drug_id?: string; smiles?: string;
+  report_markdown?: string;
+  funnel_plot?: string | null;
+  model?: string; disclaimer?: string; reason?: string; error?: string;
+}
 
 // ── Análisis molecular integral (panel tipo sandbox, Tier 4+5) ────────────────────
 

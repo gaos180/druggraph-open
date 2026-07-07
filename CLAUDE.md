@@ -259,6 +259,7 @@ _Tools (`drugs/urls_tools.py` → `drugs/views/*` + `drugs/views/tools/*`):_
 | `POST /api/tools/admet/` | `drugs/views/tools/admet.py` (Tier 4.3) |
 | `POST /api/tools/chemprop-tox/` | `drugs/views/tools/chemprop_tox.py` (Tier 4.6) |
 | `GET  /api/tools/disease-gnn/<drug_id>/` | `drugs/views/tools/disease_gnn.py` (Tier 4.7, BiomedGPS) |
+| `POST /api/tools/dossier/` | `drugs/views/tools/dossier.py` — **informe integral por IA** (`dossier_service`): agrega TODO el servicio (propiedades, similitud, dianas+especies, cascada, rutas KEGG, enfermedades, ADMET, toxicidad, **docking+funnel con gráfico**) y lo redacta con Gemini en secciones fijas (prompt estructurado + anti-alucinación). Requiere `GEMINI_API_KEY`. |
 | `POST /api/tools/molecule-analysis/` | `drugs/views/tools/molecule_analysis.py` — **panel integral** (agrega propiedades, vecinos, espacio químico, pharmacóforo, ADMET, dianas predichas y repurposing en una llamada; Chemprop/docking son extras aparte). Frontend `MoleculeLabTool` en `/tools/lab`. Si la molécula no está en el catálogo, la red usa el vecino más cercano como proxy. |
 | `POST /api/tools/pharmacophore/` | `drugs/views/tools/pharmacophore.py` (Tier 5.1) |
 | `POST /api/tools/docking/` · `GET /api/tools/docking/targets/` | `drugs/views/tools/docking.py` (Tier 5.3) |
