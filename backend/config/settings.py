@@ -5,12 +5,24 @@ from dotenv import load_dotenv
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'druggraph-dev-secret-change-in-production')
+load_dotenv(BASE_DIR / '.env')   # cargar .env ANTES de leer las variables
+
+_DEV_SECRET = 'druggraph-dev-secret-change-in-production'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', _DEV_SECRET)
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = [h.strip() for h in os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',') if h.strip()]
 
-load_dotenv(BASE_DIR / '.env')
- 
+# Nunca usar el SECRET_KEY de desarrollo tal cual: si no se define uno propio, se genera uno
+# aleatorio en memoria (no crashea el dev). En producción DEFINE DJANGO_SECRET_KEY para que las
+# sesiones/admin persistan entre reinicios.
+if SECRET_KEY == _DEV_SECRET:
+    import secrets
+    SECRET_KEY = secrets.token_urlsafe(64)
+    if not DEBUG:
+        import warnings
+        warnings.warn("DJANGO_SECRET_KEY no definido: usando una clave aleatoria efímera. "
+                      "Defínelo en el entorno para producción.")
+
 INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -114,6 +126,16 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': ['users.authentication.MongoJWTAuthentication'],
     'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticated'],
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    # Rate-limiting: protege los endpoints caros (docking, informe Gemini con costo, AlphaFold/
+    # ChEMBL/UniProt que pueden banear la IP) contra abuso/DoS. Configurable por env.
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': os.environ.get('THROTTLE_ANON', '30/min'),
+        'user': os.environ.get('THROTTLE_USER', '120/min'),
+    },
 }
 
 SPECTACULAR_SETTINGS = {

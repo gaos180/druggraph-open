@@ -258,7 +258,7 @@ export default function MoleculeLabTool() {
             <PencilButton variant="solid" onClick={runDossier} disabled={dossierLoading}>{dossierLoading ? 'Generando informe…' : '📄 Generar informe'}</PencilButton>
             <label className="flex items-center gap-1 text-[12px] font-hand cursor-pointer"><input type="checkbox" checked={incDock} onChange={e => setIncDock(e.target.checked)} /> incluir docking + funnel (más lento)</label>
           </div>
-          <div className="text-stone-400 text-[11px] font-hand">Integra todo el análisis (dianas, rutas KEGG, cascada, enfermedades, ADMET, toxicidad, docking/funnel, especies) en un informe estructurado por IA.</div>
+          <div className="text-stone-400 text-[11px] font-hand">Integra todo el análisis (dianas, rutas KEGG, cascada, enfermedades, ADMET, toxicidad, docking/funnel, especies) en un informe estructurado por IA. Nota: los datos agregados de la molécula se envían a <b>Google Gemini</b> para redactar el informe.</div>
           {dossierLoading && <div className="text-stone-500 text-[12px] mt-2">Agregando datos y redactando con Gemini… (puede tardar 1–4 min si incluye docking)</div>}
           {dossier && (dossier.available
             ? <div className="mt-3 border-t border-stone-800/10 pt-3">

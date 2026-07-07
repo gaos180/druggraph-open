@@ -48,6 +48,17 @@ KEGG
   Kanehisa M., Goto S. "KEGG." Nucleic Acids Research. https://www.kegg.jp
   Libre para uso académico (API).
 
+AlphaFold Protein Structure Database
+  Jumper J. et al. "Highly accurate protein structure prediction with AlphaFold." Nature 2021.
+  Varadi M. et al. "AlphaFold Protein Structure Database." Nucleic Acids Research.
+  https://alphafold.ebi.ac.uk  — usado para preparar receptores de docking on-demand por UniProt.
+  Licencia: CC BY 4.0
+
+MoleculeNet (Tox21, BBBP, ESOL/Delaney)
+  Wu Z. et al. "MoleculeNet: a benchmark for molecular machine learning." Chem Sci. 2018.
+  Tox21 (NCATS), BBBP (Martins 2012), ESOL (Delaney 2004). Usados para entrenar los modelos
+  ADMET (Tier 4.3) y Chemprop (Tier 4.6). Dominio público / uso académico.
+
 TWOSIDES / nSIDES
   Tatonetti NP. et al. "Data-driven prediction of drug effects and interactions."
   Science Translational Medicine. https://nsides.io

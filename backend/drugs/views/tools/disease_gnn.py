@@ -10,8 +10,9 @@ Degrada con 503 si el modelo no se ha entrenado / GDS o la capa de enfermedad fa
 """
 import logging
 
-from django.http import JsonResponse
-from django.views.decorators.http import require_GET
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 from neo4j import exceptions as neo4j_exc
 
 from config.services import disease_gnn_service
@@ -19,7 +20,8 @@ from config.services import disease_gnn_service
 log = logging.getLogger(__name__)
 
 
-@require_GET
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
 def disease_gnn_view(request, drug_id: str):
     drug_id = (drug_id or "").strip()
     try:
@@ -30,18 +32,18 @@ def disease_gnn_view(request, drug_id: str):
     try:
         result = disease_gnn_service.predict_for_drug(drug_id, top_n=top_n)
     except disease_gnn_service.DiseaseGNNUnavailable as exc:
-        return JsonResponse({"available": False, "error": str(exc)}, status=503)
+        return Response({"available": False, "error": str(exc)}, status=503)
     except neo4j_exc.ServiceUnavailable:
-        return JsonResponse({"available": False, "error": "Neo4j no disponible."}, status=503)
+        return Response({"available": False, "error": "Neo4j no disponible."}, status=503)
     except Exception as exc:
         log.error("disease_gnn_view error: %s", exc)
-        return JsonResponse({"error": "Error prediciendo enfermedades."}, status=500)
+        return Response({"error": "Error prediciendo enfermedades."}, status=500)
 
     # Sin modelo entrenado no hay predicciones: señalar 503 para consistencia con Tier 4.
     if not result.get("model"):
-        return JsonResponse(
+        return Response(
             {"available": False,
              "error": "Modelo fármaco→enfermedad no entrenado (scripts/train_disease_gnn.py)."},
             status=503,
         )
-    return JsonResponse(result, json_dumps_params={"ensure_ascii": False})
+    return Response(result)

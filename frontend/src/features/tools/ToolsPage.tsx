@@ -50,6 +50,9 @@ export default function ToolsPage() {
 
         {/* Contenido */}
         <main className="flex-1 min-w-0">
+          <div className="mb-4 rounded-lg border-2 border-amber-800/30 bg-amber-500/10 px-4 py-2 text-[12px] font-hand text-amber-900">
+            ⚠️ <b>Solo para investigación.</b> Todas las salidas (dianas, enfermedades, docking, repurposing, homología entre especies) son <b>predicciones in silico no validadas</b> — hipótesis exploratorias. <b>No son consejo médico ni veterinario</b> y no deben usarse para decisiones clínicas o de tratamiento sin validación experimental.
+          </div>
           {isHub ? (
             <>
               <HandTitle className="text-3xl flex items-center gap-2"><Wrench className="w-7 h-7 text-amber-800" /> Herramientas Analíticas</HandTitle>

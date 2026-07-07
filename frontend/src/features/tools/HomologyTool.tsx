@@ -43,7 +43,7 @@ export default function HomologyTool() {
     <div className="max-w-5xl">
       <HandTitle className="text-2xl flex items-center gap-2"><PawPrint className="w-6 h-6 text-amber-800" /> Homología cross-especies</HandTitle>
       <p className="text-stone-500 text-[13px] font-hand mt-1 mb-4">
-        ¿El fármaco podría funcionar en <b>otras especies</b> (uso veterinario)? Busca los ortólogos de sus dianas en las especies que elijas y mide la <b>% de identidad</b> — alta conservación (≥70%) sugiere que la diana, y por tanto el fármaco, se conserva.
+¿El fármaco <b>podría</b> aplicar en <b>otras especies</b> (uso veterinario)? Busca los ortólogos de sus dianas en las especies que elijas y mide la <b>% de identidad</b> — alta conservación (≥70%) sugiere que la diana está conservada, lo que <b>aumenta la probabilidad</b> de que el fármaco aplique (hipótesis, requiere validación).
       </p>
 
       <div className={cardCls}>
@@ -68,11 +68,11 @@ export default function HomologyTool() {
       {r?.available && (
         <>
           <div className={cardCls}>
-            <div className="text-stone-600 text-[12px] font-mono mb-2 uppercase">Veredicto por especie — ¿funcionaría?</div>
+            <div className="text-stone-600 text-[12px] font-mono mb-2 uppercase">Conservación de dianas por especie</div>
             <div className="flex flex-wrap gap-2">
               {(r.summary || []).map(s => (
                 <div key={s.organism_id} className="px-3 py-1.5 rounded-lg border-2" style={{ borderColor: `${idColor(s.mean_identity)}40`, background: `${idColor(s.mean_identity)}12` }}>
-                  <div className="text-[13px] font-bold text-stone-800">{s.name} {s.likely_works ? '✓' : ''}</div>
+                  <div className="text-[13px] font-bold text-stone-800">{s.name} {s.likely_works ? '· dianas conservadas' : ''}</div>
                   <div className="text-[11px] font-mono" style={{ color: idColor(s.mean_identity) }}>{s.mean_identity ?? '—'}% media · {s.n_conserved}/{s.n_targets} conservadas</div>
                 </div>
               ))}
