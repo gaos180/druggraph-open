@@ -219,7 +219,27 @@ export const toolsApi = {
 
   dossier: (body: { smiles?: string; drug_id?: string; style?: string; include_docking?: boolean }) =>
     api.post<DossierResult>('/tools/dossier/', body),
+
+  homologySpecies: () =>
+    api.get<{ available: boolean; species: HomologySpecies[] }>('/tools/homology/species/'),
+  homology: (body: { drug_id?: string; genes?: string[]; species: number[] }) =>
+    api.post<HomologyResult>('/tools/homology/', body),
 };
+
+// ── Homología cross-especies (Tier 6, veterinaria) ───────────────────────────────
+
+export interface HomologySpecies { organism_id: number; name: string; sci: string; }
+
+export interface HomologyResult {
+  available: boolean;
+  drug_id?: string; genes?: string[];
+  species?: HomologySpecies[];
+  targets?: { gene: string; human_uniprot: string | null;
+    by_species: Record<string, { found: boolean; ortholog?: string; identity: number | null; verdict: string }> }[];
+  summary?: { organism_id: number; name: string; sci: string; mean_identity: number | null;
+    n_conserved: number; n_targets: number; likely_works: boolean; verdict: string }[];
+  note?: string; reason?: string; error?: string;
+}
 
 export interface DossierResult {
   available: boolean;

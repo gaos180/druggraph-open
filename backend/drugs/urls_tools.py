@@ -6,6 +6,7 @@ from .views.tools import (
     chemprop_tox_view, disease_gnn_view, pharmacophore_view,
     docking_view, docking_targets_view, docking_screen_view, docking_refine_view,
     docking_funnel_view, molecule_analysis_view, dossier_view,
+    homology_view, homology_species_view,
 )
 
 urlpatterns = [
@@ -30,4 +31,6 @@ urlpatterns = [
     path('docking/funnel/',                 docking_funnel_view,   name='tools-docking-funnel'),
     path('molecule-analysis/',              molecule_analysis_view, name='tools-molecule-analysis'),
     path('dossier/',                        dossier_view,          name='tools-dossier'),
+    path('homology/',                       homology_view,         name='tools-homology'),
+    path('homology/species/',               homology_species_view, name='tools-homology-species'),
 ]
