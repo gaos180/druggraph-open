@@ -46,6 +46,49 @@ def docking_screen_view(request, target: str):
 
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
+def docking_funnel_view(request):
+    """Gráfico funnel de poses (RMSD vs energía) para escoger la mejor pose (abajo-izquierda)."""
+    if not docking_service.DOCKING_OK:
+        return Response({"available": False, "error": "Docking no disponible."}, status=503)
+    target = (request.data.get("target") or "").strip()
+    uniprot = (request.data.get("uniprot") or "").strip()
+    tname = (request.data.get("target_name") or "").strip()
+    smiles = (request.data.get("smiles") or "").strip()
+    drug_id = (request.data.get("drug_id") or "").strip()
+    ph = request.data.get("ph")
+    try:
+        ph = float(ph) if ph not in (None, "") else None
+    except (TypeError, ValueError):
+        ph = None
+
+    if not smiles and drug_id:
+        try:
+            from config.services.mongo import get_db
+            from config.services.chemberta_index import _smiles_for
+            smiles = _smiles_for(get_db(), drug_id.upper())
+        except Exception:
+            smiles = ""
+    if not smiles:
+        return Response({"error": "Se requiere 'smiles' o 'drug_id'."}, status=400)
+
+    if not target and uniprot:
+        try:
+            target = docking_service.ensure_receptor(uniprot, name=tname)
+        except docking_service.DockingUnavailable as exc:
+            return Response({"available": False, "error": str(exc)}, status=503)
+    if not target:
+        return Response({"error": "Falta 'target' o 'uniprot'."}, status=400)
+
+    try:
+        result = docking_service.pose_funnel(smiles, target, ph=ph)
+    except Exception as exc:
+        log.error("docking_funnel_view error: %s", exc)
+        return Response({"error": "Error generando el funnel de poses."}, status=500)
+    return Response(result, status=200 if result.get("available") else 503)
+
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
 def docking_refine_view(request):
     """Refina una pose por MD corta (OpenMM+OpenFF, fase 2). 503 si MD no está (requiere conda)."""
     from config.services import md_service

@@ -209,6 +209,8 @@ export const toolsApi = {
     api.post<DockingResult>('/tools/docking/', body),
   dockingScreen: (target: string, limit = 50) =>
     api.get<{ available: boolean; target: string; results: DockingScreenHit[] }>(`/tools/docking/screen/${target}/?limit=${limit}`),
+  dockingFunnel: (body: { smiles?: string; drug_id?: string; target?: string; uniprot?: string; target_name?: string; ph?: number }) =>
+    api.post<DockingFunnelResult>('/tools/docking/funnel/', body),
 
   moleculeAnalysis: (body: { smiles?: string; drug_id?: string }) =>
     api.post<MoleculeAnalysisResult>('/tools/molecule-analysis/', body),
@@ -255,6 +257,16 @@ export interface DockingTarget {
 
 export interface DockingScreenHit {
   drug_id: string; name: string; affinity_kcal_mol: number; smiles?: string;
+}
+
+export interface DockingFunnelResult {
+  available: boolean;
+  target?: string; target_name?: string;
+  self_reference?: boolean; n_reference_actives?: number;
+  points?: { pose: number; affinity: number; rmsd: number | null }[];
+  recommended_pose?: { pose: number; affinity: number; rmsd: number | null } | null;
+  plot_png?: string | null;
+  note?: string; reason?: string; error?: string;
 }
 
 export interface DockingResult {

@@ -22,7 +22,8 @@ from .dti_gnn import dti_gnn_view
 from .chemprop_tox import chemprop_tox_view
 from .disease_gnn import disease_gnn_view
 from .pharmacophore import pharmacophore_view
-from .docking import docking_view, docking_targets_view, docking_screen_view, docking_refine_view
+from .docking import (docking_view, docking_targets_view, docking_screen_view,
+                      docking_refine_view, docking_funnel_view)
 from .molecule_analysis import molecule_analysis_view
 
 __all__ = ["deg_analysis_view", "repurposing_view", "toxicity_view", "proximity_view",
@@ -30,4 +31,4 @@ __all__ = ["deg_analysis_view", "repurposing_view", "toxicity_view", "proximity_
            "chemical_space_view", "chemical_space_locate_view", "denovo_view", "admet_view",
            "dti_gnn_view", "chemprop_tox_view", "disease_gnn_view", "pharmacophore_view",
            "docking_view", "docking_targets_view", "docking_screen_view", "docking_refine_view",
-           "molecule_analysis_view"]
+           "docking_funnel_view", "molecule_analysis_view"]

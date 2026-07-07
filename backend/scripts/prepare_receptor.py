@@ -110,6 +110,7 @@ def main():
     ap.add_argument("--pdb-id"); ap.add_argument("--pdb-file")
     ap.add_argument("--uniprot", help="prepara desde AlphaFold por UniProt (caja ciega en el centroide)")
     ap.add_argument("--name", default="", help="nombre legible del receptor")
+    ap.add_argument("--category", default="", help="categoría (p. ej. 'antibiotic' para NDM-1)")
     ap.add_argument("--target", required=True, help="nombre corto del receptor (carpeta)")
     ap.add_argument("--center", nargs=3, help="coordenadas x y z de la caja")
     ap.add_argument("--center-ligand", help="código HETATM del ligando co-cristalizado")
@@ -137,7 +138,8 @@ def main():
     box = {"name": args.name or args.target, "pdb_id": (args.pdb_id or "").upper(),
            "uniprot": (args.uniprot or "").upper(), "center": center,
            "box_size": [args.box_size] * 3, "chain": args.chain,
-           "source": "alphafold" if args.uniprot else "pdb", "blind": blind}
+           "source": "alphafold" if args.uniprot else "pdb", "blind": blind,
+           "category": args.category}
     with open(os.path.join(out_dir, "box.json"), "w") as fh:
         json.dump(box, fh, indent=2)
     log.info("Receptor '%s' listo: centro %s, caja %s, blind=%s → %s",

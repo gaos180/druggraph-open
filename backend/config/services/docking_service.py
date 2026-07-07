@@ -58,7 +58,8 @@ def list_targets() -> list[dict]:
                 meta = {}
             out.append({"target": name, "name": meta.get("name", name),
                         "pdb_id": meta.get("pdb_id", ""), "center": meta.get("center"),
-                        "box_size": meta.get("box_size")})
+                        "box_size": meta.get("box_size"), "blind": bool(meta.get("blind", False)),
+                        "category": meta.get("category", "")})
     return out
 
 
@@ -213,6 +214,171 @@ def dock_many(smiles_list, target: str, exhaustiveness: int = 8, on_progress=Non
         if on_progress and (i + 1) % 20 == 0:
             on_progress(i + 1, len(smiles_list))
     return res
+
+
+def _heavy_coords(pdbqt_text: str) -> list:
+    """Coordenadas de átomos pesados por pose (parsea los MODEL del PDBQT que devuelve Vina)."""
+    import numpy as np
+    poses, cur = [], []
+    for line in pdbqt_text.splitlines():
+        if line.startswith("MODEL"):
+            cur = []
+        elif line.startswith("ENDMDL"):
+            if cur:
+                poses.append(np.array(cur))
+            cur = []
+        elif line.startswith(("ATOM", "HETATM")):
+            elem = (line[76:78].strip() if len(line) >= 78 else "") or line[12:14].strip()
+            if elem.upper().startswith("H"):
+                continue
+            try:
+                cur.append((float(line[30:38]), float(line[38:46]), float(line[46:54])))
+            except ValueError:
+                pass
+    if cur:
+        poses.append(np.array(cur))
+    return poses
+
+
+def _overlap_rmsd(a, b) -> float | None:
+    """Distancia media simétrica al átomo pesado más cercano entre dos poses (solape espacial, Å)."""
+    if a is None or b is None or len(a) == 0 or len(b) == 0:
+        return None
+    from scipy.spatial import cKDTree
+    da, _ = cKDTree(b).query(a)
+    db, _ = cKDTree(a).query(b)
+    return round(float((da.mean() + db.mean()) / 2), 2)
+
+
+def _reference_actives(target: str, box: dict, n: int = 2) -> list[str]:
+    """SMILES de ligandos conocidos que interactúan con la diana (ChEMBL por UniProt; NDM-1 cacheado)."""
+    up = (box.get("uniprot") or "").strip()
+    if up:
+        try:
+            import requests
+            t = requests.get("https://www.ebi.ac.uk/chembl/api/data/target",
+                             params={"target_components__accession": up, "format": "json", "limit": 3},
+                             timeout=60).json().get("targets", [])
+            tids = [x["target_chembl_id"] for x in t]
+            smi = []
+            for tid in tids:
+                acts = requests.get("https://www.ebi.ac.uk/chembl/api/data/activity",
+                                    params={"target_chembl_id": tid, "pchembl_value__gte": 6,
+                                            "limit": 50, "format": "json"}, timeout=60).json().get("activities", [])
+                for a in acts:
+                    s = a.get("canonical_smiles")
+                    if s and Chem.MolFromSmiles(s):
+                        smi.append(s)
+                if smi:
+                    break
+            return smi[:n]
+        except Exception as exc:
+            log.debug("ref actives uniprot error: %s", exc)
+            return []
+    if target == "ndm1":
+        path = os.path.join(_BACKEND_DIR, "..", "dataset_testing", "docking", "actives_chembl.smi")
+        if os.path.exists(path):
+            return [l.strip() for l in open(path) if l.strip()][:n]
+    return []
+
+
+def pose_funnel(smiles: str, target: str, exhaustiveness: int = 8, n_poses: int = 9,
+                ph: float | None = None) -> dict:
+    """
+    Gráfico funnel para ESCOGER pose: acopla el ligando (varias poses) y las sitúa en (RMSD, energía),
+    donde RMSD = solape espacial con la pose de un ligando CONOCIDO de la diana. La mejor pose es la de
+    abajo-izquierda (baja RMSD = donde se unen los conocidos + buena energía). Devuelve puntos +
+    recomendación + PNG del gráfico en base64.
+    """
+    if not DOCKING_OK:
+        return {"available": False, "reason": "Docking no disponible."}
+    try:
+        rec_path, box = _receptor_paths(target)
+    except DockingUnavailable as exc:
+        return {"available": False, "reason": str(exc)}
+    try:
+        from vina import Vina
+        import numpy as np
+        v = Vina(sf_name="vina", verbosity=0)
+        v.set_receptor(rec_path)
+        v.compute_vina_maps(center=box["center"], box_size=box["box_size"])
+        v.set_ligand_from_string(prepare_ligand_pdbqt(smiles, ph=ph))
+        v.dock(exhaustiveness=exhaustiveness, n_poses=n_poses)
+        q_aff = [round(float(e[0]), 2) for e in v.energies(n_poses=n_poses)]
+        q_poses = _heavy_coords(v.poses(n_poses=n_poses))
+    except Exception as exc:
+        log.error("pose_funnel dock error: %s", exc)
+        return {"available": False, "reason": f"Error en el docking: {exc}"}
+
+    # Poses de referencia (ligandos conocidos). Si no hay, se usa la mejor pose propia como referencia.
+    ref_poses, ref_info = [], []
+    for rs in _reference_actives(target, box, n=2):
+        try:
+            v.set_ligand_from_string(prepare_ligand_pdbqt(rs))
+            v.dock(exhaustiveness=exhaustiveness, n_poses=1)
+            rp = _heavy_coords(v.poses(n_poses=1))
+            if rp:
+                ref_poses.append(rp[0]); ref_info.append({"smiles": rs, "affinity": round(float(v.energies(1)[0][0]), 2)})
+        except Exception:
+            pass
+    self_ref = len(ref_poses) == 0
+    if self_ref and q_poses:
+        ref_poses = [q_poses[int(np.argmin(q_aff))]]   # fallback: mejor pose propia
+
+    points = []
+    for i, (aff, qp) in enumerate(zip(q_aff, q_poses)):
+        rmsds = [r for r in (_overlap_rmsd(qp, rp) for rp in ref_poses) if r is not None]
+        points.append({"pose": i + 1, "affinity": aff, "rmsd": min(rmsds) if rmsds else None})
+
+    valid = [p for p in points if p["rmsd"] is not None]
+    best = None
+    if valid:
+        rs = [p["rmsd"] for p in valid]; es = [p["affinity"] for p in valid]
+        rr = (max(rs) - min(rs)) or 1; er = (max(es) - min(es)) or 1
+        best = min(valid, key=lambda p: (p["rmsd"] - min(rs)) / rr + (p["affinity"] - min(es)) / er)
+
+    plot = _funnel_plot(points, ref_info, self_ref, target)
+    return {
+        "available": True, "target": target, "target_name": box.get("name", target),
+        "self_reference": self_ref, "n_reference_actives": len(ref_info),
+        "points": points, "recommended_pose": best, "plot_png": plot,
+        "note": ("Sin ligandos conocidos: RMSD respecto a la mejor pose propia (convergencia)."
+                 if self_ref else
+                 "RMSD = solape espacial con la pose de ligandos conocidos de la diana. "
+                 "Mejor pose = abajo-izquierda (baja RMSD + buena energía)."),
+    }
+
+
+def _funnel_plot(points, ref_info, self_ref, target) -> str | None:
+    """Genera el scatter RMSD vs energía y lo devuelve como PNG base64."""
+    try:
+        import base64
+        import io
+        import matplotlib
+        matplotlib.use("Agg")
+        import matplotlib.pyplot as plt
+        valid = [p for p in points if p["rmsd"] is not None]
+        if not valid:
+            return None
+        fig, ax = plt.subplots(figsize=(5, 4))
+        xs = [p["rmsd"] for p in valid]; ys = [p["affinity"] for p in valid]
+        ax.scatter(xs, ys, c="#2563eb", s=60, edgecolors="k", linewidths=0.4, label="poses del ligando")
+        for p in valid:
+            ax.annotate(str(p["pose"]), (p["rmsd"], p["affinity"]), fontsize=7, ha="center", va="center", color="white")
+        if ref_info:
+            ax.scatter([0] * len(ref_info), [r["affinity"] for r in ref_info], marker="*", s=120,
+                       c="#dc2626", label="ligandos conocidos")
+        b = min(valid, key=lambda p: p["rmsd"] + p["affinity"])
+        ax.scatter([b["rmsd"]], [b["affinity"]], facecolors="none", edgecolors="#15803d", s=200, linewidths=2, label="recomendada")
+        ax.set_xlabel("RMSD a ligandos conocidos (Å)" if not self_ref else "RMSD a mejor pose (Å)")
+        ax.set_ylabel("Energía / afinidad (kcal/mol)")
+        ax.set_title(f"Funnel de poses — {target}\n(mejor = abajo-izquierda)")
+        ax.legend(fontsize=8); fig.tight_layout()
+        buf = io.BytesIO(); fig.savefig(buf, format="png", dpi=110); plt.close(fig)
+        return "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode()
+    except Exception as exc:
+        log.debug("funnel plot error: %s", exc)
+        return None
 
 
 def screen_results(target: str, limit: int = 50) -> list[dict]:

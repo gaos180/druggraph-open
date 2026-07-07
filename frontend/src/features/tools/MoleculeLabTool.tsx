@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Microscope, Target as TargetIcon, Biohazard } from 'lucide-react';
-import { toolsApi, MoleculeAnalysisResult, ChempropToxResult, DockingResult, DockingTarget, MolTarget } from '../../api/tools';
+import { toolsApi, MoleculeAnalysisResult, ChempropToxResult, DockingResult, DockingTarget, MolTarget, DockingFunnelResult } from '../../api/tools';
 import { usePageTitle } from '../../hooks/usePageTitle';
 import { HandTitle, PencilButton } from '../../components/notebook';
 
@@ -30,6 +30,8 @@ export default function MoleculeLabTool() {
   const [ph, setPh] = useState(7.4);
   const [dock, setDock] = useState<DockingResult | null>(null);
   const [dockLoading, setDockLoading] = useState(false);
+  const [funnel, setFunnel] = useState<DockingFunnelResult | null>(null);
+  const [funnelLoading, setFunnelLoading] = useState(false);
 
   const analyze = async () => {
     const s = q.trim();
@@ -58,15 +60,24 @@ export default function MoleculeLabTool() {
     }
   };
 
+  const choiceBody = (c: DockChoice, atPh: number) => {
+    const base: any = molBody();
+    return c.kind === 'prepared' ? { ...base, target: c.target, ph: atPh } : { ...base, uniprot: c.uniprot, target_name: c.name, ph: atPh };
+  };
+
   const runDock = async (c: DockChoice, atPh = ph) => {
-    setChoice(c); setShowDock(true); setDockLoading(true); setDock(null);
-    try {
-      const base: any = molBody();
-      const body = c.kind === 'prepared' ? { ...base, target: c.target, ph: atPh } : { ...base, uniprot: c.uniprot, target_name: c.name, ph: atPh };
-      const res = await toolsApi.docking(body);
-      setDock(res.data);
-    } catch (e: any) { setDock({ available: false, reason: e?.response?.data?.error } as any); }
+    setChoice(c); setShowDock(true); setDockLoading(true); setDock(null); setFunnel(null);
+    try { const res = await toolsApi.docking(choiceBody(c, atPh)); setDock(res.data); }
+    catch (e: any) { setDock({ available: false, reason: e?.response?.data?.error } as any); }
     finally { setDockLoading(false); }
+  };
+
+  const runFunnel = async () => {
+    if (!choice) return;
+    setFunnelLoading(true); setFunnel(null);
+    try { const res = await toolsApi.dockingFunnel(choiceBody(choice, ph)); setFunnel(res.data); }
+    catch (e: any) { setFunnel({ available: false, reason: e?.response?.data?.error } as any); }
+    finally { setFunnelLoading(false); }
   };
 
   // Botón de docking para una fila de diana (si tiene UniProt).
@@ -189,8 +200,19 @@ export default function MoleculeLabTool() {
               {choice && <div className="text-[12px] mb-1">Diana: <b>{choice.name}</b> · pH {ph}</div>}
               {dockLoading && <div className="text-stone-400 text-[12px]">Acoplando… (si prepara receptor nuevo puede tardar)</div>}
               {dock && (dock.available
-                ? <div className="text-[13px]">Afinidad: <span className="font-mono font-bold" style={{ color: affColor(dock.affinity_kcal_mol || 0) }}>{dock.affinity_kcal_mol?.toFixed(2)} kcal/mol</span> {dock.blind && <span className="text-amber-700 text-[11px]">(ciego · AlphaFold, baja confianza)</span>} <button className="ml-2 text-[11px] underline text-stone-500" onClick={() => choice && runDock(choice)}>reintentar</button></div>
+                ? <div className="text-[13px]">Afinidad: <span className="font-mono font-bold" style={{ color: affColor(dock.affinity_kcal_mol || 0) }}>{dock.affinity_kcal_mol?.toFixed(2)} kcal/mol</span> {dock.blind && <span className="text-amber-700 text-[11px]">(ciego · AlphaFold, baja confianza)</span>}
+                    <button className="ml-2 text-[11px] underline text-stone-500" onClick={() => choice && runDock(choice)}>reintentar</button>
+                    <button className="ml-2 text-[11px] px-1.5 py-0.5 rounded bg-purple-600/10 text-purple-800 border border-purple-800/20" onClick={runFunnel} disabled={funnelLoading}>{funnelLoading ? 'funnel…' : '📊 funnel de poses'}</button>
+                  </div>
                 : <div className="text-amber-800 text-[12px]">{(dock as any).reason || 'No disponible'}</div>)}
+              {funnel && (funnel.available
+                ? <div className="mt-2">
+                    {funnel.plot_png && <img src={funnel.plot_png} alt="funnel de poses" className="max-w-[420px] w-full rounded border border-stone-300" />}
+                    {funnel.recommended_pose && <div className="text-[12px] mt-1">Pose recomendada: <b>#{funnel.recommended_pose.pose}</b> (RMSD {funnel.recommended_pose.rmsd} Å · {funnel.recommended_pose.affinity} kcal/mol) — la de abajo-izquierda.</div>}
+                    <div className="text-stone-400 text-[10px] font-hand">{funnel.note}</div>
+                  </div>
+                : funnel && <div className="text-amber-800 text-[12px] mt-1">{(funnel as any).reason || 'Funnel no disponible'}</div>)}
+              <div className="text-stone-400 text-[10px] font-hand mt-1"><b>NDM-1</b> es específico de antibióticos; para otras dianas se prepara la estructura AlphaFold al vuelo (docking ciego).</div>
             </div>
           )}
         </div>
