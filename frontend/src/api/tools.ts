@@ -211,6 +211,8 @@ export const toolsApi = {
     api.get<{ available: boolean; target: string; results: DockingScreenHit[] }>(`/tools/docking/screen/${target}/?limit=${limit}`),
   dockingFunnel: (body: { smiles?: string; drug_id?: string; target?: string; uniprot?: string; target_name?: string; ph?: number }) =>
     api.post<DockingFunnelResult>('/tools/docking/funnel/', body),
+  dockingRefine: (body: { smiles?: string; target: string; ph?: number }) =>
+    api.post<DockingRefineResult>('/tools/docking/refine/', body),
 
   moleculeAnalysis: (body: { smiles?: string; drug_id?: string }) =>
     api.post<MoleculeAnalysisResult>('/tools/molecule-analysis/', body),
@@ -252,11 +254,18 @@ export interface MoleculeAnalysisResult {
 
 export interface DockingTarget {
   target: string; name: string; pdb_id?: string;
-  center?: number[]; box_size?: number[];
+  center?: number[]; box_size?: number[]; category?: string; blind?: boolean;
 }
 
 export interface DockingScreenHit {
   drug_id: string; name: string; affinity_kcal_mol: number; smiles?: string;
+}
+
+export interface DockingRefineResult {
+  available: boolean;
+  target?: string; docked_affinity_kcal_mol?: number;
+  energy_min_kcal_mol?: number; energy_md_kcal_mol?: number; md_steps?: number;
+  note?: string; reason?: string; error?: string;
 }
 
 export interface DockingFunnelResult {

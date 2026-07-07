@@ -262,13 +262,19 @@ def _reference_actives(target: str, box: dict, n: int = 2) -> list[str]:
             tids = [x["target_chembl_id"] for x in t]
             smi = []
             for tid in tids:
-                acts = requests.get("https://www.ebi.ac.uk/chembl/api/data/activity",
-                                    params={"target_chembl_id": tid, "pchembl_value__gte": 6,
-                                            "limit": 50, "format": "json"}, timeout=60).json().get("activities", [])
+                # only=canonical_smiles reduce el payload (los registros de activity son enormes) →
+                # evita el timeout en dianas muy estudiadas (p. ej. CA-II con miles de datos).
+                acts = requests.get(
+                    "https://www.ebi.ac.uk/chembl/api/data/activity",
+                    params={"target_chembl_id": tid, "pchembl_value__gte": 7,
+                            "only": "canonical_smiles", "limit": 30, "format": "json"},
+                    timeout=45).json().get("activities", [])
                 for a in acts:
                     s = a.get("canonical_smiles")
-                    if s and Chem.MolFromSmiles(s):
+                    if s and s not in smi and Chem.MolFromSmiles(s):
                         smi.append(s)
+                    if len(smi) >= n:
+                        break
                 if smi:
                     break
             return smi[:n]

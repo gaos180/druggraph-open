@@ -32,6 +32,8 @@ export default function MoleculeLabTool() {
   const [dockLoading, setDockLoading] = useState(false);
   const [funnel, setFunnel] = useState<DockingFunnelResult | null>(null);
   const [funnelLoading, setFunnelLoading] = useState(false);
+  const [md, setMd] = useState<any>(null);
+  const [mdLoading, setMdLoading] = useState(false);
 
   const analyze = async () => {
     const s = q.trim();
@@ -66,7 +68,7 @@ export default function MoleculeLabTool() {
   };
 
   const runDock = async (c: DockChoice, atPh = ph) => {
-    setChoice(c); setShowDock(true); setDockLoading(true); setDock(null); setFunnel(null);
+    setChoice(c); setShowDock(true); setDockLoading(true); setDock(null); setFunnel(null); setMd(null);
     try { const res = await toolsApi.docking(choiceBody(c, atPh)); setDock(res.data); }
     catch (e: any) { setDock({ available: false, reason: e?.response?.data?.error } as any); }
     finally { setDockLoading(false); }
@@ -78,6 +80,15 @@ export default function MoleculeLabTool() {
     try { const res = await toolsApi.dockingFunnel(choiceBody(choice, ph)); setFunnel(res.data); }
     catch (e: any) { setFunnel({ available: false, reason: e?.response?.data?.error } as any); }
     finally { setFunnelLoading(false); }
+  };
+
+  const runRefine = async () => {
+    const tgt = dock?.target || (choice?.kind === 'prepared' ? choice.target : choice?.uniprot);
+    if (!tgt || !r?.smiles) return;
+    setMdLoading(true); setMd(null);
+    try { const res = await toolsApi.dockingRefine({ smiles: r.smiles, target: tgt, ph }); setMd(res.data); }
+    catch (e: any) { setMd({ available: false, reason: e?.response?.data?.error }); }
+    finally { setMdLoading(false); }
   };
 
   // Botón de docking para una fila de diana (si tiene UniProt).
@@ -189,14 +200,16 @@ export default function MoleculeLabTool() {
           </label>
           {showDock && (
             <div className="pl-6 mt-2">
+              <div className="text-[12px] text-stone-600 font-hand mb-2">Acopla la molécula a <b>sus dianas posibles</b> — pulsa <b>dock</b> junto a una diana de la tabla de arriba (documentadas o del consenso de vecinos; se prepara su estructura AlphaFold al vuelo). El funnel usará los <b>ligandos conocidos de esa diana</b> como referencia.</div>
               <div className="flex gap-2 items-center flex-wrap mb-2 text-[12px]">
                 <span className="text-stone-500 font-mono">pH:</span>
                 {PH_PRESETS.map(x => <button key={x} onClick={() => { setPh(x); if (choice) runDock(choice, x); }} className={`px-2 py-0.5 rounded font-mono ${ph === x ? 'bg-[#2d2621] text-[#faf6ee]' : 'bg-stone-500/10 text-stone-600'}`}>{x}</button>)}
-                <span className="text-stone-400 mx-2">·</span>
-                <span className="text-stone-500 font-mono">receptor preparado:</span>
-                {preparedTargets.map(t => <button key={t.target} onClick={() => runDock({ kind: 'prepared', target: t.target, name: t.name })} className="px-2 py-0.5 rounded font-mono bg-sky-600/10 text-sky-800">{t.name}</button>)}
+                {preparedTargets.some(t => t.category === 'antibiotic') && (<>
+                  <span className="text-stone-400 mx-2">·</span>
+                  <span className="text-stone-500 font-mono">antibióticos:</span>
+                  {preparedTargets.filter(t => t.category === 'antibiotic').map(t => <button key={t.target} onClick={() => runDock({ kind: 'prepared', target: t.target, name: t.name })} className="px-2 py-0.5 rounded font-mono bg-red-600/10 text-red-800" title="Solo para candidatos a antibiótico">{t.name}</button>)}
+                </>)}
               </div>
-              <div className="text-stone-400 text-[11px] font-hand mb-1">Elige un receptor preparado, o pulsa <b>dock</b> junto a una diana de arriba (se prepara su estructura AlphaFold al vuelo). Cambia el pH para reintentar con otra protonación.</div>
               {choice && <div className="text-[12px] mb-1">Diana: <b>{choice.name}</b> · pH {ph}</div>}
               {dockLoading && <div className="text-stone-400 text-[12px]">Acoplando… (si prepara receptor nuevo puede tardar)</div>}
               {dock && (dock.available
@@ -212,7 +225,15 @@ export default function MoleculeLabTool() {
                     <div className="text-stone-400 text-[10px] font-hand">{funnel.note}</div>
                   </div>
                 : funnel && <div className="text-amber-800 text-[12px] mt-1">{(funnel as any).reason || 'Funnel no disponible'}</div>)}
-              <div className="text-stone-400 text-[10px] font-hand mt-1"><b>NDM-1</b> es específico de antibióticos; para otras dianas se prepara la estructura AlphaFold al vuelo (docking ciego).</div>
+              {dock?.available && (
+                <div className="mt-2">
+                  <button className="text-[11px] px-1.5 py-0.5 rounded bg-teal-600/10 text-teal-800 border border-teal-800/20" onClick={runRefine} disabled={mdLoading}>{mdLoading ? 'MD…' : '🧪 verificar con MD (¿la unión es estable?)'}</button>
+                  {md && (md.available
+                    ? <div className="text-[12px] mt-1">MD OK · energía minimizada {md.energy_min_kcal_mol} → tras MD {md.energy_md_kcal_mol} kcal/mol. <span className="text-stone-400">{md.note}</span></div>
+                    : <div className="text-amber-800 text-[11px] mt-1">{md.reason || md.error || 'MD no disponible'}</div>)}
+                </div>
+              )}
+              <div className="text-stone-400 text-[10px] font-hand mt-1">Flujo: dianas posibles → <b>dock</b> → funnel (escoge pose) → <b>MD</b> (comprueba estabilidad). <b>NDM-1</b> es solo para antibióticos.</div>
             </div>
           )}
         </div>
