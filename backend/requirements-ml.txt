@@ -46,6 +46,12 @@ gemmi
 openbabel-wheel
 dimorphite-dl
 
+# ── Tier 5.3 fase 2 — refinamiento de poses por Dinámica Molecular (OpenMM) ──
+# openmm sí está en PyPI, PERO la parametrización del ligando (openff-toolkit) es SOLO CONDA:
+#   conda install -c conda-forge openmm openmmforcefields openff-toolkit rdkit
+# Sin openff, md_service degrada a 503. Ver docs/TIER5_PLAN.md.
+openmm
+
 # ── Tier 4.4c — motor generativo SyntheMol (de novo, Stanford, MIT) ──
 # Búsqueda combinatoria (MCTS/RL) sobre bloques comprables + reacciones reales: síntesis
 # garantizada por construcción. Requiere además descargar la biblioteca de bloques (Enamine

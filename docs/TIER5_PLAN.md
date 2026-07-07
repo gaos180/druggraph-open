@@ -1,10 +1,13 @@
 # Tier 5 — Plan: cribado estructural por docking (NDM-1 como caso piloto)
 
-_Estado (2026-07-06): **NÚCLEO IMPLEMENTADO**. 5.1 pharmacóforos (`pharmacophore_service`), 5.2 de
-novo pharmaco-guiado (`denovo_pharma_service`, `engine='pharma'`) y **5.3 docking Vina**
-(`docking_service` + `scripts/prepare_receptor.py`, receptor NDM-1/3SPU probado: aspirina −4.86
-kcal/mol) ya funcionan. Pendiente/futuro: cribado batch del catálogo persistido + validación EF/ROC
-vs. decoys DUD-E + MD (fase 2). El resto de este documento es el plan original._
+_Estado (2026-07-07): **NÚCLEO + VALIDACIÓN + BATCH + on-demand + MD-scaffold**. 5.1 pharmacóforos,
+5.2 de novo pharma-guiado, **5.3 docking Vina** con: validación EF/ROC (ROC-AUC 0.775 vs NDM-1,
+`dataset_testing/docking/`), cribado batch (`run_docking_screen.py` → Mongo `docking_results`),
+preparación de receptor **on-demand desde AlphaFold** por UniProt (dock a dianas elegidas/predichas),
+y **pH** en el ligando (dimorphite-dl). **MD (fase 2): scaffold listo** (`md_service.py` +
+`POST /api/tools/docking/refine/`) pero REQUIERE CONDA: `openmm` está en pip, pero la parametrización
+del ligando (`openff-toolkit`/`openmmforcefields`) es solo-conda → sin ella degrada a 503. Setup:
+`conda install -c conda-forge openmm openmmforcefields openff-toolkit`. El resto es el plan original._
 
 Basado en el repo `Insilico Drug Discovery for NDM-1` de la tabla de métodos externos. Es la única
 recomendación que introduce una **modalidad realmente nueva**: pasar de los métodos basados en

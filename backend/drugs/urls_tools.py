@@ -4,7 +4,7 @@ from .views.tools import (
     proximity_view, disease_evidence_view, signature_reversion_view,
     chemical_space_view, chemical_space_locate_view, denovo_view, admet_view, dti_gnn_view,
     chemprop_tox_view, disease_gnn_view, pharmacophore_view,
-    docking_view, docking_targets_view, docking_screen_view,
+    docking_view, docking_targets_view, docking_screen_view, docking_refine_view,
     molecule_analysis_view,
 )
 
@@ -26,5 +26,6 @@ urlpatterns = [
     path('docking/',                        docking_view,          name='tools-docking'),
     path('docking/targets/',                docking_targets_view,  name='tools-docking-targets'),
     path('docking/screen/<str:target>/',    docking_screen_view,   name='tools-docking-screen'),
+    path('docking/refine/',                 docking_refine_view,   name='tools-docking-refine'),
     path('molecule-analysis/',              molecule_analysis_view, name='tools-molecule-analysis'),
 ]

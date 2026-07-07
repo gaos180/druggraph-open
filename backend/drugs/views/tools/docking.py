@@ -46,6 +46,33 @@ def docking_screen_view(request, target: str):
 
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
+def docking_refine_view(request):
+    """Refina una pose por MD corta (OpenMM+OpenFF, fase 2). 503 si MD no está (requiere conda)."""
+    from config.services import md_service
+    if not md_service.available():
+        return Response({"available": False,
+                         "error": "Refinamiento por MD no disponible (requiere conda: openmm + "
+                                  "openmmforcefields + openff-toolkit). Ver docs/TIER5_PLAN.md."},
+                        status=503)
+    target = (request.data.get("target") or "").strip()
+    smiles = (request.data.get("smiles") or "").strip()
+    ph = request.data.get("ph")
+    try:
+        ph = float(ph) if ph not in (None, "") else None
+    except (TypeError, ValueError):
+        ph = None
+    if not target or not smiles:
+        return Response({"error": "Se requiere 'smiles' y 'target'."}, status=400)
+    try:
+        result = md_service.refine(smiles, target, ph=ph)
+    except Exception as exc:
+        log.error("docking_refine_view error: %s", exc)
+        return Response({"error": "Error en el refinamiento MD."}, status=500)
+    return Response(result, status=200 if result.get("available") else 503)
+
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
 def docking_view(request):
     if not docking_service.DOCKING_OK:
         return Response({"available": False,
