@@ -41,6 +41,28 @@ def _fetch_pdb(pdb_id: str, dest: str) -> str:
     return dest
 
 
+def _fetch_alphafold(uniprot: str, dest: str) -> str:
+    """Descarga la estructura AlphaFold de un UniProt (vía API, robusta ante versiones)."""
+    import requests
+    meta = requests.get(f"https://alphafold.ebi.ac.uk/api/prediction/{uniprot.upper()}", timeout=60).json()
+    if not meta:
+        raise SystemExit(f"Sin estructura AlphaFold para {uniprot}.")
+    log.info("Descargando AlphaFold %s…", meta[0]["pdbUrl"])
+    r = requests.get(meta[0]["pdbUrl"], timeout=120); r.raise_for_status()
+    with open(dest, "w") as fh:
+        fh.write(r.text)
+    return dest
+
+
+def _centroid(pdb_in: str) -> list[float]:
+    import gemmi
+    import numpy as np
+    st = gemmi.read_structure(pdb_in)
+    pts = np.array([(a.pos.x, a.pos.y, a.pos.z) for m in st for ch in m for r in ch for a in r])
+    c = pts.mean(0)
+    return [round(float(c[0]), 2), round(float(c[1]), 2), round(float(c[2]), 2)]
+
+
 def _protein_only(pdb_in: str, pdb_out: str, keep_metal: str | None):
     """Escribe solo ATOM (proteína) + opcionalmente el metal HETATM; descarta aguas/otros."""
     metal = (keep_metal or "").upper()
@@ -86,6 +108,8 @@ def _receptor_pdbqt(protein_pdb: str, out_pdbqt: str):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--pdb-id"); ap.add_argument("--pdb-file")
+    ap.add_argument("--uniprot", help="prepara desde AlphaFold por UniProt (caja ciega en el centroide)")
+    ap.add_argument("--name", default="", help="nombre legible del receptor")
     ap.add_argument("--target", required=True, help="nombre corto del receptor (carpeta)")
     ap.add_argument("--center", nargs=3, help="coordenadas x y z de la caja")
     ap.add_argument("--center-ligand", help="código HETATM del ligando co-cristalizado")
@@ -96,19 +120,28 @@ def main():
 
     out_dir = os.path.join(RECEPTOR_DIR, args.target)
     os.makedirs(out_dir, exist_ok=True)
-    raw = args.pdb_file or _fetch_pdb(args.pdb_id, os.path.join(out_dir, "structure.pdb"))
 
-    center = _box_center(raw, args)
+    blind = False
+    if args.uniprot:
+        raw = _fetch_alphafold(args.uniprot, os.path.join(out_dir, "structure.pdb"))
+        center = [float(v) for v in args.center] if args.center else _centroid(raw)
+        blind = not args.center           # sin sitio validado → docking ciego
+    else:
+        raw = args.pdb_file or _fetch_pdb(args.pdb_id, os.path.join(out_dir, "structure.pdb"))
+        center = _box_center(raw, args)
+
     protein_pdb = os.path.join(out_dir, "protein.pdb")
     _protein_only(raw, protein_pdb, args.center_metal)
     _receptor_pdbqt(protein_pdb, os.path.join(out_dir, "receptor.pdbqt"))
 
-    box = {"name": args.target, "pdb_id": (args.pdb_id or "").upper(), "center": center,
-           "box_size": [args.box_size] * 3, "chain": args.chain}
+    box = {"name": args.name or args.target, "pdb_id": (args.pdb_id or "").upper(),
+           "uniprot": (args.uniprot or "").upper(), "center": center,
+           "box_size": [args.box_size] * 3, "chain": args.chain,
+           "source": "alphafold" if args.uniprot else "pdb", "blind": blind}
     with open(os.path.join(out_dir, "box.json"), "w") as fh:
         json.dump(box, fh, indent=2)
-    log.info("Receptor '%s' listo: centro %s, caja %s → %s",
-             args.target, center, box["box_size"], out_dir)
+    log.info("Receptor '%s' listo: centro %s, caja %s, blind=%s → %s",
+             args.target, center, box["box_size"], blind, out_dir)
 
 
 if __name__ == "__main__":

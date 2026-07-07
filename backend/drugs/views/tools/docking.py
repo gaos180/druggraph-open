@@ -52,20 +52,39 @@ def docking_view(request):
                          "error": "Docking no disponible (instala vina + meeko + openbabel)."}, status=503)
 
     target = (request.data.get("target") or "").strip()
-    if not target:
-        return Response({"error": "Falta 'target' (receptor preparado)."}, status=400)
+    uniprot = (request.data.get("uniprot") or "").strip()
+    tname = (request.data.get("target_name") or "").strip()
     try:
         exhaustiveness = max(1, min(int(request.data.get("exhaustiveness", 8)), 32))
     except (TypeError, ValueError):
         exhaustiveness = 8
+    ph = request.data.get("ph")
+    try:
+        ph = float(ph) if ph is not None and ph != "" else None
+    except (TypeError, ValueError):
+        ph = None
+
+    # Si se pasa un UniProt (diana elegida, p. ej. una predicha), preparar el receptor al vuelo
+    # desde AlphaFold y acoplar contra él.
+    if not target and uniprot:
+        try:
+            target = docking_service.ensure_receptor(uniprot, name=tname)
+        except docking_service.DockingUnavailable as exc:
+            return Response({"available": False, "error": str(exc)}, status=503)
+        except Exception as exc:
+            log.error("ensure_receptor error: %s", exc)
+            return Response({"available": False, "error": "No se pudo preparar el receptor."}, status=503)
+    if not target:
+        return Response({"error": "Falta 'target' (receptor preparado) o 'uniprot' (diana a preparar)."},
+                        status=400)
 
     drug_id = (request.data.get("drug_id") or "").strip()
     smiles = (request.data.get("smiles") or "").strip()
     try:
         if drug_id:
-            result = docking_service.dock_for_drug(drug_id, target, exhaustiveness=exhaustiveness)
+            result = docking_service.dock_for_drug(drug_id, target, exhaustiveness=exhaustiveness, ph=ph)
         elif smiles and len(smiles) <= MAX_SMILES:
-            result = docking_service.dock(smiles, target, exhaustiveness=exhaustiveness)
+            result = docking_service.dock(smiles, target, exhaustiveness=exhaustiveness, ph=ph)
         else:
             return Response({"error": "Se requiere 'smiles' o 'drug_id'."}, status=400)
     except Exception as exc:

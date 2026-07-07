@@ -205,7 +205,7 @@ export const toolsApi = {
 
   dockingTargets: () =>
     api.get<{ available: boolean; targets: DockingTarget[] }>('/tools/docking/targets/'),
-  docking: (body: { smiles?: string; drug_id?: string; target: string; exhaustiveness?: number }) =>
+  docking: (body: { smiles?: string; drug_id?: string; target?: string; uniprot?: string; target_name?: string; exhaustiveness?: number; ph?: number }) =>
     api.post<DockingResult>('/tools/docking/', body),
   dockingScreen: (target: string, limit = 50) =>
     api.get<{ available: boolean; target: string; results: DockingScreenHit[] }>(`/tools/docking/screen/${target}/?limit=${limit}`),
@@ -218,8 +218,8 @@ export const toolsApi = {
 
 export interface MolNeighbor { similarity: number; drug_id: string; name: string; }
 export interface MolTarget { name?: string; gene?: string; uniprot?: string;
-  target_name?: string; gene_name?: string; probability?: number; }
-export interface MolDisease { disease_name: string; probability: number; }
+  target_name?: string; gene_name?: string; uniprot_id?: string; probability?: number; shared?: number; }
+export interface MolDisease { disease_name: string; probability?: number; shared?: number; }
 
 export interface MoleculeAnalysisResult {
   available:  boolean;
@@ -232,11 +232,16 @@ export interface MoleculeAnalysisResult {
   pharmacophore?: PharmacophoreResult;
   admet?:     AdmetResult | { available: boolean };
   network?: {
+    mode?: string;
     reference_drug_id?: string;
-    proxy_drug?: MolNeighbor | null;
     documented_targets?: MolTarget[];
     predicted_targets?: MolTarget[];
     repurposing?: MolDisease[];
+    // modo consenso (molécula fuera del catálogo)
+    neighbors_used?: MolNeighbor[];
+    consensus_targets?: MolTarget[];
+    consensus_diseases?: MolDisease[];
+    n_neighbors?: number;
   };
   reason?:    string;
 }
@@ -263,6 +268,9 @@ export interface DockingResult {
   affinity_kcal_mol?: number | null;
   poses_kcal_mol?:    number[];
   box?:               { center: number[]; box_size: number[] };
+  ph?:                number | null;
+  blind?:             boolean;
+  source?:            string;
   note?:              string;
   reason?:            string;
   error?:             string;

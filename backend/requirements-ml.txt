@@ -37,11 +37,14 @@ py3Dmol
 # ── Tier 5.3 — docking estructural con AutoDock Vina (open) ──
 # vina: bindings de AutoDock Vina. meeko(+gemmi): preparación de ligando/receptor a PDBQT.
 # openbabel-wheel: conversión de receptor a PDBQT (autocontenido, sin libs del sistema).
-# Preparar un receptor con scripts/prepare_receptor.py antes de usar.
+# dimorphite-dl: protonación del ligando por pH (solo RDKit) para el docking con pH.
+# Preparar receptores con scripts/prepare_receptor.py (--pdb-id / --uniprot AlphaFold).
+# NOTA: dimorphite-dl 2.x fija rdkit ~2025.09 (downgrade menor desde 2026.x; verificado funcional).
 vina
 meeko
 gemmi
 openbabel-wheel
+dimorphite-dl
 
 # ── Tier 4.4c — motor generativo SyntheMol (de novo, Stanford, MIT) ──
 # Búsqueda combinatoria (MCTS/RL) sobre bloques comprables + reacciones reales: síntesis

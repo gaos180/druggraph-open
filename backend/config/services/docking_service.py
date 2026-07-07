@@ -72,8 +72,54 @@ def _receptor_paths(target: str) -> tuple[str, dict]:
     return rec, json.load(open(box))
 
 
-def prepare_ligand_pdbqt(smiles: str) -> str:
-    """SMILES → PDBQT (embebido 3D + Meeko). Lanza ValueError si el SMILES es inválido."""
+_BACKEND_DIR = os.path.dirname(os.path.dirname(RECEPTOR_DIR))  # backend/
+
+
+def ensure_receptor(uniprot: str, name: str = "") -> str:
+    """
+    Garantiza un receptor preparado para una diana por UniProt: si no existe, lo prepara desde
+    **AlphaFold** (caja ciega en el centroide) llamando a scripts/prepare_receptor.py **por
+    subprocess** — obligatorio, porque OpenBabel co-cargado con vina/meeko en el mismo proceso
+    segfaultea. Permite acoplar contra dianas ELEGIDAS (p. ej. las predichas), no solo curadas.
+
+    Ojo: caja ciega (sin bolsillo validado) → docking EXPLORATORIO, menor confianza que un receptor
+    curado (como NDM-1).
+    """
+    import subprocess
+    import sys
+    uniprot = (uniprot or "").strip().upper()
+    if not uniprot:
+        raise DockingUnavailable("Falta UniProt para preparar el receptor.")
+    tdir = os.path.join(RECEPTOR_DIR, uniprot)
+    if os.path.exists(os.path.join(tdir, "receptor.pdbqt")) and os.path.exists(os.path.join(tdir, "box.json")):
+        return uniprot
+
+    cmd = [sys.executable, "-m", "scripts.prepare_receptor",
+           "--uniprot", uniprot, "--target", uniprot, "--name", name or uniprot]
+    env = {**os.environ, "DJANGO_SETTINGS_MODULE": "config.settings"}
+    proc = subprocess.run(cmd, cwd=_BACKEND_DIR, env=env, capture_output=True, text=True, timeout=600)
+    if proc.returncode != 0 or not os.path.exists(os.path.join(tdir, "box.json")):
+        raise DockingUnavailable(
+            f"No se pudo preparar el receptor {uniprot}: {(proc.stderr or proc.stdout)[-300:]}")
+    return uniprot
+
+
+def _protonate(smiles: str, ph: float) -> str:
+    """Ajusta el estado de protonación del SMILES al pH dado (dimorphite-dl, solo RDKit)."""
+    try:
+        from dimorphite_dl import protonate_smiles
+        out = protonate_smiles(smiles, ph_min=ph, ph_max=ph, precision=1.0)
+        if out and Chem.MolFromSmiles(out[0]):
+            return out[0]
+    except Exception as exc:
+        log.debug("protonación pH %s falló: %s", ph, exc)
+    return smiles
+
+
+def prepare_ligand_pdbqt(smiles: str, ph: float | None = None) -> str:
+    """SMILES → PDBQT (embebido 3D + Meeko). Con `ph`, ajusta la protonación al pH. ValueError si inválido."""
+    if ph is not None:
+        smiles = _protonate(smiles, ph)
     m = Chem.MolFromSmiles(smiles)
     if m is None:
         raise ValueError("SMILES inválido.")
@@ -90,10 +136,12 @@ def prepare_ligand_pdbqt(smiles: str) -> str:
     return pdbqt
 
 
-def dock(smiles: str, target: str, exhaustiveness: int = 8, n_poses: int = 5) -> dict:
+def dock(smiles: str, target: str, exhaustiveness: int = 8, n_poses: int = 5,
+         ph: float | None = None) -> dict:
     """
-    Acopla un ligando (SMILES) al receptor `target` preparado. Devuelve la afinidad top
-    (kcal/mol) y las poses. Degrada con available=False si faltan deps o el receptor.
+    Acopla un ligando (SMILES) al receptor `target` preparado. Con `ph`, ajusta la protonación del
+    ligando a ese pH antes de acoplar (permite reintentar a distinto pH). Devuelve afinidad top +
+    poses. Degrada con available=False si faltan deps o el receptor.
     """
     if not DOCKING_OK:
         return {"available": False,
@@ -104,7 +152,7 @@ def dock(smiles: str, target: str, exhaustiveness: int = 8, n_poses: int = 5) ->
         return {"available": False, "reason": str(exc)}
 
     try:
-        lig_pdbqt = prepare_ligand_pdbqt(smiles)
+        lig_pdbqt = prepare_ligand_pdbqt(smiles, ph=ph)
     except ValueError as exc:
         return {"available": False, "reason": str(exc)}
 
@@ -127,11 +175,16 @@ def dock(smiles: str, target: str, exhaustiveness: int = 8, n_poses: int = 5) ->
         "target_name": box.get("name", target),
         "pdb_id": box.get("pdb_id", ""),
         "smiles": Chem.MolToSmiles(Chem.MolFromSmiles(smiles)),
+        "ph": ph,
         "affinity_kcal_mol": poses[0] if poses else None,
         "poses_kcal_mol": poses,
         "box": {"center": box["center"], "box_size": box["box_size"]},
-        "note": "Afinidad de docking rígido in silico (kcal/mol, más negativo = mejor); "
-                "hipótesis, no medida experimental. Validar el protocolo con EF/ROC vs. decoys.",
+        "source": box.get("source", "curated"),
+        "blind": bool(box.get("blind", False)),
+        "note": ("Docking CIEGO a estructura AlphaFold (sitio no validado) — exploratorio, baja "
+                 "confianza." if box.get("blind") else
+                 "Afinidad de docking rígido in silico (kcal/mol, más negativo = mejor); hipótesis, "
+                 "no medida experimental. Protocolo validado con EF/ROC vs. decoys."),
     }
 
 
